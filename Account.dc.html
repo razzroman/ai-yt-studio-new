@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>AI YT Studio — Account</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F3EF}
+a{color:#16161A}a:hover{color:#B8320F}
+button{font-family:inherit;cursor:pointer}
+input,select{font-family:inherit}
+.card{background:#fff;border:1px solid #E2DFD7;border-radius:12px}
+.btn2{min-height:40px;padding:0 14px;border-radius:8px;border:1px solid #D9D6CE;background:#fff;font-size:14px;color:#16161A}
+.btnd{min-height:40px;padding:0 16px;border-radius:8px;border:0;background:#16161A;color:#fff;font-size:14px}
+.h2{margin:0;font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600}
+.lbl{font-weight:500;font-size:14px}
+.fld{min-height:44px;padding:0 12px;border:1px solid #D9D6CE;border-radius:8px;font-size:15px;background:#fff;box-sizing:border-box;width:100%}
+.mono{font-family:'IBM Plex Mono',monospace}
+.muted{color:#5E5B54}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.sw{width:52px;height:44px;border:0;background:none;padding:0;display:flex;align-items:center;justify-content:flex-end;flex:none}
+.th{padding:10px 8px;font-weight:500;border-bottom:1px solid #E2DFD7;text-align:left;color:#5E5B54}
+.td{padding:10px 8px;border-bottom:1px solid #EFECE5}
+.pill{min-height:38px;padding:0 13px;border-radius:999px;font-size:13px}
+:focus-visible{outline:3px solid #2F5BEA;outline-offset:2px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+label:focus-within{outline:3px solid #2F5BEA;outline-offset:2px}
+@media (max-width: 760px){nav[aria-label="Account"]{flex:1 1 100% !important;padding:14px 12px !important;gap:10px !important}nav[aria-label="Account"] .navlist{flex-direction:row !important;overflow-x:auto;gap:6px !important;padding-bottom:4px}nav[aria-label="Account"] .navlist > *{flex:none;white-space:nowrap}nav[aria-label="Account"] .navfoot,nav[aria-label="Account"] .navgrp{display:none !important}}
+</style>
+</helmet>
+<div lang="{{uiLang}}" style="min-height: 100vh; background: #F4F3EF; color: #16161A; font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 15px; display: flex; flex-wrap: wrap; align-items: stretch">
+
+<nav aria-label="Account" style="flex: 1 1 240px; max-width: 100%; box-sizing: border-box; background: #16161A; color: #F4F3EF; padding: 28px 18px; display: flex; flex-direction: column; gap: 22px">
+<div style="display: flex; align-items: center; gap: 10px; padding: 0 8px">
+<div style="width: 34px; height: 34px; border-radius: 8px; background: {{accent}}; display: flex; align-items: center; justify-content: center"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7.5-4.5z" fill="#fff"></path></svg></div>
+<div style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 20px; letter-spacing: -0.02em">AI YT Studio</div>
+</div>
+<a href="Main.dc.html" style="min-height: 44px; display: flex; align-items: center; padding: 0 12px; border-radius: 8px; border: 1px solid #34343C; color: #F4F3EF; text-decoration: none; font-size: 14px">← {{t.back}}</a>
+<div class="navlist" style="display: flex; flex-direction: column; gap: 4px">
+<span class="mono navgrp" style="font-size: 11px; letter-spacing: 0.1em; color: #9C998F; padding: 0 12px 6px">{{t.group}}</span>
+<sc-for list="{{nav}}" as="n" hint-placeholder-count="7">
+<button type="button" onClick="{{n.go}}" style="min-height: 42px; padding: 8px 12px; border-radius: 8px; border: 0; text-align: left; font-size: 15px; {{n.st}}">{{n.label}}</button>
+</sc-for>
+</div>
+<div class="navfoot" style="margin-top: auto; border-top: 1px solid #34343C; padding: 16px 8px 0">
+<a href="Landing.dc.html" style="min-height: 40px; display: flex; align-items: center; color: #CFCBC2; font-size: 14px">{{t.logout}}</a>
+</div>
+</nav>
+
+<main style="flex: 999 1 560px; min-width: 0; box-sizing: border-box; padding: 28px clamp(16px, 4vw, 48px) 64px; display: flex; flex-direction: column; gap: 22px">
+<header style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<div class="mono muted" style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em">{{t.group}}</div>
+<h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 34px; font-weight: 600; letter-spacing: -0.02em">{{heading}}</h1>
+</div>
+<div role="group" aria-label="{{t.langSwitch}}" style="display: flex; gap: 4px; padding: 4px; background: #fff; border: 1px solid #D9D6CE; border-radius: 10px">
+<button type="button" onClick="{{setRu}}" aria-pressed="{{isRu}}" class="mono" style="min-width: 44px; min-height: 36px; border-radius: 7px; font-size: 13px; {{ruSt}}">RU</button>
+<button type="button" onClick="{{setEn}}" aria-pressed="{{isEn}}" class="mono" style="min-width: 44px; min-height: 36px; border-radius: 7px; font-size: 13px; {{enSt}}">EN</button>
+</div>
+</header>
+
+<sc-if value="{{saved}}" hint-placeholder-val="{{ false }}"><div role="status" style="background: #DDF0E8; color: #0B5A45; border-radius: 10px; padding: 12px 16px; font-size: 14px">{{t.savedMsg}}</div></sc-if>
+
+<!-- PROFILE -->
+<sc-if value="{{isProfile}}" hint-placeholder-val="{{ true }}">
+<section style="display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-start">
+<form class="card" style="flex: 2 1 420px; min-width: 0; padding: 24px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; gap: 16px; align-items: center">
+<div style="width: 72px; height: 72px; border-radius: 50%; background: #16161A; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 600; flex: none">YC</div>
+<div style="display: flex; gap: 8px; flex-wrap: wrap"><label class="btn2" style="cursor: pointer; display: inline-flex; align-items: center; justify-content: center">{{t.changePhoto}}<input type="file" class="vh" accept="image/png,image/jpeg" onChange="{{demo.photoOk}}"></label><button type="button" class="btn2" onClick="{{demo.removePhoto}}">{{t.removePhoto}}</button></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="pname" class="lbl">{{t.name}}</label><input id="pname" type="text" value="{{nameVal}}" onChange="{{onName}}" autocomplete="name" class="fld"></div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="pemail" class="lbl">Email</label>
+<div style="display: flex; gap: 8px; align-items: center"><input id="pemail" type="email" value="you@example.com" onChange="{{noop}}" autocomplete="email" class="fld" style="flex: 1"><span style="padding: 4px 10px; border-radius: 999px; background: #DDF0E8; color: #0B5A45; font-size: 12px; flex: none">{{t.verified}}</span></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="plang" class="lbl">{{t.ifaceLang}}</label><select id="plang" class="fld" value="{{langVal}}" onChange="{{onLang}}"><option value="ru">Русский</option><option value="en">English</option></select></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="ptz" class="lbl">{{t.timezone}}</label><select id="ptz" class="fld"><option>Europe/Samara (UTC+4)</option><option>Europe/Moscow (UTC+3)</option><option>UTC</option></select></div>
+</div>
+<button type="button" onClick="{{save}}" style="align-self: flex-start; min-height: 46px; padding: 0 22px; border-radius: 8px; border: 0; background: {{accent}}; color: #fff; font-weight: 600; font-size: 15px">{{t.saveBtn}}</button>
+</form>
+<div class="card" style="flex: 1 1 320px; min-width: 0; padding: 24px; display: flex; flex-direction: column; gap: 4px">
+<h2 class="h2" style="margin-bottom: 4px">{{t.notifH}}</h2>
+<span class="lbl" style="font-size: 13px">{{t.ntChH}}</span>
+<div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 6px"><sc-for list="{{ntChs}}" as="nc" hint-placeholder-count="3"><button type="button" onClick="{{nc.toggle}}" aria-pressed="{{nc.on}}" class="pill" style="{{nc.st}}">{{nc.mark}}{{nc.label}}</button></sc-for></div>
+<sc-if value="{{tgNeed}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{connectTg}}" class="btn2" style="align-self: flex-start; margin-bottom: 6px">{{t.ntTg}}</button></sc-if>
+<sc-if value="{{tgOk}}" hint-placeholder-val="{{ false }}"><span style="font-size: 13px; color: #0B5A45; margin-bottom: 6px">{{t.ntTgOk}}</span></sc-if>
+<sc-for list="{{notifs}}" as="nt" hint-placeholder-count="4">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 0; border-top: 1px solid #EFECE5">
+<span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 500">{{nt.label}}</span><span class="muted" style="font-size: 12px">{{nt.hint}}</span></span>
+<button type="button" role="switch" aria-checked="{{nt.on}}" aria-label="{{nt.label}}" onClick="{{nt.toggle}}" class="sw"><span style="width: 46px; height: 26px; border-radius: 13px; position: relative; {{nt.track}}"><span style="position: absolute; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; {{nt.knob}}"></span></span></button>
+</div>
+</sc-for>
+</div>
+</section>
+</sc-if>
+
+<!-- BILLING -->
+<sc-if value="{{isBilling}}" hint-placeholder-val="{{ false }}">
+<section style="display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; flex-wrap: wrap; gap: 18px; align-items: stretch">
+<div style="flex: 2 1 420px; min-width: 0; background: #16161A; color: #F4F3EF; border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap">
+<span style="display: flex; flex-direction: column; gap: 2px"><span class="mono" style="font-size: 12px; color: #CFCBC2">{{t.currentPlan}}</span><span style="font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 600">{{planName}}</span></span>
+<span style="padding: 4px 12px; border-radius: 999px; font-size: 12px; {{subStatusSt}}">{{subStatus}}</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; justify-content: space-between; font-size: 13px; color: #CFCBC2"><span>{{t.creditsLeft}}</span><span class="mono">620 / {{planCredits}}</span></div>
+<div style="height: 8px; border-radius: 4px; background: #34343C"><div style="width: 38%; height: 8px; border-radius: 4px; background: {{accent}}"></div></div>
+</div>
+<span style="font-size: 13px; color: #CFCBC2">{{renewText}}</span>
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<button type="button" onClick="{{buyPack}}" style="min-height: 42px; padding: 0 16px; border-radius: 8px; border: 0; background: {{accent}}; color: #fff; font-weight: 600; font-size: 14px">{{t.buyPack}}</button>
+<sc-if value="{{canCancel}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{askCancel}}" style="min-height: 42px; padding: 0 16px; border-radius: 8px; border: 1px solid #4A4A52; background: transparent; color: #F4F3EF; font-size: 14px">{{t.cancelSub}}</button></sc-if>
+<sc-if value="{{cancelled}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{resume}}" style="min-height: 42px; padding: 0 16px; border-radius: 8px; border: 1px solid #4A4A52; background: transparent; color: #F4F3EF; font-size: 14px">{{t.resumeSub}}</button></sc-if>
+</div>
+<sc-if value="{{packBought}}" hint-placeholder-val="{{ false }}"><span role="status" style="font-size: 13px; color: #9FE0C6">{{t.packDone}}</span></sc-if>
+</div>
+<div class="card" style="flex: 1 1 280px; min-width: 0; padding: 24px; display: flex; flex-direction: column; gap: 12px">
+<h2 class="h2">{{t.payMethod}}</h2>
+<div role="radiogroup" aria-label="{{t.payMethod}}" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px"><sc-for list="{{pmOpts}}" as="po" hint-placeholder-count="4"><button type="button" role="radio" aria-checked="{{po.on}}" onClick="{{po.pick}}" style="min-height: 56px; padding: 8px 12px; border-radius: 10px; text-align: left; display: flex; flex-direction: column; gap: 2px; color: #16161A; {{po.st}}"><span style="font-weight: 600; font-size: 14px">{{po.label}}</span><span class="muted" style="font-size: 12px">{{po.sub}}</span></button></sc-for></div>
+<span class="muted" style="font-size: 12px; line-height: 1.45">{{t.pmAuto}}</span>
+<sc-if value="{{pmIsCard}}" hint-placeholder-val="{{ true }}"><button type="button" class="btn2" style="align-self: flex-start" onClick="{{demo.changeCard}}">{{t.changeCard}}</button></sc-if>
+</div>
+</div>
+
+<sc-if value="{{payPending}}" hint-placeholder-val="{{ false }}">
+<div role="status" class="card" style="padding: 20px; border: 2px solid #16161A; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; align-items: center"><span style="font-weight: 600">{{t.payPendH}}</span><span class="mono" style="font-size: 14px">{{payWhat}}</span></div>
+<span class="muted" style="font-size: 14px; line-height: 1.5">{{payPendText}}</span>
+<span style="font-size: 14px; line-height: 1.5; font-weight: 500">{{pmPendText}}</span>
+<sc-if value="{{pmIsSbp}}" hint-placeholder-val="{{ false }}"><div role="img" aria-label="{{t.qrAlt}}" style="width: 132px; height: 132px; border-radius: 8px; border: 1px solid #D9D6CE; background-color: #fff; background-image: repeating-linear-gradient(0deg, #16161A 0 6px, transparent 6px 12px), repeating-linear-gradient(90deg, #16161A 0 6px, transparent 6px 12px); background-blend-mode: difference; opacity: 0.85"></div><span class="muted" style="font-size: 12px">{{t.qrAlt}}</span></sc-if>
+<span class="muted" style="font-size: 12px">{{t.offerA}} <a href="Legal.dc.html">{{t.offerL}}</a></span>
+<div style="display: flex; gap: 8px; flex-wrap: wrap"><button type="button" onClick="{{payOk}}" class="btnd">{{t.paySimOk}}</button><button type="button" onClick="{{payFail}}" class="btn2">{{t.paySimFail}}</button><button type="button" onClick="{{payCancel}}" class="btn2">{{t.payCancel}}</button></div>
+</div>
+</sc-if>
+<sc-if value="{{payFailed}}" hint-placeholder-val="{{ false }}">
+<div role="alert" class="card" style="padding: 20px; border: 2px solid #B42318; display: flex; flex-direction: column; gap: 10px">
+<span style="font-weight: 600; color: #8E1B12">{{t.payFailH}}</span>
+<span class="muted" style="font-size: 14px; line-height: 1.5">{{payFailText}}</span>
+<div style="display: flex; gap: 8px; flex-wrap: wrap"><button type="button" onClick="{{payRetry}}" class="btnd">{{t.payRetry}}</button><button type="button" class="btn2" onClick="{{demo.changeCard}}">{{t.changeCard}}</button><button type="button" onClick="{{payCancel}}" class="btn2">{{t.payCancel}}</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{confirmCancel}}" hint-placeholder-val="{{ false }}">
+<div role="alertdialog" aria-label="{{t.cancelQ}}" class="card" style="padding: 20px; border: 2px solid #A3300C; display: flex; flex-direction: column; gap: 12px">
+<span style="font-weight: 600">{{t.cancelQ}}</span>
+<span class="muted" style="font-size: 14px; line-height: 1.5">{{t.cancelInfo}}</span>
+<fieldset style="border: 0; padding: 0; margin: 0"><legend class="lbl" style="margin-bottom: 8px">{{t.whyLeave}}</legend><div style="display: flex; gap: 6px; flex-wrap: wrap"><sc-for list="{{reasons}}" as="rs" hint-placeholder-count="4"><button type="button" onClick="{{rs.pick}}" class="pill" style="{{rs.st}}">{{rs.label}}</button></sc-for></div></fieldset>
+<div style="display: flex; gap: 8px; flex-wrap: wrap"><button type="button" onClick="{{doCancel}}" style="min-height: 42px; padding: 0 16px; border-radius: 8px; border: 0; background: #A3300C; color: #fff; font-size: 14px">{{t.confirmCancel}}</button><button type="button" onClick="{{keepSub}}" class="btn2">{{t.keepSub}}</button></div>
+</div>
+</sc-if>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px">
+<sc-for list="{{plans}}" as="p" hint-placeholder-count="3">
+<div class="card" style="padding: 20px; display: flex; flex-direction: column; gap: 10px; {{p.cardSt}}">
+<span style="display: flex; justify-content: space-between; align-items: center"><span style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 600">{{p.name}}</span><span class="mono" style="font-size: 15px">{{p.price}}</span></span>
+<span class="muted" style="font-size: 13px">{{p.desc}}</span>
+<button type="button" onClick="{{p.pick}}" style="min-height: 40px; border-radius: 8px; font-size: 14px; {{p.btnSt}}">{{p.btn}}</button>
+</div>
+</sc-for>
+</div>
+
+<div class="card" style="padding: 20px; display: flex; flex-direction: column; gap: 10px">
+<h2 class="h2">{{t.invoices}}</h2>
+<div style="overflow-x: auto"><table style="width: 100%; min-width: 520px; border-collapse: collapse; font-size: 14px">
+<thead><tr><sc-for list="{{t.invCols}}" as="ic" hint-placeholder-count="4"><th class="th">{{ic}}</th></sc-for></tr></thead>
+<tbody><sc-for list="{{invoices}}" as="iv" hint-placeholder-count="3"><tr><td class="td mono" style="font-size: 13px">{{iv.date}}</td><td class="td">{{iv.what}}</td><td class="td mono" style="font-size: 13px">{{iv.sum}}</td><td class="td" style="font-size: 13px">{{iv.method}}</td><td class="td"><button type="button" onClick="{{iv.getRcpt}}" style="min-height: 36px; padding: 0 10px; border-radius: 8px; border: 1px solid #D9D6CE; background: #fff; font-size: 13px; white-space: nowrap; {{iv.rcptSt}}">↓ {{iv.rcpt}}</button></td></tr></sc-for></tbody>
+</table></div>
+</div>
+</section>
+</sc-if>
+
+<!-- HISTORY -->
+<sc-if value="{{isHistory}}" hint-placeholder-val="{{ false }}">
+<section class="card" style="padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap">
+<div style="display: flex; gap: 6px; flex-wrap: wrap"><sc-for list="{{hFilters}}" as="hf" hint-placeholder-count="3"><button type="button" onClick="{{hf.pick}}" class="pill" style="{{hf.st}}">{{hf.label}}</button></sc-for></div>
+<a href="{{histCsv}}" download="{{histCsvName}}" class="btn2" style="display: inline-flex; align-items: center; text-decoration: none; color: #16161A">{{t.export}}</a>
+</div>
+<div style="overflow-x: auto"><table style="width: 100%; min-width: 640px; border-collapse: collapse; font-size: 14px">
+<thead><tr><sc-for list="{{t.hCols}}" as="hc" hint-placeholder-count="5"><th class="th">{{hc}}</th></sc-for></tr></thead>
+<tbody><sc-for list="{{history}}" as="h" hint-placeholder-count="8"><tr><td class="td mono" style="font-size: 12px; color: #5E5B54; white-space: nowrap">{{h.when}}</td><td class="td">{{h.what}}</td><td class="td muted">{{h.module}}</td><td class="td mono" style="font-weight: 600; {{h.amtSt}}">{{h.amt}}</td><td class="td"><span style="padding: 3px 10px; border-radius: 999px; font-size: 12px; {{h.stSt}}">{{h.status}}</span></td></tr></sc-for></tbody>
+</table></div>
+<span class="muted" style="font-size: 13px">{{t.historyNote}}</span>
+</section>
+</sc-if>
+
+<!-- CHANNELS -->
+<sc-if value="{{isChannels}}" hint-placeholder-val="{{ false }}">
+<section style="display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-start">
+<div class="card" style="flex: 2 1 420px; min-width: 0; padding: 22px; display: flex; flex-direction: column; gap: 10px">
+<h2 class="h2">{{cx.chH2}}</h2><span class="muted" style="font-size: 14px; line-height: 1.5">{{cx.chP}}</span>
+<sc-for list="{{plats}}" as="c" hint-placeholder-count="4">
+<div style="display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid #EFECE5; flex-wrap: wrap">
+<span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 10px; flex: none; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; color: #fff; {{c.icoSt}}">{{c.ab}}</span>
+<span style="flex: 1 1 200px; display: flex; flex-direction: column"><span style="font-weight: 600">{{c.name}}</span><span class="muted" style="font-size: 13px">{{c.sub}}</span></span>
+<sc-if value="{{c.on}}" hint-placeholder-val="{{ true }}"><span style="padding: 3px 10px; border-radius: 999px; background: #DDF0E8; color: #0B5A45; font-size: 12px">{{cx.chOk}}</span></sc-if>
+<button type="button" onClick="{{c.toggle}}" class="{{c.btnCls}}" style="min-height: 40px; font-size: 13px">{{c.btn}}</button>
+</div>
+</sc-for>
+</div>
+<div class="card" style="flex: 1 1 320px; min-width: 0; padding: 22px; display: flex; flex-direction: column; gap: 10px">
+<h2 class="h2">{{t.accessH}}</h2>
+<sc-for list="{{t.accessList}}" as="al" hint-placeholder-count="4"><div style="display: flex; gap: 10px; font-size: 14px; line-height: 1.45"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#0F7B5F" stroke-width="2" aria-hidden="true" style="flex: none; margin-top: 4px"><path d="M3 8.5l3 3 7-7"></path></svg><span>{{al}}</span></div></sc-for>
+<span class="muted" style="font-size: 12px; line-height: 1.45">{{t.accessNote}}</span>
+</div>
+</section>
+</sc-if>
+
+<!-- SECURITY -->
+<sc-if value="{{isSecurity}}" hint-placeholder-val="{{ false }}">
+<section style="display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-start">
+<form class="card" style="flex: 1 1 340px; min-width: 0; padding: 22px; display: flex; flex-direction: column; gap: 12px">
+<h2 class="h2">{{t.passH}}</h2>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="op" class="lbl">{{t.oldPass}}</label><input id="op" type="password" autocomplete="current-password" class="fld"></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="np" class="lbl">{{t.newPass}}</label><input id="np" type="password" autocomplete="new-password" class="fld"><span class="muted" style="font-size: 12px">{{t.passHint}}</span></div>
+<button type="button" onClick="{{save}}" class="btnd" style="align-self: flex-start; min-height: 44px">{{t.changePass}}</button>
+</form>
+<div style="flex: 1 1 340px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
+<div class="card" style="padding: 22px; display: flex; justify-content: space-between; align-items: center; gap: 12px">
+<span style="display: flex; flex-direction: column; gap: 2px"><span class="h2">{{t.twoFa}}</span><span class="muted" style="font-size: 13px">{{t.twoFaHint}}</span></span>
+<button type="button" role="switch" aria-checked="{{twoFa}}" aria-label="{{t.twoFa}}" onClick="{{toggle2fa}}" class="sw"><span style="width: 46px; height: 26px; border-radius: 13px; position: relative; {{twoFaTrack}}"><span style="position: absolute; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; {{twoFaKnob}}"></span></span></button>
+</div>
+<div class="card" style="padding: 22px; display: flex; flex-direction: column; gap: 6px">
+<h2 class="h2" style="margin-bottom: 6px">{{t.sessionsH}}</h2>
+<sc-for list="{{sessions}}" as="se" hint-placeholder-count="3">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid #EFECE5"><span style="display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 500">{{se.device}}</span><span class="muted" style="font-size: 12px">{{se.meta}}</span></span><sc-if value="{{se.current}}" hint-placeholder-val="{{ false }}"><span style="padding: 3px 10px; border-radius: 999px; background: #F4F3EF; font-size: 12px">{{t.thisDevice}}</span></sc-if><sc-if value="{{se.other}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{se.end}}" class="btn2" style="min-height: 34px; font-size: 12px">{{t.endSession}}</button></sc-if></div>
+</sc-for>
+</div>
+<div class="card" style="padding: 22px; border-color: #E8B4A3; display: flex; flex-direction: column; gap: 10px">
+<h2 class="h2" style="color: #A3300C">{{t.dangerH}}</h2>
+<span class="muted" style="font-size: 13px; line-height: 1.45">{{t.deleteInfo}}</span>
+<sc-if value="{{delIdle}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{askDelete}}" class="btn2" style="align-self: flex-start; border-color: #E8B4A3; color: #A3300C">{{t.deleteAcc}}</button></sc-if>
+<sc-if value="{{delAsk}}" hint-placeholder-val="{{ false }}">
+<label for="delc" class="lbl">{{t.typeDelete}}</label>
+<input id="delc" type="text" value="{{delText}}" onChange="{{onDelText}}" class="fld" placeholder="{{t.deleteWord}}">
+<div style="display: flex; gap: 8px"><button type="button" onClick="{{doDelete}}" style="min-height: 40px; padding: 0 14px; border-radius: 8px; border: 0; font-size: 14px; {{delBtnSt}}">{{t.deleteForever}}</button><button type="button" onClick="{{cancelDelete}}" class="btn2">{{t.cancel}}</button></div>
+</sc-if>
+<sc-if value="{{delDone}}" hint-placeholder-val="{{ false }}"><span role="status" style="font-size: 13px; color: #A3300C">{{t.deleteScheduled}}</span></sc-if>
+</div>
+</div>
+</section>
+</sc-if>
+
+<!-- REFERRALS -->
+<sc-if value="{{isRef}}" hint-placeholder-val="{{ false }}">
+<section style="display: flex; flex-direction: column; gap: 18px">
+<div style="background: #16161A; color: #F4F3EF; border-radius: 14px; padding: 28px; display: flex; flex-wrap: wrap; gap: 24px; align-items: center; justify-content: space-between">
+<div style="display: flex; flex-direction: column; gap: 8px; max-width: 560px"><span style="font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 600; line-height: 1.2">{{t.refTitle}}</span><span style="color: #CFCBC2; line-height: 1.5">{{t.refSub}}</span></div>
+<div style="flex: 1 1 320px; max-width: 460px; display: flex; flex-direction: column; gap: 8px">
+<label for="reflink" style="font-size: 13px; color: #CFCBC2">{{t.refLinkLbl}}</label>
+<div style="display: flex; gap: 8px"><input id="reflink" type="text" readonly value="{{t.refLink}}" class="fld mono" style="flex: 1; min-width: 0; font-size: 14px; color: #16161A"><button type="button" onClick="{{copyRef}}" style="min-height: 44px; padding: 0 16px; border-radius: 8px; border: 0; background: #C23B14; color: #fff; font-weight: 600; font-size: 14px; flex: none">{{copyLabel}}</button></div>
+<div style="display: flex; gap: 8px; flex-wrap: wrap"><sc-for list="{{refShareLinks}}" as="rs" hint-placeholder-count="3"><a href="{{rs.href}}" target="_blank" rel="noopener" style="min-height: 40px; padding: 0 12px; border-radius: 8px; border: 1px solid #4A4A52; background: transparent; color: #F4F3EF; font-size: 13px; display: inline-flex; align-items: center; text-decoration: none">{{rs.label}}</a></sc-for></div>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px">
+<sc-for list="{{refStats}}" as="rk" hint-placeholder-count="4"><div class="card" style="padding: 18px; display: flex; flex-direction: column; gap: 6px"><span class="muted" style="font-size: 13px">{{rk.label}}</span><span style="font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 600">{{rk.value}}</span></div></sc-for>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-start">
+<div class="card" style="flex: 2 1 420px; min-width: 0; padding: 22px; display: flex; flex-direction: column; gap: 12px">
+<h2 class="h2">{{t.refInvH}}</h2>
+<form style="display: flex; gap: 8px; flex-wrap: wrap"><label for="refmail" class="sr">{{t.refMailLbl}}</label><input id="refmail" type="email" value="{{refMail}}" onChange="{{onRefMail}}" placeholder="{{t.refMailPh}}" class="fld" style="flex: 1 1 220px; min-width: 0"><button type="button" onClick="{{sendInvite}}" class="btnd" style="min-height: 44px">{{t.refSend}}</button></form>
+<sc-if value="{{refSentMsg}}" hint-placeholder-val="{{ false }}"><span role="status" style="font-size: 13px; color: #0B5A45">{{t.refSent}}</span></sc-if>
+<div style="overflow-x: auto"><table style="width: 100%; min-width: 480px; border-collapse: collapse; font-size: 14px">
+<thead><tr><sc-for list="{{t.refCols}}" as="rc" hint-placeholder-count="4"><th class="th">{{rc}}</th></sc-for></tr></thead>
+<tbody><sc-for list="{{refRows}}" as="rr" hint-placeholder-count="5"><tr><td class="td">{{rr.who}}</td><td class="td muted">{{rr.when}}</td><td class="td"><span style="padding: 3px 10px; border-radius: 999px; font-size: 12px; {{rr.st}}">{{rr.status}}</span></td><td class="td mono">{{rr.cr}}</td></tr></sc-for></tbody>
+</table></div>
+</div>
+<div class="card" style="flex: 1 1 280px; min-width: 0; padding: 22px; display: flex; flex-direction: column; gap: 10px">
+<h2 class="h2">{{t.refRulesH}}</h2>
+<sc-for list="{{t.refRules}}" as="rl" hint-placeholder-count="4"><div style="display: flex; gap: 10px; font-size: 14px; line-height: 1.45"><span class="mono" style="color: #B8320F; flex: none">—</span><span>{{rl}}</span></div></sc-for>
+</div>
+</div>
+</section>
+</sc-if>
+
+<!-- LICENSES -->
+<sc-if value="{{isLic}}" hint-placeholder-val="{{ false }}">
+<section style="display: flex; flex-direction: column; gap: 18px">
+<p class="muted" style="margin: 0; max-width: 760px; line-height: 1.5">{{t.licIntro}}</p>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap">
+<div role="group" aria-label="{{t.licPick}}" style="display: flex; gap: 8px; flex-wrap: wrap"><sc-for list="{{licProjects}}" as="lp" hint-placeholder-count="2"><button type="button" onClick="{{lp.pick}}" class="pill" style="{{lp.st}}">{{lp.label}}</button></sc-for></div>
+<button type="button" onClick="{{downloadCert}}" class="btnd" style="min-height: 44px">{{certLabel}}</button>
+</div>
+<div class="card" style="padding: 8px 20px 16px; overflow-x: auto">
+<table style="width: 100%; min-width: 760px; border-collapse: collapse; font-size: 14px">
+<thead><tr><sc-for list="{{t.licCols}}" as="lc" hint-placeholder-count="5"><th class="th">{{lc}}</th></sc-for></tr></thead>
+<tbody><sc-for list="{{licRows}}" as="lr" hint-placeholder-count="6"><tr><td class="td" style="font-weight: 500">{{lr.name}}</td><td class="td"><span style="padding: 3px 10px; border-radius: 999px; font-size: 12px; background: #F4F3EF">{{lr.type}}</span></td><td class="td">{{lr.src}}</td><td class="td muted" style="font-size: 13px">{{lr.lic}}</td><td class="td mono" style="font-size: 12px">{{lr.where}}</td></tr></sc-for></tbody>
+</table>
+</div>
+<div class="card" style="padding: 22px; display: flex; flex-direction: column; gap: 10px; max-width: 760px">
+<h2 class="h2">{{t.licHelpH}}</h2>
+<ol style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; line-height: 1.5; font-size: 14px"><sc-for list="{{t.licHelp}}" as="lh" hint-placeholder-count="3"><li>{{lh}}</li></sc-for></ol>
+</div>
+</section>
+</sc-if>
+
+</main>
+<div role="status" aria-live="polite" style="position: fixed; left: 50%; bottom: 24px; z-index: 60; max-width: min(92vw, 560px); background: #16161A; color: #fff; padding: 12px 18px; border-radius: 10px; font-size: 14px; line-height: 1.45; box-shadow: 0 8px 24px rgba(0,0,0,0.25); transition: opacity .2s, transform .2s; {{toastSt}}">{{toastText}}</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#C93C14","options":["#C93C14","#2F5BEA","#0F7B5F","#16161A"]},"startLang":{"editor":"enum","options":["ru","en"],"default":"ru"},"$preview":{"width":1440,"height":1100}}'>
+var ACX = {
+  ru: {
+    nav: ["Профиль и настройки", "Тариф и оплата", "История и кредиты", "Каналы и площадки", "Безопасность", "Пригласить друзей", "Лицензии"],
+    refTitle: "Пригласите друга — по 200 кредитов вам обоим", refSub: "Друг получает 200 кредитов при регистрации по вашей ссылке, вы — 200 кредитов, когда он оплатит любой тариф.",
+    refLinkLbl: "Ваша ссылка", refLink: "aiytstudio.example/r/YURI7K", refCopy: "Копировать", refCopied: "Скопировано ✓", refShare: ["Telegram", "WhatsApp", "Email"],
+    refStatLbls: ["Приглашено", "Зарегистрировались", "Оплатили тариф", "Получено кредитов"],
+    refInvH: "Приглашения", refMailLbl: "Email друга", refMailPh: "friend@example.com", refSend: "Отправить приглашение", refSent: "Приглашение отправлено.",
+    refCols: ["Кто", "Когда", "Статус", "Вам"], refSt: { sent: "Приглашение отправлено", reg: "Зарегистрировался", paid: "Оплатил тариф" }, refJustNow: "только что",
+    refList: [["an***@gmail.com", "2 дня назад", "paid"], ["mi***@yandex.ru", "4 дня назад", "reg"], ["ol***@mail.ru", "неделю назад", "reg"], ["de***@gmail.com", "неделю назад", "sent"], ["ka***@outlook.com", "2 недели назад", "sent"]],
+    refRulesH: "Правила", refRules: ["Бонус начисляется после первой оплаты друга.", "До 10 бонусов в месяц — до 2 000 кредитов.", "Приглашать себя и создавать дубли аккаунтов нельзя: такие бонусы аннулируются.", "Начисления видны в разделе «История и кредиты»."],
+    licIntro: "Источник и лицензия каждого материала в ваших роликах. Пригодится, если YouTube пришлёт заявку Content ID или спор об авторских правах.",
+    licPick: "Проект", licCert: "Скачать сертификат лицензий (PDF)", licCertDone: "Сертификат скачан ✓",
+    licCols: ["Материал", "Тип", "Источник", "Лицензия", "Где в ролике"],
+    licProjects: [
+      { label: "Что светится на глубине 4000 м", rows: [["Кадры сцен 1–6", "Изображение", "AI-генерация в AI YT Studio", "Коммерческое использование разрешено", "0:00–9:12"], ["Оживлённые кадры, сцены 2 и 4", "Видео", "AI-генерация в AI YT Studio", "Коммерческое использование разрешено", "1:15–1:20, 4:02–4:07"], ["Глубоководная рыба-удильщик", "Видео", "Сток-библиотека", "Стандартная лицензия стока, ID 2041187", "2:30–2:38"], ["Deep Ambient", "Музыка", "Музыкальная библиотека AI YT Studio", "Без заявок Content ID", "весь ролик"], ["Голос «Марина»", "Голос", "Синтез речи, библиотечный голос", "Коммерческое использование разрешено", "весь ролик"], ["Шрифт обложки", "Шрифт", "Открытая лицензия OFL", "Свободное использование", "обложка"]] },
+      { label: "Марс изучен лучше океана · Shorts #1", rows: [["Кадры сцен 1–3", "Изображение", "AI-генерация в AI YT Studio", "Коммерческое использование разрешено", "0:00–0:45"], ["Свой голос (клон)", "Голос", "Голос владельца аккаунта, подтверждён записью", "Принадлежит вам", "весь ролик"], ["Pulse Low", "Музыка", "Музыкальная библиотека AI YT Studio", "Без заявок Content ID", "весь ролик"]] }
+    ],
+    licHelpH: "Если пришла заявка Content ID", licHelp: ["Откройте заявку в YouTube Studio → «Ограничения» и найдите спорный фрагмент по таймкоду.", "Сверьте его с таблицей выше: источник и лицензия покажут, откуда материал.", "Оспорьте заявку и приложите сертификат лицензий проекта."]
+  },
+  en: {
+    nav: ["Profile & settings", "Plan & billing", "History & credits", "Channels & platforms", "Security", "Invite friends", "Licenses"],
+    refTitle: "Invite a friend — 200 credits for each of you", refSub: "Your friend gets 200 credits when signing up with your link; you get 200 credits when they pay for any plan.",
+    refLinkLbl: "Your link", refLink: "aiytstudio.example/r/YURI7K", refCopy: "Copy", refCopied: "Copied ✓", refShare: ["Telegram", "WhatsApp", "Email"],
+    refStatLbls: ["Invited", "Signed up", "Paid for a plan", "Credits earned"],
+    refInvH: "Invitations", refMailLbl: "Friend’s email", refMailPh: "friend@example.com", refSend: "Send invite", refSent: "Invite sent.",
+    refCols: ["Who", "When", "Status", "You get"], refSt: { sent: "Invite sent", reg: "Signed up", paid: "Paid for a plan" }, refJustNow: "just now",
+    refList: [["an***@gmail.com", "2 days ago", "paid"], ["mi***@yahoo.com", "4 days ago", "reg"], ["ol***@proton.me", "a week ago", "reg"], ["de***@gmail.com", "a week ago", "sent"], ["ka***@outlook.com", "2 weeks ago", "sent"]],
+    refRulesH: "Rules", refRules: ["The bonus is added after your friend’s first payment.", "Up to 10 bonuses a month — up to 2,000 credits.", "Self-invites and duplicate accounts are not allowed; such bonuses are cancelled.", "Bonuses appear under “History & credits”."],
+    licIntro: "The source and license of every asset in your videos. Useful if YouTube sends a Content ID claim or a copyright dispute.",
+    licPick: "Project", licCert: "Download license certificate (PDF)", licCertDone: "Certificate downloaded ✓",
+    licCols: ["Asset", "Type", "Source", "License", "Where in video"],
+    licProjects: [
+      { label: "What glows at 4,000 m", rows: [["Scene frames 1–6", "Image", "AI-generated in AI YT Studio", "Commercial use allowed", "0:00–9:12"], ["Animated frames, scenes 2 and 4", "Video", "AI-generated in AI YT Studio", "Commercial use allowed", "1:15–1:20, 4:02–4:07"], ["Deep-sea anglerfish", "Video", "Stock library", "Standard stock license, ID 2041187", "2:30–2:38"], ["Deep Ambient", "Music", "AI YT Studio music library", "No Content ID claims", "whole video"], ["Voice “Marina”", "Voice", "Speech synthesis, library voice", "Commercial use allowed", "whole video"], ["Thumbnail font", "Font", "Open Font License (OFL)", "Free to use", "thumbnail"]] },
+      { label: "Mars is mapped better · Short #1", rows: [["Scene frames 1–3", "Image", "AI-generated in AI YT Studio", "Commercial use allowed", "0:00–0:45"], ["My voice (clone)", "Voice", "Account owner’s voice, verified by recording", "Owned by you", "whole video"], ["Pulse Low", "Music", "AI YT Studio music library", "No Content ID claims", "whole video"]] }
+    ],
+    licHelpH: "If you get a Content ID claim", licHelp: ["Open the claim in YouTube Studio → “Restrictions” and find the disputed part by timestamp.", "Match it against the table above: source and license show where the asset came from.", "Dispute the claim and attach the project’s license certificate."]
+  }
+};
+var L = {
+  ru: {
+    group: "АККАУНТ", back: "В кабинет", logout: "Выйти", langSwitch: "Язык сайта",
+    nav: ["Профиль и настройки", "Тариф и оплата", "История и кредиты", "Каналы и площадки", "Безопасность"],
+    savedMsg: "Изменения сохранены.",
+    changePhoto: "Сменить фото", removePhoto: "Удалить", name: "Имя", verified: "Подтверждён", ifaceLang: "Язык интерфейса", timezone: "Часовой пояс", saveBtn: "Сохранить",
+    notifH: "Уведомления", ntChH: "Куда присылать", ntChs: ["В кабинете", "Email", "Telegram"], ntTg: "Подключить Telegram-бота", ntTgOk: "Telegram подключён: @yuri_c",
+    notifList: [["Генерация готова", "Видео, озвучка или раскадровка собраны"], ["Оплата", "Платёж подтверждён банком или не прошёл"], ["Аналитика ролика", "Прогноз против факта через 48 часов после публикации"], ["Кредиты заканчиваются", "Когда осталось меньше 10% кредитов"], ["Отчёт по каналу раз в неделю", "Рост, лучшие видео и идеи"], ["Новости сервиса", "Новые функции, не чаще раза в месяц"]],
+    currentPlan: "ТЕКУЩИЙ ТАРИФ", creditsLeft: "Осталось кредитов", active: "Активна", cancelledSt: "Отменена", renews: "Продлится 12 ноября — ", ends: "Доступ сохранится до 12 ноября, потом тариф станет «Старт»",
+    buyPack: "Купить 500 кредитов — 1 190 ₽", packDone: "Оплата подтверждена — 500 кредитов добавлены на баланс.",
+    payPendH: "Ожидаем подтверждение оплаты", offerA: "Оплачивая, вы принимаете условия", offerL: "публичной оферты", payPendPlan: "Тариф и его кредиты откроются сразу после того, как банк подтвердит платёж. До этого действует текущий тариф. Чек самозанятого из «Мой налог» придёт на email.", payPendPack: "Кредиты появятся на балансе сразу после того, как банк подтвердит платёж. Чек самозанятого из «Мой налог» придёт на email.",
+    paySimOk: "Показать: банк подтвердил", paySimFail: "Показать: банк отклонил", payCancel: "Отменить", payRetry: "Повторить оплату",
+    payFailH: "Оплата не прошла", payFailPlan: "Тариф не подключён: его функции и кредиты открываются только после успешной и подтверждённой оплаты.", payFailPack: "Кредиты не начислены: пакет добавляется только после успешной и подтверждённой оплаты.", packName: "Пакет 500 кредитов", packPrice: "1 190 ₽",
+    cancelSub: "Отменить подписку", resumeSub: "Возобновить подписку",
+    payMethod: "Способ оплаты", changeCard: "Сменить карту",
+    cancelQ: "Отменить подписку?", cancelInfo: "Доступ к тарифу сохранится до конца оплаченного периода. Неиспользованные кредиты подписки сгорят, кредиты из пакетов останутся.",
+    whyLeave: "Почему уходите? (необязательно)", reasonsList: ["Дорого", "Мало пользуюсь", "Не хватает функций", "Другое"],
+    confirmCancel: "Отменить подписку", keepSub: "Оставить",
+    plansList: [["start", "Старт", "0 ₽", "60 кредитов, 1 канал"], ["creator", "Автор", "2 490 ₽", "1000 кредитов, до 3 каналов"], ["studio", "Студия", "6 490 ₽", "3500 кредитов, команда"]],
+    currentBtn: "Текущий тариф", switchBtn: "Перейти",
+    invoices: "Платежи", invCols: ["Дата", "За что", "Сумма", "Способ", "Чек"], receipt: "Скачать",
+    invList: [["12 окт. 2026", "Тариф «Автор», месяц", "2 490 ₽"], ["28 сент. 2026", "Пакет 500 кредитов", "1 190 ₽"], ["12 сент. 2026", "Тариф «Автор», месяц", "2 490 ₽"]],
+    hFiltersMap: { all: "Все операции", spend: "Списания", topup: "Пополнения" },
+    hCols: ["Когда", "Операция", "Модуль", "Кредиты", "Статус"],
+    hList: [["сегодня, 14:58", "Сборка видео 1080p", "Фото и видео", -3, "ok"], ["сегодня, 14:40", "Видеоклип, сцена 04", "Фото и видео", -60, "refund"], ["сегодня, 14:12", "Озвучка, 9 минут", "AI-контент", -63, "ok"], ["сегодня, 13:50", "Прогноз удержания", "AI-контент", -3, "ok"], ["сегодня, 13:44", "Сценарий 8–12 мин", "AI-контент", -6, "ok"], ["вчера, 19:02", "Анализ канала", "Анализ каналов", -5, "ok"], ["28 сент.", "Пакет кредитов", "Оплата", 500, "ok"], ["12 окт.", "Тариф «Автор»", "Оплата", 1000, "ok"]],
+    hStatus: { ok: "Выполнено", refund: "Ошибка — кредиты возвращены" },
+    historyNote: "Если генерация завершилась ошибкой, кредиты возвращаются автоматически. Операции — пример.", export: "Экспорт CSV",
+    chH: "Подключённые каналы", connectBtn: "+ Подключить YouTube-канал", noCh: "Каналы не подключены. Без подключения работают все модули, кроме статистики своего канала и публикации.",
+    connected: "Подключён", disconnect: "Отключить", newChannel: ["Бездна. Объясняем", "@your-channel", "подключён сегодня"],
+    accessH: "Что получает сервис", accessList: ["Статистику вашего канала для анализа", "Публикацию видео и обложек по вашей команде", "Чтение комментариев и отправку ответов, которые вы одобрили", "Смену обложки для A/B-теста"],
+    accessNote: "Доступ даётся через вход в Google и в любой момент отзывается здесь или в настройках аккаунта Google.",
+    passH: "Сменить пароль", oldPass: "Текущий пароль", newPass: "Новый пароль", passHint: "Минимум 8 символов", changePass: "Сменить пароль",
+    twoFa: "Двухфакторная защита", twoFaHint: "Код из приложения-аутентификатора при входе",
+    sessionsH: "Активные сеансы", thisDevice: "Это устройство", endSession: "Завершить",
+    sessionsList: [["Chrome, Windows", "Самара · сейчас"], ["Safari, iPhone", "Самара · вчера"], ["Firefox, macOS", "Москва · 3 окт."]],
+    dangerH: "Удаление аккаунта", deleteInfo: "Будут удалены проекты, файлы и история. Активная подписка отменится. Отменить удаление можно в течение 30 дней.",
+    deleteAcc: "Удалить аккаунт", typeDelete: "Чтобы подтвердить, введите слово УДАЛИТЬ", deleteWord: "УДАЛИТЬ", deleteForever: "Удалить аккаунт", cancel: "Отмена",
+    deleteScheduled: "Аккаунт будет удалён через 30 дней. Мы отправили письмо со ссылкой для отмены."
+  },
+  en: {
+    group: "ACCOUNT", back: "Back to dashboard", logout: "Log out", langSwitch: "Site language",
+    nav: ["Profile & settings", "Plan & billing", "History & credits", "Channels & platforms", "Security"],
+    savedMsg: "Changes saved.",
+    changePhoto: "Change photo", removePhoto: "Remove", name: "Name", verified: "Verified", ifaceLang: "Interface language", timezone: "Time zone", saveBtn: "Save",
+    notifH: "Notifications", ntChH: "Where to send", ntChs: ["In the app", "Email", "Telegram"], ntTg: "Connect the Telegram bot", ntTgOk: "Telegram connected: @yuri_c",
+    notifList: [["Generation ready", "A video, voiceover or storyboard is done"], ["Payments", "A payment was confirmed by the bank or failed"], ["Video analytics", "Forecast vs actual 48 hours after publishing"], ["Credits running low", "When less than 10% of credits is left"], ["Weekly channel report", "Growth, top videos and ideas"], ["Product news", "New features, at most monthly"]],
+    currentPlan: "CURRENT PLAN", creditsLeft: "Credits left", active: "Active", cancelledSt: "Cancelled", renews: "Renews Nov 12 — ", ends: "Access stays until Nov 12, then the plan becomes Starter",
+    buyPack: "Buy 500 credits — $15", packDone: "Payment confirmed — 500 credits added to your balance.",
+    payPendH: "Waiting for payment confirmation", offerA: "By paying you accept the", offerL: "public offer", payPendPlan: "The plan and its credits unlock as soon as the bank confirms the payment. Until then your current plan stays active. A receipt from the “Moy Nalog” tax app will be emailed to you.", payPendPack: "Credits appear on your balance as soon as the bank confirms the payment. A receipt from the “Moy Nalog” tax app will be emailed to you.",
+    paySimOk: "Show: bank confirmed", paySimFail: "Show: bank declined", payCancel: "Cancel", payRetry: "Retry payment",
+    payFailH: "Payment failed", payFailPlan: "The plan is not active: its features and credits unlock only after a successful, confirmed payment.", payFailPack: "No credits added: the pack is added only after a successful, confirmed payment.", packName: "500-credit pack", packPrice: "$15",
+    cancelSub: "Cancel subscription", resumeSub: "Resume subscription",
+    payMethod: "Payment method", changeCard: "Change card",
+    cancelQ: "Cancel the subscription?", cancelInfo: "Your plan stays active until the end of the paid period. Unused subscription credits expire; credits from packs remain.",
+    whyLeave: "Why are you leaving? (optional)", reasonsList: ["Too expensive", "Don’t use it enough", "Missing features", "Other"],
+    confirmCancel: "Cancel subscription", keepSub: "Keep it",
+    plansList: [["start", "Starter", "$0", "60 credits, 1 channel"], ["creator", "Creator", "$29", "1,000 credits, up to 3 channels"], ["studio", "Studio", "$79", "3,500 credits, team"]],
+    currentBtn: "Current plan", switchBtn: "Switch",
+    invoices: "Payments", invCols: ["Date", "For", "Amount", "Method", "Receipt"], receipt: "Download",
+    invList: [["Oct 12, 2026", "Creator plan, month", "$29"], ["Sep 28, 2026", "500-credit pack", "$15"], ["Sep 12, 2026", "Creator plan, month", "$29"]],
+    hFiltersMap: { all: "All", spend: "Spending", topup: "Top-ups" },
+    hCols: ["When", "Operation", "Module", "Credits", "Status"],
+    hList: [["today, 14:58", "Video render 1080p", "Photo & Video", -3, "ok"], ["today, 14:40", "Video clip, scene 04", "Photo & Video", -60, "refund"], ["today, 14:12", "Voiceover, 9 minutes", "AI Content", -63, "ok"], ["today, 13:50", "Retention forecast", "AI Content", -3, "ok"], ["today, 13:44", "Script 8–12 min", "AI Content", -6, "ok"], ["yesterday, 19:02", "Channel analysis", "Channel Analyzer", -5, "ok"], ["Sep 28", "Credit pack", "Billing", 500, "ok"], ["Oct 12", "Creator plan", "Billing", 1000, "ok"]],
+    hStatus: { ok: "Done", refund: "Failed — credits returned" },
+    historyNote: "If a generation fails, its credits come back automatically. Operations are examples.", export: "Export CSV",
+    chH: "Connected channels", connectBtn: "+ Connect a YouTube channel", noCh: "No channels connected. Every module works without one except your own stats and publishing.",
+    connected: "Connected", disconnect: "Disconnect", newChannel: ["Abyss Explained", "@your-channel", "connected today"],
+    accessH: "What the service gets", accessList: ["Your channel’s stats for analysis", "Publishing videos and thumbnails when you ask", "Reading comments and posting replies you approved", "Swapping the thumbnail for an A/B test"],
+    accessNote: "Access is granted through Google sign-in and can be revoked any time here or in your Google account settings.",
+    passH: "Change password", oldPass: "Current password", newPass: "New password", passHint: "At least 8 characters", changePass: "Change password",
+    twoFa: "Two-factor authentication", twoFaHint: "A code from an authenticator app at sign-in",
+    sessionsH: "Active sessions", thisDevice: "This device", endSession: "End",
+    sessionsList: [["Chrome, Windows", "Samara · now"], ["Safari, iPhone", "Samara · yesterday"], ["Firefox, macOS", "Moscow · Oct 3"]],
+    dangerH: "Delete account", deleteInfo: "Projects, files and history will be deleted. An active subscription will be cancelled. You can undo within 30 days.",
+    deleteAcc: "Delete account", typeDelete: "To confirm, type DELETE", deleteWord: "DELETE", deleteForever: "Delete account", cancel: "Cancel",
+    deleteScheduled: "Your account will be deleted in 30 days. We emailed you a link to undo it."
+  }
+};
+var ADM_KEY = 'aiytstudio.admin.v1';
+var ADM_KEYS = ['platOn', 'igScope', 'axProv', 'axEnabled', 'medEnabled', 'eridOn', 'payOn'];
+function admRead() { try { var v = window.localStorage.getItem(ADM_KEY); var o = v ? JSON.parse(v) : {}; return o && typeof o === 'object' ? o : {}; } catch (e) { return {}; } }
+function admWrite(o) { try { window.localStorage.setItem(ADM_KEY, JSON.stringify(o)); } catch (e) {} }
+function admPick(s) { var o = {}; ADM_KEYS.forEach(function (k) { if (s[k] !== undefined) o[k] = s[k]; }); return o; }
+function admWatch(comp, onChange) {
+  var last = JSON.stringify(admRead());
+  var chk = function () { var v = JSON.stringify(admRead()); if (v !== last) { last = v; onChange(); } };
+  var h = function (e) { if (!e || e.key === ADM_KEY || e.key === null) chk(); };
+  try { window.addEventListener('storage', h); } catch (e) {}
+  var id = setInterval(chk, 1000);
+  comp._admStop = function () { clearInterval(id); try { window.removeEventListener('storage', h); } catch (e) {} };
+}
+function admEff(props, lang) {
+  var a = admRead(), pl = a.platOn || {}, prov = a.axProv || {}, axEn = a.axEnabled || {}, med = a.medEnabled || {}, pay = a.payOn || {};
+  var AXIDS = ['opus', 'astra', 'sol', 'luna', 'haiku', 'deepseek', 'ygpt', 'ylite', 'gmax', 'glite'];
+  var PROVK = { opus: 'a', haiku: 'a', astra: 'o', sol: 'o', luna: 'o', deepseek: 'd', ygpt: 'y', ylite: 'y', gmax: 'g', glite: 'g' };
+  return {
+    platOk: function (k) { if (k === 'yt') return true; if (pl[k] === false) return false; if (k === 'ig') { if (props.instagram === 'off') return false; if (a.igScope === 'en' && lang === 'ru') return false; } return true; },
+    axOk: function (id) { var pk = PROVK[id]; if (pk === 'a' && props.claudeChats === 'off') return false; if (pk === 'o' && props.gptChats === 'off') return false; if (pk && prov[pk]) return false; var i = AXIDS.indexOf(id); if (i >= 0 && axEn[i] === false) return false; return true; },
+    medOk: function (id) { return med[id] !== false; },
+    payOk: function (k) { return pay[k] !== false; },
+    eridOn: a.eridOn !== false
+  };
+}
+var PAYX = {
+  ru: { pmList: [["card", "Карта", "•••• 4417 · 09/28"], ["sbp", "СБП", "QR-код или приложение банка"], ["sber", "SberPay", "СберБанк Онлайн"], ["tpay", "T-Pay", "Приложение Т-Банка"]],
+    pmAuto: "Автопродление подписки списывается с выбранного способа. Если банк не поддерживает повторные списания этим способом, перед продлением придёт ссылка на оплату.",
+    pmPend: { card: "Подтвердите платёж кодом из СМС банка.", sbp: "Отсканируйте QR-код камерой телефона или откройте приложение банка — платёж подтвердится там.", sber: "Откройте СберБанк Онлайн и подтвердите оплату.", tpay: "Откройте приложение Т-Банка и подтвердите оплату." },
+    pmPendH: "Способ: ", qrAlt: "QR-код СБП (демо)", invMethod: "Способ", rcptBtn: "Чек «Мой налог»", rcptDone: "Чек скачан ✓", invM: ["Карта", "СБП", "Карта"] },
+  en: { pmList: [["card", "Card", "•••• 4417 · 09/28"], ["sbp", "SBP", "QR code or bank app"], ["sber", "SberPay", "SberBank Online"], ["tpay", "T-Pay", "T-Bank app"]],
+    pmAuto: "Subscription renewal is charged to the selected method. If the bank doesn’t support repeat charges for it, you’ll get a payment link before renewal.",
+    pmPend: { card: "Confirm the payment with the code from your bank’s SMS.", sbp: "Scan the QR code with your phone camera or open your bank app — the payment is confirmed there.", sber: "Open SberBank Online and confirm the payment.", tpay: "Open the T-Bank app and confirm the payment." },
+    pmPendH: "Method: ", qrAlt: "SBP QR code (demo)", invMethod: "Method", rcptBtn: "“Moy Nalog” receipt", rcptDone: "Receipt downloaded ✓", invM: ["Card", "SBP", "Card"] }
+};
+
+var EN_FIX = [[/Сбер · свой сервер/g, 'Sber · own server'], [/Свой сервер \(GPU\)/g, 'Own server (GPU)'], [/Яндекс/g, 'Yandex'], [/Сбер/g, 'Sber']];
+function enFix(v) {
+  if (typeof v === 'string') { var r = v; EN_FIX.forEach(function (p) { r = r.replace(p[0], p[1]); }); return r; }
+  if (Array.isArray(v)) return v.map(enFix);
+  if (v && typeof v === 'object') { var o = {}; Object.keys(v).forEach(function (k) { o[k] = typeof v[k] === 'function' ? v[k] : enFix(v[k]); }); return o; }
+  return v;
+}
+function csvHref(rows) {
+  var esc = function (x) { x = String(x == null ? '' : x); return /[",;\n]/.test(x) ? '"' + x.replace(/"/g, '""') + '"' : x; };
+  return 'data:text/csv;charset=utf-8,' + encodeURIComponent('﻿' + rows.map(function (r) { return r.map(esc).join(';'); }).join('\r\n'));
+}
+function demoBuild(self, s, msgs) {
+  var show = function (m) { if (self._tt) clearTimeout(self._tt); self.setState({ toast: m }); self._tt = setTimeout(function () { self.setState({ toast: '' }); }, 4000); };
+  var o = {};
+  Object.keys(msgs).forEach(function (k) {
+    o[k] = function (e) {
+      var m = msgs[k];
+      if (e && e.target && e.target.files) { var n = e.target.files.length; if (!n) return; m = m.replace('{n}', n).replace('{name}', e.target.files[0].name); }
+      if (k.indexOf('copy') === 0 && msgs['_' + k]) { try { navigator.clipboard.writeText(msgs['_' + k]); } catch (er) {} }
+      show(m);
+    };
+  });
+  return { demo: o, toastText: s.toast || '', toastSt: s.toast ? 'opacity:1;transform:translate(-50%,0)' : 'opacity:0;transform:translate(-50%,10px);pointer-events:none' };
+}
+var CHX = {
+  ru: { chH2: "Подключённые площадки", chP: "Подключите площадки, на которые публикуете ролики. Доступ можно отозвать в любой момент.", chConnect: "Подключить", chDisc: "Отключить", chOk: "Подключено", chList: [["yt", "YouTube", "через Google", "@glubina"], ["vk", "VK Видео", "через VK ID", "vk.com/glubina"], ["rt", "RUTUBE", "аккаунт RUTUBE", "rutube.ru/channel/glubina"], ["dz", "Дзен", "через VK ID", "dzen.ru/glubina"]], chOff: "Площадка отключена администратором" },
+  en: { chH2: "Connected platforms", chP: "Connect the platforms you publish to. You can revoke access any time.", chConnect: "Connect", chDisc: "Disconnect", chOk: "Connected", chList: [["yt", "YouTube", "with Google", "@glubina"], ["vk", "VK Video", "with VK ID", "vk.com/glubina"], ["rt", "RUTUBE", "RUTUBE account", "rutube.ru/channel/glubina"], ["dz", "Dzen", "with VK ID", "dzen.ru/glubina"]], chOff: "Platform turned off by the admin" }
+};
+function prefRd() { try { var v = window.localStorage.getItem('aiytstudio.user.v1'); return v ? JSON.parse(v) || {} : {}; } catch (e) { return {}; } }
+var DEMO = { ru: {"photoOk": "Фото обновлено: {name}", "removePhoto": "Фото удалено — вместо него показываются инициалы.", "changeCard": "Откроется защищённая форма банка. Новая карта привяжется после подтверждения кодом из СМС."}, en: {"photoOk": "Photo updated: {name}", "removePhoto": "Photo removed — your initials are shown instead.", "changeCard": "A secure bank form will open. The new card is linked after you confirm it with the SMS code."} };
+class Component extends DCLogic {
+  componentDidUpdate() { if (this._planK !== this.state.plan) { this._planK = this.state.plan; try { var u = JSON.parse(window.localStorage.getItem('aiytstudio.user.v1') || '{}'); u.plan = this.state.plan; window.localStorage.setItem('aiytstudio.user.v1', JSON.stringify(u)); } catch (e) {} } }
+  componentDidMount() { var self = this; admWatch(this, function () { self.forceUpdate(); }); }
+  componentWillUnmount() { if (this._admStop) this._admStop(); }
+  constructor(props) {
+    super(props);
+    this.state = { pm: 'card', rcpt: {}, lang: null, view: 0, saved: false, name: 'Yuri C.', notif: [true, true, true, true, true, false], ntCh: [true, true, false], tg: false, plan: 'creator', cancelled: false, confirm: false, reason: -1, pack: false, hFilter: 'all', channels: [], twoFa: false, ended: {}, del: 'idle', delText: '', pay: null, copied: false, refMail: '', invites: [], refSent: false, licSel: 0, certDone: false };
+  }
+  renderVals() {
+    var s = this.state, lang = s.lang || this.props.startLang || 'ru';
+    var v = Object.assign({}, this._rv(), demoBuild(this, s, DEMO[lang] || DEMO.ru), { uiLang: lang }, this._extra ? this._extra(lang) : {});
+    return lang === 'en' ? enFix(v) : v;
+  }
+  _extra(lang) {
+    var self = this, s = this.state, cx = CHX[lang] || CHX.ru, adm = admEff(this.props, lang), pr = prefRd();
+    var conn = s.conn || (function () { var o = {}; var m = pr.mainPlat && pr.mainPlat !== 'none' ? pr.mainPlat : 'yt'; o[m] = true; return o; })();
+    var col = { yt: '#C93C14', vk: '#2F5BEA', rt: '#16161A', dz: '#5E5B54' };
+    var csvRows = [lang === 'en' ? ['When', 'Action', 'Module', 'Credits', 'Status'] : ['Когда', 'Действие', 'Раздел', 'Кредиты', 'Статус']].concat((this._lastHist || []).map(function (h) { return [h.when, h.what, h.module, h.amt, h.status]; }));
+    return {
+      cx: cx,
+      plats: cx.chList.filter(function (p) { return adm.platOk(p[0]); }).map(function (p) { var on = !!conn[p[0]]; return { name: p[1], sub: on ? p[3] + ' · ' + p[2] : p[2], ab: { yt: 'YT', vk: 'VK', rt: 'RT', dz: lang === 'en' ? 'DZ' : 'ДЗ' }[p[0]], icoSt: 'background:' + col[p[0]], on: on, btn: on ? cx.chDisc : cx.chConnect, btnCls: on ? 'btn2' : 'btnd', toggle: function () { var o = Object.assign({}, conn); o[p[0]] = !on; self.setState({ conn: o }); } }; }),
+      histCsv: csvHref(csvRows), histCsvName: lang === 'en' ? 'credits-history.csv' : 'istoriya-kreditov.csv',
+      refShareLinks: (function () { var link = 'https://aiytstudio.example/r/YURI7K', txt = lang === 'en' ? 'Try AI YT Studio — videos with AI for YouTube, VK Video, RUTUBE and Dzen: ' : 'Попробуйте AI YT Studio — ролики с AI для YouTube, VK Видео, RUTUBE и Дзена: ';
+        return [{ label: 'Telegram', href: 'https://t.me/share/url?url=' + encodeURIComponent(link) + '&text=' + encodeURIComponent(txt) }, { label: 'WhatsApp', href: 'https://wa.me/?text=' + encodeURIComponent(txt + link) }, { label: 'Email', href: 'mailto:?subject=' + encodeURIComponent('AI YT Studio') + '&body=' + encodeURIComponent(txt + link) }]; })()
+    };
+  }
+  _rv() {
+    var s = this.state, self = this;
+    var accent = this.props.accent ?? '#C93C14';
+    var lang = s.lang || this.props.startLang || 'ru';
+    var t = Object.assign({}, L[lang] || L.ru, ACX[lang] || ACX.ru, PAYX[lang] || PAYX.ru);
+    var adm = admEff(this.props, lang);
+    var pmKeys = t.pmList.filter(function (p) { return p[0] === 'card' || adm.payOk(p[0]); });
+    var pmCur = pmKeys.filter(function (p) { return p[0] === (s.pm || 'card'); })[0] || pmKeys[0];
+    var on = 'background:#16161A;color:#fff;border:1px solid #16161A', off = 'background:#fff;color:#16161A;border:1px solid #D9D6CE';
+    var langOn = 'background:#16161A;color:#fff;border:0', langOff = 'background:transparent;color:#16161A;border:0';
+    var sw = function (v) { return { track: v ? 'background:#0F7B5F' : 'background:#B9B6AE', knob: v ? 'left:23px' : 'left:3px' }; };
+    var plan = t.plansList.filter(function (p) { return p[0] === s.plan; })[0];
+    var credits = { start: 60, creator: 1000, studio: 3500 };
+    var hist = t.hList.filter(function (h) { return s.hFilter === 'all' || (s.hFilter === 'spend' ? h[3] < 0 : h[3] > 0); });
+    var okPill = 'background:#DDF0E8;color:#0B5A45';
+    var refAll = s.invites.map(function (m) { return [m, t.refJustNow, 'sent']; }).concat(t.refList);
+    var refStChip = { sent: 'background:#F4F3EF;color:#5E5B54', reg: 'background:#E4E2F5;color:#3B3580', paid: 'background:#DDF0E8;color:#0B5A45' };
+    var nReg = refAll.filter(function (x) { return x[2] !== 'sent'; }).length, nPaid = refAll.filter(function (x) { return x[2] === 'paid'; }).length;
+    var licP = t.licProjects[s.licSel] || t.licProjects[0];
+    var payItem = !s.pay ? null : s.pay.kind === 'pack' ? [t.packName, t.packPrice] : (function () { var pp = t.plansList.filter(function (x) { return x[0] === s.pay.id; })[0]; return pp ? [pp[1], pp[2]] : null; })();
+    return {
+      ntChs: t.ntChs.map(function (c, i) { var v = !!s.ntCh[i]; return { label: c, on: v, mark: v ? '✓ ' : '+ ', st: v ? on : off, toggle: function () { var a = s.ntCh.slice(); a[i] = !v; self.setState({ ntCh: a }); } }; }),
+      tgNeed: !!s.ntCh[2] && !s.tg, tgOk: !!s.ntCh[2] && s.tg, connectTg: function () { self.setState({ tg: true }); },
+      isRef: s.view === 5, isLic: s.view === 6,
+      copyRef: function () { self.setState({ copied: true }); }, copyLabel: s.copied ? t.refCopied : t.refCopy,
+      refStats: [refAll.length, nReg, nPaid, nPaid * 200].map(function (v, i) { return { label: t.refStatLbls[i], value: String(v) }; }),
+      refMail: s.refMail, onRefMail: function (e) { self.setState({ refMail: e.target.value, refSent: false }); },
+      sendInvite: function () { var m = (s.refMail || '').trim(); if (!m) return; var masked = m.slice(0, 2) + '***' + (m.indexOf('@') > 0 ? m.slice(m.indexOf('@')) : ''); self.setState({ invites: [masked].concat(s.invites), refMail: '', refSent: true }); },
+      refSentMsg: s.refSent,
+      refRows: refAll.map(function (x) { return { who: x[0], when: x[1], status: t.refSt[x[2]], st: refStChip[x[2]], cr: x[2] === 'paid' ? '+200' : '—' }; }),
+      licProjects: t.licProjects.map(function (p, i) { return { label: p.label, st: i === s.licSel ? on : off, pick: function () { self.setState({ licSel: i, certDone: false }); } }; }),
+      licRows: licP.rows.map(function (r) { return { name: r[0], type: r[1], src: r[2], lic: r[3], where: r[4] }; }),
+      downloadCert: function () { self.setState({ certDone: true }); }, certLabel: s.certDone ? t.licCertDone : t.licCert,
+      t: t, accent: accent,
+      isRu: lang === 'ru', isEn: lang === 'en', ruSt: lang === 'ru' ? langOn : langOff, enSt: lang === 'en' ? langOn : langOff,
+      setRu: function () { self.setState({ lang: 'ru' }); }, setEn: function () { self.setState({ lang: 'en' }); },
+      nav: t.nav.map(function (l, i) { return { label: l, go: function () { self.setState({ view: i, saved: false }); }, st: i === s.view ? 'background:#2A2A31;color:#fff;font-weight:600' : 'background:transparent;color:#CFCBC2' }; }),
+      heading: t.nav[s.view],
+      isProfile: s.view === 0, isBilling: s.view === 1, isHistory: s.view === 2, isChannels: s.view === 3, isSecurity: s.view === 4,
+      saved: s.saved, save: function () { self.setState({ saved: true }); }, noop: function () {},
+      nameVal: s.name, onName: function (e) { self.setState({ name: e.target.value, saved: false }); },
+      langVal: lang, onLang: function (e) { self.setState({ lang: e.target.value }); },
+      notifs: t.notifList.map(function (n, i) { var x = sw(s.notif[i]); return { label: n[0], hint: n[1], on: s.notif[i], track: x.track, knob: x.knob, toggle: function () { var a = s.notif.slice(); a[i] = !a[i]; self.setState({ notif: a }); } }; }),
+      planName: plan[1], planCredits: String(credits[s.plan]),
+      subStatus: s.cancelled ? t.cancelledSt : t.active, subStatusSt: s.cancelled ? 'background:#FBEBC9;color:#7A4B00' : okPill,
+      renewText: s.cancelled ? t.ends : t.renews + plan[2],
+      canCancel: !s.cancelled && s.plan !== 'start', cancelled: s.cancelled,
+      askCancel: function () { self.setState({ confirm: true }); }, keepSub: function () { self.setState({ confirm: false }); },
+      doCancel: function () { self.setState({ cancelled: true, confirm: false }); }, resume: function () { self.setState({ cancelled: false }); },
+      confirmCancel: s.confirm,
+      reasons: t.reasonsList.map(function (r, i) { return { label: r, st: i === s.reason ? on : off, pick: function () { self.setState({ reason: i }); } }; }),
+      buyPack: function () { self.setState({ pay: { kind: 'pack', step: 'pending' }, pack: false }); }, packBought: s.pack,
+      payPending: !!s.pay && s.pay.step === 'pending', payFailed: !!s.pay && s.pay.step === 'failed',
+      payWhat: payItem ? payItem[0] + ' · ' + payItem[1] : '',
+      payPendText: s.pay ? (s.pay.kind === 'pack' ? t.payPendPack : t.payPendPlan) : '', payFailText: s.pay ? (s.pay.kind === 'pack' ? t.payFailPack : t.payFailPlan) : '',
+      payOk: function () { if (!s.pay) return; var o = { pay: null }; if (s.pay.kind === 'pack') o.pack = true; else { o.plan = s.pay.id; o.cancelled = false; } self.setState(o); },
+      payFail: function () { if (!s.pay) return; self.setState({ pay: Object.assign({}, s.pay, { step: 'failed' }) }); },
+      payRetry: function () { if (!s.pay) return; self.setState({ pay: Object.assign({}, s.pay, { step: 'pending' }) }); },
+      payCancel: function () { self.setState({ pay: null }); },
+      plans: t.plansList.map(function (p) { var cur = p[0] === s.plan; return { name: p[1], price: p[2], desc: p[3], btn: cur ? t.currentBtn : t.switchBtn, cardSt: cur ? 'border:2px solid #16161A' : '', btnSt: cur ? 'border:0;background:#F4F3EF;color:#5E5B54' : 'border:0;background:#16161A;color:#fff', pick: function () { if (cur) return; if (p[0] === 'start') { self.setState({ plan: 'start', cancelled: false, pay: null }); try { var u = JSON.parse(window.localStorage.getItem('aiytstudio.user.v1') || '{}'); u.plan = 'start'; window.localStorage.setItem('aiytstudio.user.v1', JSON.stringify(u)); } catch (e) {} } else self.setState({ pay: { kind: 'plan', id: p[0], step: 'pending' }, pack: false }); } }; }),
+      invoices: t.invList.map(function (v, i) { var d = !!(s.rcpt || {})[i]; return { date: v[0], what: v[1], sum: v[2], method: t.invM[i] || t.invM[0], rcpt: d ? t.rcptDone : t.rcptBtn, rcptSt: d ? 'color:#0B5E48;border-color:#B7E2D2;background:#DDF2EA' : '', getRcpt: function () { var o = Object.assign({}, s.rcpt || {}); o[i] = true; self.setState({ rcpt: o }); } }; }),
+      pmOpts: pmKeys.map(function (p) { var sel = p[0] === pmCur[0]; return { label: p[1], sub: p[2], on: sel, st: sel ? 'border:2px solid #16161A;background:#fff' : 'border:1px solid #E2DFD7;background:#F6F5F1', pick: function () { self.setState({ pm: p[0] }); } }; }),
+      pmIsCard: pmCur[0] === 'card', pmIsSbp: pmCur[0] === 'sbp', pmPendText: t.pmPendH + pmCur[1] + '. ' + t.pmPend[pmCur[0]],
+      hFilters: Object.keys(t.hFiltersMap).map(function (k) { return { label: t.hFiltersMap[k], st: k === s.hFilter ? on : off, pick: function () { self.setState({ hFilter: k }); } }; }),
+      history: self._lastHist = hist.map(function (h) { var plus = h[3] > 0; return { when: h[0], what: h[1], module: h[2], amt: (plus ? '+' : '') + h[3], amtSt: plus ? 'color:#0B5A45' : (h[4] === 'refund' ? 'color:#5E5B54;text-decoration:line-through' : 'color:#16161A'), status: t.hStatus[h[4]], stSt: h[4] === 'ok' ? okPill : 'background:#FBEBC9;color:#7A4B00' }; }),
+      channels: s.channels.map(function (c, i) { return { name: t.newChannel[0], handle: t.newChannel[1], since: t.newChannel[2], remove: function () { self.setState({ channels: s.channels.filter(function (_, j) { return j !== i; }) }); } }; }),
+      noChannels: s.channels.length === 0,
+      connect: function () { if (s.channels.length < 1) self.setState({ channels: s.channels.concat([1]) }); },
+      twoFa: s.twoFa, twoFaTrack: sw(s.twoFa).track, twoFaKnob: sw(s.twoFa).knob, toggle2fa: function () { self.setState({ twoFa: !s.twoFa }); },
+      sessions: t.sessionsList.filter(function (_, i) { return !s.ended[i]; }).map(function (se) { var i = t.sessionsList.indexOf(se); return { device: se[0], meta: se[1], current: i === 0, other: i !== 0, end: function () { var m = Object.assign({}, s.ended); m[i] = true; self.setState({ ended: m }); } }; }),
+      delIdle: s.del === 'idle', delAsk: s.del === 'ask', delDone: s.del === 'done',
+      askDelete: function () { self.setState({ del: 'ask' }); }, cancelDelete: function () { self.setState({ del: 'idle', delText: '' }); },
+      delText: s.delText, onDelText: function (e) { self.setState({ delText: e.target.value }); },
+      delBtnSt: s.delText.trim().toUpperCase() === t.deleteWord ? 'background:#A3300C;color:#fff' : 'background:#E2DFD7;color:#5E5B54',
+      doDelete: function () { if (s.delText.trim().toUpperCase() === t.deleteWord) self.setState({ del: 'done' }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

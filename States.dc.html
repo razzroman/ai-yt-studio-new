@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>AI YT Studio — States</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F3EF}
+a{color:#16161A}a:hover{color:#B8320F}
+button{font-family:inherit;cursor:pointer}
+input,textarea{font-family:inherit}
+.card{background:#fff;border:1px solid #E2DFD7;border-radius:12px}
+.btn2{min-height:40px;padding:0 14px;border-radius:8px;border:1px solid #D9D6CE;background:#fff;font-size:14px;color:#16161A}
+.btnd{min-height:40px;padding:0 16px;border-radius:8px;border:0;background:#16161A;color:#fff;font-size:14px}
+.btna{min-height:40px;padding:0 16px;border-radius:8px;border:0;background:#C23B14;color:#fff;font-size:14px;font-weight:600}
+.h2{margin:0;font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600}
+.mono{font-family:'IBM Plex Mono',monospace}
+.muted{color:#5E5B54}
+.kick{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em}
+.top{padding:12px 18px;border-bottom:1px solid #EFECE5;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.body{padding:20px;display:flex;flex-direction:column;gap:12px;flex:1;background:#FAF9F6}
+.rule{padding:12px 18px;font-size:13px;line-height:1.45;color:#5E5B54;border-top:1px solid #EFECE5}
+.ok{border-radius:10px;padding:12px 14px;background:#DDF0E8;color:#0B5A45;font-size:14px}
+.ph{background-color:#E7E4DC;background-image:repeating-linear-gradient(135deg,rgba(22,22,26,0.06) 0 10px,transparent 10px 20px)}
+:focus-visible{outline:3px solid #2F5BEA;outline-offset:2px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</helmet>
+<div lang="{{uiLang}}" style="min-height: 100vh; background: #F4F3EF; color: #16161A; font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 15px; padding: 36px clamp(16px, 4vw, 56px) 64px; box-sizing: border-box; display: flex; flex-direction: column; gap: 24px">
+
+<header style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; justify-content: space-between">
+<div style="display: flex; flex-direction: column; gap: 6px; max-width: 820px">
+<span class="kick" style="color: #B8320F">{{t.kicker}}</span>
+<h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 34px; font-weight: 600; letter-spacing: -0.02em">{{t.title}}</h1>
+<p class="muted" style="margin: 0; line-height: 1.5">{{t.intro}}</p>
+</div>
+<div style="display: flex; gap: 10px; align-items: center">
+<a href="Main.dc.html" style="min-height: 44px; display: flex; align-items: center; font-size: 14px">← {{t.back}}</a>
+<div role="group" aria-label="{{t.langSwitch}}" style="display: flex; gap: 4px; padding: 4px; background: #fff; border: 1px solid #D9D6CE; border-radius: 10px">
+<button type="button" onClick="{{setRu}}" aria-pressed="{{isRu}}" class="mono" style="min-width: 44px; min-height: 36px; border-radius: 7px; font-size: 13px; {{ruSt}}">RU</button>
+<button type="button" onClick="{{setEn}}" aria-pressed="{{isEn}}" class="mono" style="min-width: 44px; min-height: 36px; border-radius: 7px; font-size: 13px; {{enSt}}">EN</button>
+</div>
+</div>
+</header>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr)); gap: 20px; align-items: stretch">
+
+<!-- 1 credits out mid-render -->
+<article class="card" style="overflow: hidden; display: flex; flex-direction: column">
+<div class="top"><span class="kick" style="color: #B8320F">01 · {{t.c1k}}</span><span class="kick muted">{{t.c1w}}</span></div>
+<div class="body">
+<sc-if value="{{c1Open}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; gap: 12px; align-items: flex-start"><span aria-hidden="true" style="width: 32px; height: 32px; border-radius: 50%; background: #FDF1D6; color: #7A5200; display: flex; align-items: center; justify-content: center; font-weight: 700; flex: none">!</span><div style="display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 600">{{t.c1h}}</span><span class="muted" style="font-size: 14px; line-height: 1.45">{{t.c1p}}</span></div></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><div style="display: flex; justify-content: space-between; font-size: 13px"><span>{{t.c1prog}}</span><span class="mono">4 / 6</span></div><div style="height: 6px; border-radius: 3px; background: #EFECE5"><div style="width: 66%; height: 6px; border-radius: 3px; background: #0F7B5F"></div></div></div>
+<sc-for list="{{c1Opts}}" as="o" hint-placeholder-count="3">
+<button type="button" onClick="{{o.pick}}" style="min-height: 52px; padding: 10px 14px; border-radius: 10px; text-align: left; display: flex; justify-content: space-between; align-items: center; gap: 10px; {{o.st}}"><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 600; font-size: 14px">{{o.label}}</span><span style="font-size: 12px; opacity: 0.8">{{o.hint}}</span></span><span class="mono" style="font-size: 13px; flex: none">{{o.price}}</span></button>
+</sc-for>
+</sc-if>
+<sc-if value="{{c1Done}}" hint-placeholder-val="{{ false }}"><div role="status" class="ok">{{c1DoneText}}</div><button type="button" onClick="{{c1Reset}}" class="btn2" style="align-self: flex-start">{{t.replay}}</button></sc-if>
+</div>
+<div class="rule">{{t.c1r}}</div>
+</article>
+
+<!-- 2 YouTube access revoked -->
+<article class="card" style="overflow: hidden; display: flex; flex-direction: column">
+<div class="top"><span class="kick" style="color: #B8320F">02 · {{t.c2k}}</span><span class="kick muted">{{t.c2w}}</span></div>
+<div class="body">
+<sc-if value="{{c2Off}}" hint-placeholder-val="{{ true }}">
+<div style="border-radius: 10px; padding: 14px; background: #FDE2E0; color: #8E1B12; display: flex; flex-direction: column; gap: 6px"><span style="font-weight: 600">{{t.c2h}}</span><span style="font-size: 14px; line-height: 1.45">{{t.c2p}}</span></div>
+<span style="font-size: 14px; font-weight: 600">{{t.c2keep}}</span>
+<sc-for list="{{t.c2list}}" as="k" hint-placeholder-count="3"><div style="display: flex; gap: 8px; font-size: 14px"><span style="color: #0F7B5F">✓</span><span>{{k}}</span></div></sc-for>
+<div style="display: flex; gap: 8px; flex-wrap: wrap"><button type="button" onClick="{{c2Fix}}" class="btna">{{t.c2btn}}</button><button type="button" class="btn2" onClick="{{demo.c2why}}">{{t.c2why}}</button></div>
+</sc-if>
+<sc-if value="{{c2On}}" hint-placeholder-val="{{ false }}"><div role="status" class="ok">{{t.c2done}}</div><button type="button" onClick="{{c2Reset}}" class="btn2" style="align-self: flex-start">{{t.replay}}</button></sc-if>
+</div>
+<div class="rule">{{t.c2r}}</div>
+</article>
+
+<!-- 3 moderation rejected -->
+<article class="card" style="overflow: hidden; display: flex; flex-direction: column">
+<div class="top"><span class="kick" style="color: #B8320F">03 · {{t.c3k}}</span><span class="kick muted">{{t.c3w}}</span></div>
+<div class="body">
+<div style="display: flex; gap: 14px; flex-wrap: wrap">
+<div class="ph" style="width: 150px; aspect-ratio: 16 / 9; border-radius: 8px; flex: none; position: relative; display: flex; align-items: center; justify-content: center"><span class="mono" style="font-size: 11px; padding: 3px 8px; border-radius: 999px; {{c3BadgeSt}}">{{c3Badge}}</span></div>
+<div style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 600">{{c3Head}}</span><span class="muted" style="font-size: 14px; line-height: 1.45">{{c3Text}}</span></div>
+</div>
+<sc-if value="{{c3Idle}}" hint-placeholder-val="{{ true }}">
+<span class="mono" style="align-self: flex-start; padding: 3px 10px; border-radius: 999px; background: #DDF0E8; color: #0B5A45; font-size: 12px">{{t.c3refund}}</span>
+<div style="display: flex; gap: 8px; flex-wrap: wrap"><button type="button" onClick="{{c3Edit}}" class="btnd">{{t.c3a}}</button><button type="button" onClick="{{c3Kb}}" class="btn2">{{t.c3b}}</button><button type="button" class="btn2" onClick="{{demo.c3c}}">{{t.c3c}}</button></div>
+</sc-if>
+<sc-if value="{{c3Editing}}" hint-placeholder-val="{{ false }}">
+<label for="c3p" style="font-weight: 500; font-size: 14px">{{t.c3lbl}}</label>
+<textarea id="c3p" rows="3" value="{{c3Prompt}}" onChange="{{c3OnPrompt}}" style="padding: 10px 12px; border: 1px solid #D9D6CE; border-radius: 8px; font-size: 14px; line-height: 1.45; resize: vertical"></textarea>
+<div style="display: flex; gap: 8px"><button type="button" onClick="{{c3Send}}" class="btna">{{t.c3send}}</button><button type="button" onClick="{{c3Reset}}" class="btn2">{{t.cancel}}</button></div>
+</sc-if>
+<sc-if value="{{c3Fin}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{c3Reset}}" class="btn2" style="align-self: flex-start">{{t.replay}}</button></sc-if>
+</div>
+<div class="rule">{{t.c3r}}</div>
+</article>
+
+<!-- 4 provider down -->
+<article class="card" style="overflow: hidden; display: flex; flex-direction: column">
+<div class="top"><span class="kick" style="color: #B8320F">04 · {{t.c4k}}</span><span class="kick muted">{{t.c4w}}</span></div>
+<div class="body">
+<div style="display: flex; gap: 12px; align-items: flex-start"><span aria-hidden="true" style="width: 32px; height: 32px; border-radius: 50%; background: #F4F3EF; border: 1px solid #D9D6CE; display: flex; align-items: center; justify-content: center; flex: none" class="mono">↻</span><div style="display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 600">{{c4Head}}</span><span class="muted" style="font-size: 14px; line-height: 1.45">{{c4Text}}</span></div></div>
+<sc-for list="{{c4Rows}}" as="r" hint-placeholder-count="3"><div style="display: flex; justify-content: space-between; gap: 10px; font-size: 14px; padding: 8px 0; border-top: 1px solid #EFECE5"><span>{{r.a}}</span><span class="mono" style="{{r.st}}">{{r.b}}</span></div></sc-for>
+<sc-if value="{{c4Wait}}" hint-placeholder-val="{{ true }}"><div style="display: flex; gap: 8px; flex-wrap: wrap"><button type="button" onClick="{{c4Switch}}" class="btnd">{{t.c4btn}}</button><button type="button" class="btn2" onClick="{{demo.c4status}}">{{t.c4status}}</button></div></sc-if>
+<sc-if value="{{c4Moved}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{c4Reset}}" class="btn2" style="align-self: flex-start">{{t.replay}}</button></sc-if>
+</div>
+<div class="rule">{{t.c4r}}</div>
+</article>
+
+<!-- 5 payment failed -->
+<article class="card" style="overflow: hidden; display: flex; flex-direction: column">
+<div class="top"><span class="kick" style="color: #B8320F">05 · {{t.c5k}}</span><span class="kick muted">{{t.c5w}}</span></div>
+<div class="body">
+<sc-if value="{{c5Fail}}" hint-placeholder-val="{{ true }}">
+<div style="border-radius: 10px; padding: 14px; background: #FDE2E0; color: #8E1B12; display: flex; flex-direction: column; gap: 6px"><span style="font-weight: 600">{{t.c5h}}</span><span style="font-size: 14px; line-height: 1.45">{{t.c5p}}</span></div>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 14px; background: #fff; border: 1px solid #E2DFD7; border-radius: 10px"><span class="mono" style="font-size: 14px">•••• 4417</span><span style="padding: 3px 10px; border-radius: 999px; background: #FDE2E0; color: #8E1B12; font-size: 12px">{{t.c5declined}}</span></div>
+<span style="font-size: 13px; font-weight: 600">{{t.c5lockedH}}</span>
+<div style="display: flex; gap: 6px; flex-wrap: wrap"><sc-for list="{{t.c5locked}}" as="lk" hint-placeholder-count="3"><span style="padding: 4px 10px; border-radius: 999px; background: #F4F3EF; border: 1px solid #E2DFD7; font-size: 12px">🔒 {{lk}}</span></sc-for></div>
+<div style="display: flex; gap: 8px; flex-wrap: wrap"><button type="button" onClick="{{c5Pay}}" class="btna">{{t.c5btn}}</button><button type="button" onClick="{{c5Pay}}" class="btn2">{{t.c5retry}}</button></div>
+</sc-if>
+<sc-if value="{{c5Pend}}" hint-placeholder-val="{{ false }}"><div role="status" style="border-radius: 10px; padding: 12px 14px; background: #fff; border: 1px solid #E2DFD7; font-size: 14px; line-height: 1.45">{{t.c5pend}}</div><button type="button" onClick="{{c5Fix}}" class="btnd" style="align-self: flex-start">{{t.c5sim}}</button></sc-if>
+<sc-if value="{{c5Ok}}" hint-placeholder-val="{{ false }}"><div role="status" class="ok">{{t.c5done}}</div><button type="button" onClick="{{c5Reset}}" class="btn2" style="align-self: flex-start">{{t.replay}}</button></sc-if>
+</div>
+<div class="rule">{{t.c5r}}</div>
+</article>
+
+<!-- 6 offline -->
+<article class="card" style="overflow: hidden; display: flex; flex-direction: column">
+<div class="top"><span class="kick" style="color: #B8320F">06 · {{t.c6k}}</span><span class="kick muted">{{t.c6w}}</span></div>
+<div class="body">
+<div role="status" style="border-radius: 10px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 14px; {{c6BarSt}}"><span>{{c6Bar}}</span><span class="mono" style="font-size: 12px; flex: none; white-space: nowrap">{{c6Count}}</span></div>
+<div style="background: #fff; border: 1px solid #E2DFD7; border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 6px"><span class="mono muted" style="font-size: 11px">{{t.c6scene}}</span><span style="font-size: 14px; line-height: 1.5">{{t.c6text}}</span></div>
+<button type="button" onClick="{{c6Toggle}}" class="btn2" style="align-self: flex-start">{{c6Btn}}</button>
+</div>
+<div class="rule">{{t.c6r}}</div>
+</article>
+
+<!-- 7 empty library -->
+<article class="card" style="overflow: hidden; display: flex; flex-direction: column">
+<div class="top"><span class="kick" style="color: #B8320F">07 · {{t.c7k}}</span><span class="kick muted">{{t.c7w}}</span></div>
+<div class="body" style="align-items: center; text-align: center; justify-content: center">
+<div class="ph" style="width: 96px; height: 64px; border-radius: 10px"></div>
+<span style="font-weight: 600; font-size: 17px">{{t.c7h}}</span>
+<span class="muted" style="font-size: 14px; line-height: 1.45; max-width: 340px">{{t.c7p}}</span>
+<a href="Main.dc.html" style="min-height: 44px; padding: 0 18px; border-radius: 8px; background: #C23B14; color: #fff; font-weight: 600; font-size: 14px; display: flex; align-items: center; text-decoration: none">{{t.c7btn}}</a>
+<div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: center"><sc-for list="{{t.c7tpl}}" as="tp" hint-placeholder-count="3"><span style="padding: 6px 12px; border-radius: 999px; border: 1px solid #D9D6CE; background: #fff; font-size: 13px">{{tp}}</span></sc-for></div>
+</div>
+<div class="rule">{{t.c7r}}</div>
+</article>
+
+<!-- 8 no analytics yet -->
+<article class="card" style="overflow: hidden; display: flex; flex-direction: column">
+<div class="top"><span class="kick" style="color: #B8320F">08 · {{t.c8k}}</span><span class="kick muted">{{t.c8w}}</span></div>
+<div class="body">
+<sc-for list="{{c8Rows}}" as="e" hint-placeholder-count="3">
+<div style="background: #fff; border: 1px solid #E2DFD7; border-radius: 10px; padding: 14px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap"><div style="flex: 1 1 220px; display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 600; font-size: 14px">{{e.h}}</span><span class="muted" style="font-size: 13px; line-height: 1.45">{{e.p}}</span></div><sc-if value="{{e.hasBtn}}" hint-placeholder-val="{{ true }}"><a href="{{e.href}}" class="btn2" style="display: flex; align-items: center; text-decoration: none">{{e.btn}}</a></sc-if></div>
+</sc-for>
+</div>
+<div class="rule">{{t.c8r}}</div>
+</article>
+
+<!-- 9 not found -->
+<article class="card" style="overflow: hidden; display: flex; flex-direction: column">
+<div class="top"><span class="kick" style="color: #B8320F">09 · {{t.c9k}}</span><span class="kick muted">404</span></div>
+<div class="body" style="align-items: flex-start; justify-content: center">
+<span style="font-family: 'Space Grotesk', sans-serif; font-size: 56px; font-weight: 700; letter-spacing: -0.03em; line-height: 1">404</span>
+<span style="font-weight: 600; font-size: 17px">{{t.c9h}}</span>
+<span class="muted" style="font-size: 14px; line-height: 1.45">{{t.c9p}}</span>
+<div style="display: flex; gap: 8px; flex-wrap: wrap"><a href="Main.dc.html" class="btnd" style="display: flex; align-items: center; text-decoration: none">{{t.c9a}}</a><a href="Landing.dc.html" class="btn2" style="display: flex; align-items: center; text-decoration: none">{{t.c9b}}</a></div>
+</div>
+<div class="rule">{{t.c9r}}</div>
+</article>
+
+<!-- 10 subtitles & timings -->
+<article class="card" style="overflow: hidden; display: flex; flex-direction: column">
+<div class="top"><span class="kick" style="color: #B8320F">10 · {{c10.k}}</span><span class="kick muted">{{c10.w}}</span></div>
+<div class="body">
+<div role="tablist" aria-label="{{c10.tabsLbl}}" style="display: flex; gap: 6px; flex-wrap: wrap"><sc-for list="{{c10Tabs}}" as="tb" hint-placeholder-count="4"><button type="button" role="tab" aria-selected="{{tb.on}}" onClick="{{tb.pick}}" style="min-height: 40px; padding: 0 12px; border-radius: 999px; font-size: 13px; {{tb.st}}">{{tb.label}}</button></sc-for></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-weight: 600; font-size: 17px">{{c10Sc.h}}</span><span class="muted" style="font-size: 14px; line-height: 1.5">{{c10Sc.p}}</span></div>
+<sc-if value="{{c10HasRows}}" hint-placeholder-val="{{ false }}"><div style="background: #fff; border: 1px solid #E2DFD7; border-radius: 10px; padding: 4px 12px"><sc-for list="{{c10Rows}}" as="r" hint-placeholder-count="3"><div style="display: flex; gap: 10px; align-items: center; padding: 8px 0; border-top: 1px solid #EFECE5; flex-wrap: wrap; font-size: 14px"><span class="mono muted" style="font-size: 12px">{{r.t}}</span><span style="flex: 1 1 180px">{{r.text}}</span><span style="padding: 2px 8px; border-radius: 999px; font-size: 12px; {{r.stSt}}">{{r.st}}</span></div></sc-for></div></sc-if>
+<sc-if value="{{c10Idle}}" hint-placeholder-val="{{ true }}"><div style="display: flex; gap: 8px; flex-wrap: wrap"><button type="button" onClick="{{c10A}}" class="btna">{{c10Sc.a}}</button><button type="button" onClick="{{c10B}}" class="btn2">{{c10Sc.b}}</button></div></sc-if>
+<sc-if value="{{c10Done}}" hint-placeholder-val="{{ false }}"><div role="status" style="border-radius: 10px; padding: 12px 14px; font-size: 14px; line-height: 1.45; {{c10MsgSt}}">{{c10Msg}}</div><button type="button" onClick="{{c10Reset}}" class="btn2" style="align-self: flex-start">{{c10.replay}}</button></sc-if>
+</div>
+<div class="rule">{{c10.r}}</div>
+</article>
+
+</div>
+<div role="status" aria-live="polite" style="position: fixed; left: 50%; bottom: 24px; z-index: 60; max-width: min(92vw, 560px); background: #16161A; color: #fff; padding: 12px 18px; border-radius: 10px; font-size: 14px; line-height: 1.45; box-shadow: 0 8px 24px rgba(0,0,0,0.25); transition: opacity .2s, transform .2s; {{toastSt}}">{{toastText}}</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#C93C14","options":["#C93C14","#2F5BEA","#0F7B5F","#16161A"]},"startLang":{"editor":"enum","options":["ru","en"],"default":"ru"},"$preview":{"width":1440,"height":1500}}'>
+var L = {
+  ru: {
+    kicker: "КАК СЕРВИС ВЕДЁТ СЕБЯ, КОГДА ЧТО-ТО ПОШЛО НЕ ТАК", title: "Ошибки и пустые состояния", back: "В кабинет", langSwitch: "Язык интерфейса", replay: "Показать снова", cancel: "Отмена",
+    intro: "Каждое состояние кликабельно. Общие правила: ничего не теряется, кредиты за неудачу возвращаются, у пользователя всегда есть следующий шаг.",
+    c1k: "КРЕДИТЫ ЗАКОНЧИЛИСЬ", c1w: "Сборка видео", c1h: "Не хватает 38 кредитов, чтобы закончить сборку", c1p: "Готовые сцены сохранены, сборка продолжится с того же места.", c1prog: "Собрано сцен",
+    c1opts: [["Купить пакет 500 кредитов", "Кредиты — после подтверждения оплаты", "1 190 ₽"], ["Перейти на «Студию»", "3 500 кредитов в месяц", "6 490 ₽/мес"], ["Собрать сейчас в 720p", "Хватит текущих кредитов", "9 кр."]],
+    c1done: ["Оплата пакета подтверждена, сборка продолжена с 5-й сцены.", "Оплата «Студии» подтверждена, тариф активен, сборка продолжена.", "Собираем в 720p — потом можно пересобрать в 1080p."],
+    c1r: "Правило: генерация не обрывается молча. Перед списанием показываем, хватит ли кредитов; если нет — сохраняем готовое и предлагаем 3 выхода.",
+    c2k: "YOUTUBE ОТКЛЮЧИЛ ДОСТУП", c2w: "Все разделы", c2h: "Доступ к каналу «Глубина» отозван", c2p: "Пароль Google изменён или доступ отключён в настройках аккаунта. Публикация и аналитика на паузе.",
+    c2keep: "Что сохранено:", c2list: ["Проекты и черновики — 6", "Расписание — 3 ролика ждут публикации", "История аналитики до 14 октября"],
+    c2btn: "Подключить заново", c2why: "Почему так бывает", c2done: "Канал подключён. 3 ролика вернулись в расписание, аналитика догрузится за ночь.",
+    c2r: "Правило: при потере доступа ничего не удаляем и не публикуем «вслепую». Баннер на всех экранах, письмо владельцу, повторное подключение в 1 клик.",
+    c3k: "ОТКЛОНЕНО МОДЕРАЦИЕЙ", c3w: "Раскадровка · сцена 2", c3hIdle: "Сцена не прошла проверку", c3tIdle: "В описании кадра узнаваемый реальный человек. Такие изображения мы не генерируем.",
+    c3refund: "60 кр. возвращены", c3a: "Изменить описание", c3b: "Анимация кадра · 5 кр.", c3c: "Правила контента",
+    c3lbl: "Описание кадра", c3prompt: "Исследователь в батискафе смотрит в иллюминатор на светящихся медуз, глубина 4000 м", c3send: "Сгенерировать заново",
+    c3hOk: "Кадр сгенерирован", c3tOk: "Новое описание прошло проверку. Сцена 2 обновлена в раскадровке.", c3hKb: "Сцена заменена анимацией кадра", c3tKb: "Списано 5 кредитов вместо 60; стиль серии сохранён.",
+    c3badgeErr: "Отклонено", c3badgeOk: "Готово",
+    c3r: "Правило: объясняем причину простыми словами, возвращаем кредиты и сразу предлагаем допустимую замену.",
+    c4k: "ПРОВАЙДЕР НЕДОСТУПЕН", c4w: "Очередь задач", c4hWait: "Видео-модель не отвечает", c4tWait: "Задачи стоят в очереди, кредиты не списаны. Автоматически повторим через 5 минут.",
+    c4hMoved: "Задачи переведены на резервную модель", c4tMoved: "Качество сопоставимое, цена в кредитах та же.",
+    c4rows: [["Оживление кадра · сцена 3", "в очереди"], ["AI-видео · сцена 5", "в очереди"], ["Списано кредитов", "0"]], c4rowsMoved: ["идёт · 12%", "в очереди"],
+    c4btn: "Перевести на резервную модель", c4status: "Статус сервисов",
+    c4r: "Правило: у каждого типа генерации есть резервный провайдер (раздел «AI и API» в админке); пользователь видит статус, а не бесконечный спиннер.",
+    c5k: "ПЛАТЁЖ НЕ ПРОШЁЛ", c5w: "Тариф и оплата", c5h: "Оплата не прошла — платные функции закрыты", c5p: "Банк отклонил продление «Автора». Генерации, кредиты тарифа и инструменты роста откроются только после успешной и подтверждённой оплаты. Проекты и черновики сохранены — их можно открыть и посмотреть.",
+    c5declined: "Отклонена", c5btn: "Сменить карту", c5retry: "Повторить оплату", c5done: "Оплата подтверждена банком. Тариф «Автор» активен, 1 000 кредитов начислены — все функции открыты.", c5pend: "Ожидаем подтверждение от банка. Функции откроются сразу после подтверждения.", c5sim: "Показать: банк подтвердил", c5locked: ["Генерации и сборка видео", "Кредиты тарифа", "Инструменты роста"], c5lockedH: "Закрыто до оплаты:",
+    c5r: "Правило: платные функции открываются только после успешной и подтверждённой оплаты, льготного периода нет. Данные пользователя при этом не удаляются.",
+    c6k: "НЕТ СОЕДИНЕНИЯ", c6w: "Редактор сценария", c6off: "Нет сети. Правки сохраняются на устройстве и отправятся, когда связь вернётся.", c6on: "Связь восстановлена, все правки сохранены.",
+    c6pend: " правки ждут", c6sync: "синхронизировано", c6goOn: "Вернуть сеть", c6goOff: "Отключить сеть", c6scene: "СЦЕНА 2 · 0:15–1:30",
+    c6text: "Спутники снимают Марс без помех, а океан скрывает дно под километрами воды…",
+    c6r: "Правило: редактор не блокируется без сети; генерации ставятся в очередь до восстановления связи.",
+    c7k: "ПУСТАЯ БИБЛИОТЕКА", c7w: "Проекты", c7h: "Здесь появятся ваши ролики", c7p: "Начните с первого ролика — путь «Первый ролик за 30 минут» проведёт по всем шагам.", c7btn: "Создать первый ролик",
+    c7tpl: ["Документальный фейслес", "Топ-10", "Разбор новости"],
+    c7r: "Правило: пустой экран всегда объясняет, что здесь будет, и даёт одно главное действие.",
+    c8k: "НЕТ ДАННЫХ", c8w: "Аналитика",
+    c8rows: [["Канал не подключён", "Подключите YouTube, чтобы видеть прогноз и факт по своим роликам.", "Подключить", "Account.dc.html"], ["Ролик вышел 17 часов назад", "Первые выводы появятся через 31 час — YouTube отдаёт данные с задержкой.", "", ""], ["Мало данных: 140 просмотров", "Кривая удержания станет точнее, когда просмотров будет больше.", "", ""]],
+    c8r: "Правило: не рисуем пустые графики. Объясняем, почему данных нет и когда они появятся.",
+    c9k: "СТРАНИЦА НЕ НАЙДЕНА", c9h: "Такой страницы нет", c9p: "Возможно, ссылка устарела или проект удалён. Удалённый проект можно восстановить из корзины.", c9a: "В кабинет", c9b: "На главную",
+    c9r: "Правило: даже 404 ведёт обратно в продукт и подсказывает, где искать потерянное."
+  },
+  en: {
+    kicker: "HOW THE SERVICE BEHAVES WHEN SOMETHING GOES WRONG", title: "Errors and empty states", back: "To workspace", langSwitch: "Interface language", replay: "Show again", cancel: "Cancel",
+    intro: "Every state is clickable. Shared rules: nothing gets lost, credits for failures are refunded, and the user always has a next step.",
+    c1k: "OUT OF CREDITS", c1w: "Video assembly", c1h: "You need 38 more credits to finish the render", c1p: "Finished scenes are saved; assembly resumes from the same point.", c1prog: "Scenes assembled",
+    c1opts: [["Buy a 500-credit pack", "Credits added once payment is confirmed", "$15"], ["Upgrade to Studio", "3,500 credits a month", "$79/mo"], ["Render now in 720p", "Your current credits are enough", "9 cr."]],
+    c1done: ["Pack payment confirmed; assembly resumed from scene 5.", "Studio payment confirmed, plan active; assembly resumed.", "Rendering in 720p — you can re-render in 1080p later."],
+    c1r: "Rule: a generation never stops silently. Before charging we show whether credits are enough; if not, we save what’s done and offer 3 ways out.",
+    c2k: "YOUTUBE ACCESS REVOKED", c2w: "All sections", c2h: "Access to the channel “Deep” was revoked", c2p: "The Google password changed or access was removed in account settings. Publishing and analytics are paused.",
+    c2keep: "What’s kept:", c2list: ["Projects and drafts — 6", "Schedule — 3 videos waiting", "Analytics history up to Oct 14"],
+    c2btn: "Reconnect", c2why: "Why this happens", c2done: "Channel reconnected. 3 videos are back on the schedule; analytics will catch up overnight.",
+    c2r: "Rule: when access is lost we delete nothing and never publish blindly. A banner on every screen, an email to the owner, one-click reconnect.",
+    c3k: "BLOCKED BY MODERATION", c3w: "Storyboard · scene 2", c3hIdle: "This scene didn’t pass review", c3tIdle: "The frame description names a recognizable real person. We don’t generate such images.",
+    c3refund: "60 cr. refunded", c3a: "Edit description", c3b: "Animated still · 5 cr.", c3c: "Content rules",
+    c3lbl: "Frame description", c3prompt: "A researcher in a bathyscaphe looks through the porthole at glowing jellyfish, 4,000 m deep", c3send: "Generate again",
+    c3hOk: "Frame generated", c3tOk: "The new description passed review. Scene 2 is updated in the storyboard.", c3hKb: "Scene replaced with an animated still", c3tKb: "5 credits charged instead of 60; the series style is kept.",
+    c3badgeErr: "Blocked", c3badgeOk: "Done",
+    c3r: "Rule: explain the reason in plain words, refund the credits and offer an allowed alternative right away.",
+    c4k: "PROVIDER DOWN", c4w: "Job queue", c4hWait: "The video model isn’t responding", c4tWait: "Jobs are queued and no credits were charged. We’ll retry automatically in 5 minutes.",
+    c4hMoved: "Jobs moved to the backup model", c4tMoved: "Comparable quality, same price in credits.",
+    c4rows: [["Bring frame to life · scene 3", "queued"], ["AI video · scene 5", "queued"], ["Credits charged", "0"]], c4rowsMoved: ["running · 12%", "queued"],
+    c4btn: "Switch to backup model", c4status: "Service status",
+    c4r: "Rule: every generation type has a backup provider (“AI & API” in the admin panel); the user sees a status, not an endless spinner.",
+    c5k: "PAYMENT FAILED", c5w: "Plan & billing", c5h: "Payment failed — paid features are locked", c5p: "Your bank declined the Creator renewal. Generations, plan credits and growth tools unlock only after a successful, confirmed payment. Projects and drafts are kept — you can open and view them.",
+    c5declined: "Declined", c5btn: "Change card", c5retry: "Retry payment", c5done: "Payment confirmed by the bank. Creator is active, 1,000 credits added — all features unlocked.", c5pend: "Waiting for the bank to confirm. Features unlock right after confirmation.", c5sim: "Show: bank confirmed", c5locked: ["Generations and video assembly", "Plan credits", "Growth tools"], c5lockedH: "Locked until payment:",
+    c5r: "Rule: paid features unlock only after a successful, confirmed payment; there is no grace period. User data is never deleted.",
+    c6k: "OFFLINE", c6w: "Script editor", c6off: "You’re offline. Edits are saved on this device and will sync when you’re back.", c6on: "Back online, all edits saved.",
+    c6pend: " edits pending", c6sync: "synced", c6goOn: "Restore network", c6goOff: "Go offline", c6scene: "SCENE 2 · 0:15–1:30",
+    c6text: "Satellites photograph Mars with nothing in the way, but the ocean hides its floor under kilometres of water…",
+    c6r: "Rule: the editor never locks without a connection; generations queue until it’s back.",
+    c7k: "EMPTY LIBRARY", c7w: "Projects", c7h: "Your videos will appear here", c7p: "Start with your first video — the “First video in 30 minutes” path walks you through every step.", c7btn: "Create your first video",
+    c7tpl: ["Faceless documentary", "Top 10", "News breakdown"],
+    c7r: "Rule: an empty screen always explains what will be here and offers one main action.",
+    c8k: "NO DATA YET", c8w: "Analytics",
+    c8rows: [["Channel not connected", "Connect YouTube to see forecast vs actual for your videos.", "Connect", "Account.dc.html"], ["Published 17 hours ago", "First insights in 31 hours — YouTube shares data with a delay.", "", ""], ["Not enough data: 140 views", "The retention curve gets more accurate as views grow.", "", ""]],
+    c8r: "Rule: never draw empty charts. Explain why there’s no data and when it will appear.",
+    c9k: "PAGE NOT FOUND", c9h: "This page doesn’t exist", c9p: "The link may be outdated or the project deleted. A deleted project can be restored from the trash.", c9a: "To workspace", c9b: "To homepage",
+    c9r: "Rule: even a 404 leads back into the product and hints where to find what’s lost."
+  }
+};
+
+var EN_FIX = [[/Сбер · свой сервер/g, 'Sber · own server'], [/Свой сервер \(GPU\)/g, 'Own server (GPU)'], [/Яндекс/g, 'Yandex'], [/Сбер/g, 'Sber']];
+function enFix(v) {
+  if (typeof v === 'string') { var r = v; EN_FIX.forEach(function (p) { r = r.replace(p[0], p[1]); }); return r; }
+  if (Array.isArray(v)) return v.map(enFix);
+  if (v && typeof v === 'object') { var o = {}; Object.keys(v).forEach(function (k) { o[k] = typeof v[k] === 'function' ? v[k] : enFix(v[k]); }); return o; }
+  return v;
+}
+function csvHref(rows) {
+  var esc = function (x) { x = String(x == null ? '' : x); return /[",;\n]/.test(x) ? '"' + x.replace(/"/g, '""') + '"' : x; };
+  return 'data:text/csv;charset=utf-8,' + encodeURIComponent('﻿' + rows.map(function (r) { return r.map(esc).join(';'); }).join('\r\n'));
+}
+function demoBuild(self, s, msgs) {
+  var show = function (m) { if (self._tt) clearTimeout(self._tt); self.setState({ toast: m }); self._tt = setTimeout(function () { self.setState({ toast: '' }); }, 4000); };
+  var o = {};
+  Object.keys(msgs).forEach(function (k) {
+    o[k] = function (e) {
+      var m = msgs[k];
+      if (e && e.target && e.target.files) { var n = e.target.files.length; if (!n) return; m = m.replace('{n}', n).replace('{name}', e.target.files[0].name); }
+      if (k.indexOf('copy') === 0 && msgs['_' + k]) { try { navigator.clipboard.writeText(msgs['_' + k]); } catch (er) {} }
+      show(m);
+    };
+  });
+  return { demo: o, toastText: s.toast || '', toastSt: s.toast ? 'opacity:1;transform:translate(-50%,0)' : 'opacity:0;transform:translate(-50%,10px);pointer-events:none' };
+}
+var C10 = {
+  ru: { k: "СУБТИТРЫ И ТАЙМИНГИ", w: "Сборка видео", tabs: [["novoice", "Нет озвучки"], ["fail", "Сбой распознавания"], ["diff", "Текст ≠ голос"], ["long", "Длинная запись"]],
+    sc: {
+      novoice: { h: "Озвучки ещё нет", p: "Выделение произносимого слова и файл .srt появятся после озвучки: время каждого слова берётся из голоса. Пока субтитры идут целыми фразами по примерному времени.", a: "Озвучить сценарий · 63 кр.", b: "Собрать без выделения", ok: "Озвучка готова. Время получено для 1 412 слов — выделение и .srt включены.", okB: "Ролик собирается с субтитрами по фразам. Выделение можно включить позже, после озвучки." },
+      fail: { h: "Не удалось получить время слов", p: "Распознавание Yandex SpeechKit не ответило за 2 минуты. Кредиты не списаны. Субтитры пока идут по примерному времени — расхождение может быть до 0,3 с.", a: "Повторить", b: "Распознать в SaluteSpeech", ok: "Готово: время получено для 1 412 слов, совпадение с текстом 98%.", okB: "Готово через SaluteSpeech: время получено для 1 412 слов. Кредиты не списаны повторно." },
+      diff: { h: "Текст субтитров расходится с голосом", p: "Вы изменили 3 фразы. Две совпадают с голосом, а в одной слов нет в озвучке — их время взято примерно, выделение может опережать голос.", a: "Переозвучить фразу · 2 кр.", b: "Вернуть исходный текст", ok: "Фраза переозвучена, время слов уточнено. Все 3 фразы совпадают с голосом.", okB: "Исходный текст фразы возвращён — она снова совпадает с голосом.",
+        rows: [["0:03", "Мы нанесли на карту лишь около четверти дна", "совпадает"], ["0:08", "Самая глубокая точка — Марианская впадина", "совпадает"], ["0:14", "Солнце почти не пробивается глубже 200 метров", "нет в озвучке: «пробивается»"]] },
+      long: { h: "Запись длиннее лимита", p: "Ваша запись — 74 минуты. Распознавание принимает до 60 минут за раз. Можно автоматически разделить запись на 2 части по паузам — время слов склеится без сдвига.", a: "Разделить и распознать · 74 кр.", b: "Загрузить другой файл", ok: "Запись разделена на 2 части (41 и 33 мин) и распознана. Время получено для 9 860 слов.", okB: "Загрузите файл до 60 минут или разделите его сами." } },
+    replay: "Показать снова", r: "Правило: без таймингов ролик всё равно собирается — субтитры идут фразами. Кредиты за распознавание списываются только при успехе.", tabsLbl: "Вариант ошибки" },
+  en: { k: "SUBTITLES & TIMINGS", w: "Video assembly", tabs: [["novoice", "No voiceover"], ["fail", "Recognition failed"], ["diff", "Text ≠ voice"], ["long", "Long recording"]],
+    sc: {
+      novoice: { h: "No voiceover yet", p: "Spoken-word highlighting and the .srt file appear after the voiceover: each word’s time comes from the voice. For now subtitles show whole phrases at estimated times.", a: "Voice the script · 63 cr.", b: "Build without highlighting", ok: "Voiceover ready. Timings received for 1,412 words — highlighting and .srt are on.", okB: "The video builds with phrase subtitles. You can turn highlighting on after the voiceover." },
+      fail: { h: "Couldn’t get word timings", p: "Yandex SpeechKit recognition didn’t respond within 2 minutes. No credits were charged. Subtitles use estimated times for now — they may drift by up to 0.3 s.", a: "Retry", b: "Recognise with SaluteSpeech", ok: "Done: timings received for 1,412 words, 98% match with the text.", okB: "Done via SaluteSpeech: timings received for 1,412 words. No extra credits charged." },
+      diff: { h: "Subtitle text doesn’t match the voice", p: "You edited 3 phrases. Two match the voice; one has words that aren’t in the voiceover — their times are estimated, so the highlight may run ahead of the voice.", a: "Re-voice the phrase · 2 cr.", b: "Restore original text", ok: "The phrase was re-voiced and word times refined. All 3 phrases match the voice.", okB: "The original phrase is restored — it matches the voice again.",
+        rows: [["0:03", "We have mapped only about a quarter of the floor", "matches"], ["0:08", "The deepest point is the Mariana Trench", "matches"], ["0:14", "Sunlight barely gets below 200 metres", "not in voiceover: “gets”"]] },
+      long: { h: "Recording is over the limit", p: "Your recording is 74 minutes. Recognition accepts up to 60 minutes at a time. We can split it into 2 parts at pauses — word times join without drift.", a: "Split and recognise · 74 cr.", b: "Upload another file", ok: "The recording was split into 2 parts (41 and 33 min) and recognised. Timings received for 9,860 words.", okB: "Upload a file up to 60 minutes or split it yourself." } },
+    replay: "Show again", r: "Rule: the video builds even without timings — subtitles go by phrase. Recognition credits are charged only on success.", tabsLbl: "Error variant" }
+};
+var DEMO = { ru: {"c3c": "Нельзя: узнаваемые реальные люди без их согласия, насилие и шок-контент, чужие бренды и персонажи, медицинские и финансовые обещания. Полный текст — в «Юридических документах → Правила контента».", "c2why": "Google отзывает доступ, если сменить пароль, включить ограничения в аккаунте или вручную удалить доступ приложения. Ролики и расписание при этом не теряются.", "c4status": "Статус сервисов: сценарии и озвучка работают, видео-модель недоступна у провайдера с 14:05. Задачи ждут в очереди и запустятся сами."}, en: {"c3c": "Not allowed: recognisable real people without consent, violence and shock content, other people’s brands and characters, medical and financial promises. Full text: Legal documents → Content rules.", "c2why": "Google revokes access when you change the password, turn on account restrictions or remove the app’s access manually. Videos and the schedule are not lost.", "c4status": "Service status: scripts and voiceover work; the video model is down at the provider since 14:05. Tasks wait in the queue and start automatically."} };
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { lang: null, c1: -1, c2: false, c3: 'idle', c3p: null, c4: false, c5: false, c6: false };
+  }
+  renderVals() {
+    var s = this.state, lang = s.lang || this.props.startLang || 'ru';
+    var v = Object.assign({}, this._rv(), demoBuild(this, s, DEMO[lang] || DEMO.ru), { uiLang: lang }, this._extra ? this._extra(lang) : {});
+    return lang === 'en' ? enFix(v) : v;
+  }
+  _extra(lang) {
+    var self = this, s = this.state, x = C10[lang] || C10.ru, cur = s.c10 || 'novoice', sc = x.sc[cur], done = s.c10done || '';
+    var on = 'background:#16161A;color:#fff;border:1px solid #16161A', off = 'background:#fff;color:#16161A;border:1px solid #D9D6CE';
+    return { c10: x, c10Tabs: x.tabs.map(function (tb) { var sel = tb[0] === cur; return { label: tb[1], on: sel, st: sel ? on : off, pick: function () { self.setState({ c10: tb[0], c10done: '' }); } }; }),
+      c10Sc: sc, c10Idle: !done, c10Done: !!done, c10Msg: done === 'b' ? sc.okB : sc.ok, c10MsgSt: done === 'b' && cur === 'long' ? 'background:#FBEBC9;color:#7A4B00' : 'background:#DDF0E8;color:#0B5A45',
+      c10A: function () { self.setState({ c10done: 'a' }); }, c10B: function () { self.setState({ c10done: 'b' }); }, c10Reset: function () { self.setState({ c10done: '' }); },
+      c10Rows: (sc.rows || []).map(function (r, i) { var bad = i === 2 && !done; return { t: r[0], text: r[1], st: bad ? r[2] : (lang === 'en' ? 'matches' : 'совпадает'), stSt: bad ? 'background:#F7DDD5;color:#8A2A0C' : 'background:#DDF0E8;color:#0B5A45' }; }), c10HasRows: !!sc.rows };
+  }
+  _rv() {
+    var s = this.state, self = this;
+    var lang = s.lang || this.props.startLang || 'ru';
+    var t = L[lang] || L.ru;
+    var langOn = 'background:#16161A;color:#fff;border:0', langOff = 'background:transparent;color:#16161A;border:0';
+    var set = function (o) { return function () { self.setState(o); }; };
+    var c3 = s.c3;
+    return {
+      t: t,
+      isRu: lang === 'ru', isEn: lang === 'en', ruSt: lang === 'ru' ? langOn : langOff, enSt: lang === 'en' ? langOn : langOff,
+      setRu: set({ lang: 'ru' }), setEn: set({ lang: 'en' }),
+      c1Open: s.c1 < 0, c1Done: s.c1 >= 0, c1DoneText: s.c1 >= 0 ? t.c1done[s.c1] : '', c1Reset: set({ c1: -1 }),
+      c1Opts: t.c1opts.map(function (o, i) { return { label: o[0], hint: o[1], price: o[2], pick: set({ c1: i }), st: i === 0 ? 'border:0;background:#16161A;color:#fff' : 'border:1px solid #D9D6CE;background:#fff;color:#16161A' }; }),
+      c2Off: !s.c2, c2On: s.c2, c2Fix: set({ c2: true }), c2Reset: set({ c2: false }),
+      c3Idle: c3 === 'idle', c3Editing: c3 === 'edit', c3Fin: c3 === 'ok' || c3 === 'kb',
+      c3Head: c3 === 'ok' ? t.c3hOk : c3 === 'kb' ? t.c3hKb : t.c3hIdle, c3Text: c3 === 'ok' ? t.c3tOk : c3 === 'kb' ? t.c3tKb : t.c3tIdle,
+      c3Badge: c3 === 'ok' || c3 === 'kb' ? t.c3badgeOk : t.c3badgeErr, c3BadgeSt: c3 === 'ok' || c3 === 'kb' ? 'background:#DDF0E8;color:#0B5A45' : 'background:#FDE2E0;color:#8E1B12',
+      c3Edit: set({ c3: 'edit' }), c3Kb: set({ c3: 'kb' }), c3Send: set({ c3: 'ok' }), c3Reset: set({ c3: 'idle', c3p: null }),
+      c3Prompt: s.c3p != null ? s.c3p : t.c3prompt, c3OnPrompt: function (e) { self.setState({ c3p: e.target.value }); },
+      c4Wait: !s.c4, c4Moved: s.c4, c4Switch: set({ c4: true }), c4Reset: set({ c4: false }),
+      c4Head: s.c4 ? t.c4hMoved : t.c4hWait, c4Text: s.c4 ? t.c4tMoved : t.c4tWait,
+      c4Rows: t.c4rows.map(function (r, i) { var b = s.c4 && i < 2 ? t.c4rowsMoved[i] : r[1]; return { a: r[0], b: b, st: i === 2 ? 'color:#0B5A45' : (s.c4 && i === 0 ? 'color:#8A2A0C' : 'color:#5E5B54') }; }),
+      c5Fail: !s.c5, c5Pend: s.c5 === 'pend', c5Ok: s.c5 === 'ok', c5Pay: set({ c5: 'pend' }), c5Fix: set({ c5: 'ok' }), c5Reset: set({ c5: false }),
+      c6Bar: s.c6 ? t.c6on : t.c6off, c6BarSt: s.c6 ? 'background:#DDF0E8;color:#0B5A45' : 'background:#16161A;color:#F4F3EF',
+      c6Count: s.c6 ? t.c6sync : '3' + t.c6pend, c6Btn: s.c6 ? t.c6goOff : t.c6goOn, c6Toggle: set({ c6: !s.c6 }),
+      c8Rows: t.c8rows.map(function (r) { return { h: r[0], p: r[1], btn: r[2], href: r[3] || '#', hasBtn: !!r[2] }; })
+    };
+  }
+}
+</script>
+</body>
+</html>

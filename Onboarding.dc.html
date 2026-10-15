@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>AI YT Studio — Welcome</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F3EF}
+a{color:#16161A}a:hover{color:#B8320F}
+button{font-family:inherit;cursor:pointer}
+input,select{font-family:inherit}
+.fld{min-height:48px;padding:0 12px;border:1px solid #D9D6CE;border-radius:10px;font-size:16px;background:#fff;box-sizing:border-box;width:100%}
+.mono{font-family:'IBM Plex Mono',monospace}
+.muted{color:#5E5B54}
+.h1{margin:0;font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:600;letter-spacing:-0.02em;line-height:1.15}
+.link{border:0;background:none;padding:8px 0;font-size:14px;text-decoration:underline;color:#16161A}
+:focus-visible{outline:3px solid #2F5BEA;outline-offset:2px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</helmet>
+<div lang="{{uiLang}}" style="min-height: 100vh; background: #F4F3EF; color: #16161A; font-family: 'IBM Plex Sans', system-ui, sans-serif; display: flex; flex-direction: column">
+<header style="padding: 20px clamp(16px, 4vw, 40px); display: flex; justify-content: space-between; align-items: center; gap: 12px">
+<span style="display: flex; align-items: center; gap: 10px">
+<span style="width: 32px; height: 32px; border-radius: 8px; background: {{accent}}; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7.5-4.5z" fill="#fff"></path></svg></span>
+<span style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 19px">AI YT Studio</span>
+</span>
+<div style="display: flex; gap: 8px; align-items: center">
+<sc-if value="{{inWizard}}" hint-placeholder-val="{{ false }}"><a href="Main.dc.html" style="font-size: 14px; padding: 10px 4px">{{t.skipAll}}</a></sc-if>
+<button type="button" onClick="{{toggleLang}}" aria-label="{{t.langSwitch}}" class="mono" style="min-width: 44px; height: 44px; border-radius: 10px; border: 1px solid #D9D6CE; background: #fff; font-size: 13px">{{langLabel}}</button>
+</div>
+</header>
+<main style="flex: 1; display: flex; align-items: flex-start; justify-content: center; padding: 24px 16px 64px">
+<div style="width: 100%; max-width: 640px; background: #fff; border: 1px solid #E2DFD7; border-radius: 16px; padding: 32px clamp(20px, 4vw, 40px); box-sizing: border-box; display: flex; flex-direction: column; gap: 20px">
+
+<sc-if value="{{isVerify}}" hint-placeholder-val="{{ true }}">
+<div style="width: 56px; height: 56px; border-radius: 14px; background: #F4F3EF; display: flex; align-items: center; justify-content: center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16161A" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg></div>
+<h1 class="h1">{{t.verifyH}}</h1>
+<p class="muted" style="margin: 0; line-height: 1.55">{{t.verifyP}}</p>
+<button type="button" onClick="{{confirmEmail}}" style="min-height: 52px; border-radius: 10px; border: 0; background: #16161A; color: #fff; font-size: 15px">{{t.confirmDemo}}</button>
+<div style="display: flex; gap: 18px; flex-wrap: wrap"><button type="button" onClick="{{resend}}" class="link">{{resendLabel}}</button><a href="Landing.dc.html" style="font-size: 14px; padding: 8px 0">{{t.changeEmail}}</a></div>
+<span class="muted" style="font-size: 13px">{{t.spamHint}}</span>
+</sc-if>
+
+<sc-if value="{{inWizard}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span class="mono muted" style="font-size: 12px; letter-spacing: 0.06em">{{stepLabel}}</span>
+<div style="display: flex; gap: 6px" aria-hidden="true"><sc-for list="{{bars}}" as="b" hint-placeholder-count="4"><span style="flex: 1; height: 4px; border-radius: 2px; {{b}}"></span></sc-for></div>
+</div>
+</sc-if>
+
+<sc-if value="{{isGoal}}" hint-placeholder-val="{{ false }}">
+<h1 class="h1">{{t.goalH}}</h1>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{goals}}" as="g" hint-placeholder-count="3">
+<button type="button" onClick="{{g.pick}}" aria-pressed="{{g.sel}}" style="text-align: left; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 4px; min-height: 64px; {{g.st}}"><span style="font-weight: 600; font-size: 16px">{{g.title}}</span><span style="font-size: 14px; opacity: 0.8">{{g.desc}}</span></button>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{isPlatform}}" hint-placeholder-val="{{ false }}">
+<h1 class="h1">{{platH}}</h1>
+<p class="muted" style="margin: 0; line-height: 1.55">{{platP}}</p>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px">
+<sc-for list="{{plats}}" as="pp" hint-placeholder-count="5">
+<button type="button" onClick="{{pp.pick}}" aria-pressed="{{pp.sel}}" style="text-align: left; border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; min-height: 64px; {{pp.st}}"><span style="font-weight: 600; font-size: 16px">{{pp.title}}</span><span style="font-size: 13px; opacity: 0.8">{{pp.desc}}</span></button>
+</sc-for>
+</div>
+<sc-if value="{{alsoShow}}" hint-placeholder-val="{{ false }}"><div style="display: flex; flex-direction: column; gap: 8px"><span style="font-weight: 500; font-size: 14px">{{alsoLbl}}</span><div style="display: flex; gap: 8px; flex-wrap: wrap"><sc-for list="{{alsoList}}" as="al" hint-placeholder-count="3"><button type="button" onClick="{{al.pick}}" style="min-height: 40px; padding: 0 14px; border-radius: 999px; font-size: 14px; {{al.st}}">{{al.label}}</button></sc-for></div><span class="muted" style="font-size: 13px">{{alsoHint}}</span></div></sc-if>
+</sc-if>
+
+<sc-if value="{{isNiche}}" hint-placeholder-val="{{ false }}">
+<h1 class="h1">{{t.nicheH}}</h1>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="oniche" style="font-weight: 500; font-size: 14px">{{t.nicheLbl}}</label><input id="oniche" type="text" value="{{niche}}" onChange="{{onNiche}}" placeholder="{{t.nichePh}}" class="fld"></div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><span class="muted" style="font-size: 13px; width: 100%">{{t.ideas}}</span><sc-for list="{{nicheIdeas}}" as="ni" hint-placeholder-count="5"><button type="button" onClick="{{ni.pick}}" style="min-height: 38px; padding: 0 12px; border-radius: 999px; border: 1px solid #D9D6CE; background: #fff; font-size: 13px">{{ni.label}}</button></sc-for></div>
+<fieldset style="border: 0; padding: 0; margin: 0"><legend style="font-weight: 500; font-size: 14px; margin-bottom: 8px">{{t.presLbl}}</legend><div style="display: flex; gap: 8px; flex-wrap: wrap"><sc-for list="{{presence}}" as="p" hint-placeholder-count="3"><button type="button" onClick="{{p.pick}}" style="min-height: 42px; padding: 0 14px; border-radius: 999px; font-size: 14px; {{p.st}}">{{p.label}}</button></sc-for></div></fieldset>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="olang" style="font-weight: 500; font-size: 14px">{{t.videoLang}}</label><select id="olang" class="fld"><sc-for list="{{t.langOpts}}" as="lo" hint-placeholder-count="4"><option>{{lo}}</option></sc-for></select></div>
+</sc-if>
+
+<sc-if value="{{isYoutube}}" hint-placeholder-val="{{ false }}">
+<h1 class="h1">{{connH}}</h1>
+<p class="muted" style="margin: 0; line-height: 1.55">{{connP}}</p>
+<sc-if value="{{ytNot}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{connectYt}}" style="min-height: 52px; border-radius: 10px; border: 0; background: #16161A; color: #fff; font-size: 15px">{{connBtn}}</button></sc-if>
+<sc-if value="{{ytDone}}" hint-placeholder-val="{{ false }}"><div role="status" style="background: #DDF0E8; color: #0B5A45; border-radius: 10px; padding: 14px; font-size: 14px">{{connOk}}</div></sc-if>
+<span class="muted" style="font-size: 13px; line-height: 1.45">{{t.ytNote}}</span>
+</sc-if>
+
+<sc-if value="{{isReady}}" hint-placeholder-val="{{ false }}">
+<h1 class="h1">{{t.readyH}}</h1>
+<div style="background: #FDE7DF; color: #8A2A0C; border-radius: 10px; padding: 12px 14px; font-size: 14px">{{t.bonus}}</div>
+<p class="muted" style="margin: 0; line-height: 1.55">{{summary}}</p>
+<div style="background: #DDF0E8; color: #0B5A45; border-radius: 10px; padding: 12px 14px; font-size: 14px; line-height: 1.5">{{readyPlatText}}</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{firsts}}" as="f" hint-placeholder-count="3">
+<a href="{{f.href}}" style="text-decoration: none; color: #16161A; border: 1px solid #E2DFD7; border-radius: 12px; padding: 16px; display: flex; gap: 14px; align-items: center; {{f.st}}"><span class="mono" style="font-size: 13px; color: #B8320F; flex: none">{{f.n}}</span><span style="flex: 1; display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 600">{{f.title}}</span><span class="muted" style="font-size: 13px">{{f.desc}}</span></span><span aria-hidden="true">→</span></a>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{inWizard}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; border-top: 1px solid #EFECE5; padding-top: 16px">
+<button type="button" onClick="{{back}}" class="link" style="{{backSt}}">{{t.back}}</button>
+<div style="display: flex; gap: 10px; align-items: center">
+<sc-if value="{{canSkip}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{next}}" class="link">{{t.skip}}</button></sc-if>
+<sc-if value="{{notLast}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{next}}" style="min-height: 48px; padding: 0 24px; border-radius: 10px; border: 0; font-weight: 600; font-size: 15px; {{nextSt}}">{{t.next}}</button></sc-if>
+<sc-if value="{{isReady}}" hint-placeholder-val="{{ false }}"><a href="Main.dc.html" style="min-height: 48px; padding: 0 24px; display: inline-flex; align-items: center; border-radius: 10px; background: {{accent}}; color: #fff; text-decoration: none; font-weight: 600; font-size: 15px">{{t.toDashboard}}</a></sc-if>
+</div>
+</div>
+</sc-if>
+</div>
+</main>
+<div role="status" aria-live="polite" style="position: fixed; left: 50%; bottom: 24px; z-index: 60; max-width: min(92vw, 560px); background: #16161A; color: #fff; padding: 12px 18px; border-radius: 10px; font-size: 14px; line-height: 1.45; box-shadow: 0 8px 24px rgba(0,0,0,0.25); transition: opacity .2s, transform .2s; {{toastSt}}">{{toastText}}</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#C93C14","options":["#C93C14","#2F5BEA","#0F7B5F","#16161A"]},"startLang":{"editor":"enum","options":["ru","en"],"default":"ru"},"$preview":{"width":1440,"height":960}}'>
+var L = {
+  ru: { langSwitch: "Сменить язык на английский", skipAll: "Пропустить настройку",
+    verifyH: "Подтвердите email", verifyP: "Мы отправили письмо на you@example.com. Перейдите по ссылке из письма — после этого откроется короткая настройка.", confirmDemo: "Я перешёл по ссылке (демо)", resend: "Отправить письмо ещё раз", resendDone: "Отправлено. Повторить можно через 60 секунд", changeEmail: "Указать другой email", spamHint: "Письма нет? Проверьте папку «Спам».",
+    stepWord: "ШАГ", ofWord: "ИЗ",
+    goalH: "Что вы хотите сделать?", goalsList: [["new", "Запустить новый канал", "Поможем выбрать нишу, название и план"], ["grow", "Развивать свой канал", "Анализ, идеи, сценарии и Shorts"], ["agency", "Вести каналы клиентов", "Несколько каналов и командная работа"]],
+    nicheH: "О чём будет канал?", nicheLbl: "Тема или ниша", nichePh: "Например: наука об океане простыми словами", ideas: "Популярные темы:", nicheList: ["Наука и космос", "Финансы простыми словами", "История", "Технологии", "Кулинария"],
+    presLbl: "Формат подачи", presenceMap: { faceless: "Без лица", camera: "В кадре", host: "Аним. ведущий" }, videoLang: "Язык видео", langOpts: ["Русский", "Английский", "Испанский", "Другой"],
+    ytH: "Подключить YouTube-канал?", ytP: "Подключение нужно для статистики вашего канала, публикации видео и ответов на комментарии. Остальное работает и без него.", ytConnect: "Подключить через Google", ytOk: "Канал подключён: @your-channel", ytNote: "Доступ можно отозвать в любой момент в настройках аккаунта.",
+    readyH: "Всё готово!", bonus: "На ваш счёт начислено 60 бесплатных кредитов — хватит, чтобы попробовать каждый модуль.",
+    sumNew: "Начнём с концепции канала по вашей теме: ", sumGrow: "Начнём с анализа вашего канала и идей по теме: ", sumAgency: "Создайте первый проект клиента по теме: ", sumNoNiche: "тему выберете в кабинете",
+    firstsList: [["Создать концепцию канала", "Названия, оформление и план на месяц", "Main.dc.html"], ["Написать первый сценарий", "Посценно, с прогнозом удержания", "Main.dc.html"], ["Найти тренды в нише", "Растущие темы и вирусные видео", "Studio.dc.html"]],
+    back: "Назад", skip: "Пропустить", next: "Далее", toDashboard: "Перейти в кабинет" },
+  en: { langSwitch: "Switch language to Russian", skipAll: "Skip setup",
+    verifyH: "Confirm your email", verifyP: "We sent an email to you@example.com. Follow the link in it — then a short setup opens.", confirmDemo: "I followed the link (demo)", resend: "Send the email again", resendDone: "Sent. You can resend in 60 seconds", changeEmail: "Use a different email", spamHint: "No email? Check your spam folder.",
+    stepWord: "STEP", ofWord: "OF",
+    goalH: "What do you want to do?", goalsList: [["new", "Launch a new channel", "We’ll help pick a niche, name and plan"], ["grow", "Grow my channel", "Analytics, ideas, scripts and Shorts"], ["agency", "Run channels for clients", "Several channels and teamwork"]],
+    nicheH: "What will the channel be about?", nicheLbl: "Topic or niche", nichePh: "For example: ocean science explained simply", ideas: "Popular topics:", nicheList: ["Science & space", "Personal finance", "History", "Tech", "Cooking"],
+    presLbl: "Presentation style", presenceMap: { faceless: "Faceless", camera: "On camera", host: "Animated host" }, videoLang: "Video language", langOpts: ["English", "Russian", "Spanish", "Other"],
+    ytH: "Connect your YouTube channel?", ytP: "Connecting is needed for your own stats, publishing videos and replying to comments. Everything else works without it.", ytConnect: "Connect with Google", ytOk: "Channel connected: @your-channel", ytNote: "You can revoke access any time in account settings.",
+    readyH: "All set!", bonus: "60 free credits added to your balance — enough to try every module.",
+    sumNew: "Let’s start with a channel concept for your topic: ", sumGrow: "Let’s start by analysing your channel and ideas on: ", sumAgency: "Create your first client project on: ", sumNoNiche: "you’ll pick a topic in the dashboard",
+    firstsList: [["Create a channel concept", "Names, branding and a monthly plan", "Main.dc.html"], ["Write your first script", "Scene by scene, with a retention forecast", "Main.dc.html"], ["Find trends in your niche", "Rising topics and viral videos", "Studio.dc.html"]],
+    back: "Back", skip: "Skip", next: "Next", toDashboard: "Go to dashboard" }
+};
+var ADM_KEY = 'aiytstudio.admin.v1';
+var ADM_KEYS = ['platOn', 'igScope', 'axProv', 'axEnabled', 'medEnabled', 'eridOn', 'payOn'];
+function admRead() { try { var v = window.localStorage.getItem(ADM_KEY); var o = v ? JSON.parse(v) : {}; return o && typeof o === 'object' ? o : {}; } catch (e) { return {}; } }
+function admWrite(o) { try { window.localStorage.setItem(ADM_KEY, JSON.stringify(o)); } catch (e) {} }
+function admPick(s) { var o = {}; ADM_KEYS.forEach(function (k) { if (s[k] !== undefined) o[k] = s[k]; }); return o; }
+function admWatch(comp, onChange) {
+  var last = JSON.stringify(admRead());
+  var chk = function () { var v = JSON.stringify(admRead()); if (v !== last) { last = v; onChange(); } };
+  var h = function (e) { if (!e || e.key === ADM_KEY || e.key === null) chk(); };
+  try { window.addEventListener('storage', h); } catch (e) {}
+  var id = setInterval(chk, 1000);
+  comp._admStop = function () { clearInterval(id); try { window.removeEventListener('storage', h); } catch (e) {} };
+}
+function admEff(props, lang) {
+  var a = admRead(), pl = a.platOn || {}, prov = a.axProv || {}, axEn = a.axEnabled || {}, med = a.medEnabled || {}, pay = a.payOn || {};
+  var AXIDS = ['opus', 'astra', 'sol', 'luna', 'haiku', 'deepseek', 'ygpt', 'ylite', 'gmax', 'glite'];
+  var PROVK = { opus: 'a', haiku: 'a', astra: 'o', sol: 'o', luna: 'o', deepseek: 'd', ygpt: 'y', ylite: 'y', gmax: 'g', glite: 'g' };
+  return {
+    platOk: function (k) { if (k === 'yt') return true; if (pl[k] === false) return false; if (k === 'ig') { if (props.instagram === 'off') return false; if (a.igScope === 'en' && lang === 'ru') return false; } return true; },
+    axOk: function (id) { var pk = PROVK[id]; if (pk === 'a' && props.claudeChats === 'off') return false; if (pk === 'o' && props.gptChats === 'off') return false; if (pk && prov[pk]) return false; var i = AXIDS.indexOf(id); if (i >= 0 && axEn[i] === false) return false; return true; },
+    medOk: function (id) { return med[id] !== false; },
+    payOk: function (k) { return pay[k] !== false; },
+    eridOn: a.eridOn !== false
+  };
+}
+var PREF_KEY = 'aiytstudio.user.v1';
+function prefRead() { try { var v = window.localStorage.getItem(PREF_KEY); var o = v ? JSON.parse(v) : {}; return o && typeof o === 'object' ? o : {}; } catch (e) { return {}; } }
+function prefWrite(o) { try { window.localStorage.setItem(PREF_KEY, JSON.stringify(Object.assign(prefRead(), o))); } catch (e) {} }
+var OPL = {
+  ru: { platH: "Где ваш основной канал?", platP: "Кабинет подстроится: публикация, аналитика и монетизация по умолчанию будут для этой площадки.",
+    platList: [["yt", "YouTube", "Длинные видео и Shorts"], ["vk", "VK Видео", "Ролики и VK Клипы"], ["rt", "RUTUBE", "Видео и RUTUBE Shorts"], ["dz", "Дзен", "Видео и ролики"], ["none", "Пока нет канала", "Выберете площадку позже"]],
+    alsoLbl: "Публиковать также в", alsoHint: "Можно изменить в любой момент при публикации.",
+    conn: { yt: ["Подключить YouTube-канал?", "Подключить через Google", "Канал подключён: @your-channel"], vk: ["Подключить VK Видео?", "Подключить через VK ID", "Сообщество подключено: vk.com/your-channel"], rt: ["Подключить RUTUBE?", "Подключить RUTUBE", "Канал подключён: rutube.ru/channel/…"], dz: ["Подключить Дзен?", "Подключить через VK ID", "Канал подключён: dzen.ru/your-channel"], none: ["Подключить канал?", "Подключить через Google", "Канал подключён"] },
+    connP: "Подключение нужно для публикации, статистики вашего канала и ответов на комментарии. Остальное работает и без него.",
+    readyPlat: "Кабинет настроен под площадку: ", readyAlso: ". Публикация по умолчанию: ", readyRu: ". В центре монетизации открыта вкладка «Россия».", readyNone: "Площадку выберете при первой публикации." },
+  en: { platH: "Where is your main channel?", platP: "The dashboard adapts: publishing, analytics and monetization default to this platform.",
+    platList: [["yt", "YouTube", "Long videos and Shorts"], ["vk", "VK Video", "Videos and VK Clips"], ["rt", "RUTUBE", "Videos and RUTUBE Shorts"], ["dz", "Dzen", "Videos and short videos"], ["none", "No channel yet", "Pick a platform later"]],
+    alsoLbl: "Also publish to", alsoHint: "You can change this any time when publishing.",
+    conn: { yt: ["Connect your YouTube channel?", "Connect with Google", "Channel connected: @your-channel"], vk: ["Connect VK Video?", "Connect with VK ID", "Community connected: vk.com/your-channel"], rt: ["Connect RUTUBE?", "Connect RUTUBE", "Channel connected: rutube.ru/channel/…"], dz: ["Connect Dzen?", "Connect with VK ID", "Channel connected: dzen.ru/your-channel"], none: ["Connect a channel?", "Connect with Google", "Channel connected"] },
+    connP: "Connecting is needed for publishing, your channel stats and replying to comments. Everything else works without it.",
+    readyPlat: "The dashboard is set up for: ", readyAlso: ". Default publishing: ", readyRu: ". The monetization center opens on the “Russia” tab.", readyNone: "You’ll pick a platform at your first publish." }
+};
+var WIZ = ['goal', 'platform', 'niche', 'youtube', 'ready'];
+
+var EN_FIX = [[/Сбер · свой сервер/g, 'Sber · own server'], [/Свой сервер \(GPU\)/g, 'Own server (GPU)'], [/Яндекс/g, 'Yandex'], [/Сбер/g, 'Sber']];
+function enFix(v) {
+  if (typeof v === 'string') { var r = v; EN_FIX.forEach(function (p) { r = r.replace(p[0], p[1]); }); return r; }
+  if (Array.isArray(v)) return v.map(enFix);
+  if (v && typeof v === 'object') { var o = {}; Object.keys(v).forEach(function (k) { o[k] = typeof v[k] === 'function' ? v[k] : enFix(v[k]); }); return o; }
+  return v;
+}
+function csvHref(rows) {
+  var esc = function (x) { x = String(x == null ? '' : x); return /[",;\n]/.test(x) ? '"' + x.replace(/"/g, '""') + '"' : x; };
+  return 'data:text/csv;charset=utf-8,' + encodeURIComponent('﻿' + rows.map(function (r) { return r.map(esc).join(';'); }).join('\r\n'));
+}
+function demoBuild(self, s, msgs) {
+  var show = function (m) { if (self._tt) clearTimeout(self._tt); self.setState({ toast: m }); self._tt = setTimeout(function () { self.setState({ toast: '' }); }, 4000); };
+  var o = {};
+  Object.keys(msgs).forEach(function (k) {
+    o[k] = function (e) {
+      var m = msgs[k];
+      if (e && e.target && e.target.files) { var n = e.target.files.length; if (!n) return; m = m.replace('{n}', n).replace('{name}', e.target.files[0].name); }
+      if (k.indexOf('copy') === 0 && msgs['_' + k]) { try { navigator.clipboard.writeText(msgs['_' + k]); } catch (er) {} }
+      show(m);
+    };
+  });
+  return { demo: o, toastText: s.toast || '', toastSt: s.toast ? 'opacity:1;transform:translate(-50%,0)' : 'opacity:0;transform:translate(-50%,10px);pointer-events:none' };
+}
+var DEMO = { ru: {}, en: {} };
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { mainPlat: '', alsoPlat: {}, lang: null, step: 'verify', resent: false, goal: '', niche: '', presence: 'faceless', yt: false }; }
+  renderVals() {
+    var s = this.state, lang = s.lang || this.props.startLang || 'ru';
+    var v = Object.assign({}, this._rv(), demoBuild(this, s, DEMO[lang] || DEMO.ru), { uiLang: lang }, this._extra ? this._extra(lang) : {});
+    return lang === 'en' ? enFix(v) : v;
+  }
+  _rv() {
+    var s = this.state, self = this;
+    var accent = this.props.accent ?? '#C93C14';
+    var lang = s.lang || this.props.startLang || 'ru';
+    var t = L[lang] || L.ru;
+    var on = 'background:#16161A;color:#fff;border:1px solid #16161A', off = 'background:#fff;color:#16161A;border:1px solid #D9D6CE';
+    var wi = WIZ.indexOf(s.step);
+    var op = OPL[lang] || OPL.ru, admE = admEff(this.props || {}, lang);
+    var pl = op.platList.filter(function (p) { return p[0] === 'none' || admE.platOk(p[0]); }), pn = {}; pl.forEach(function (p) { pn[p[0]] = p[1]; });
+    var mp = s.mainPlat || '', cn = op.conn[mp || 'yt'] || op.conn.yt;
+    var alsoOn = Object.keys(s.alsoPlat || {}).filter(function (k) { return s.alsoPlat[k] && k !== mp && pn[k]; });
+    var canNext = s.step === 'goal' ? !!s.goal : s.step === 'platform' ? !!mp : true;
+    var sumStart = s.goal === 'grow' ? t.sumGrow : (s.goal === 'agency' ? t.sumAgency : t.sumNew);
+    var firstIdx = s.goal === 'grow' ? 2 : 0;
+    return {
+      t: t, accent: accent,
+      langLabel: lang === 'ru' ? 'EN' : 'RU', toggleLang: function () { self.setState({ lang: lang === 'ru' ? 'en' : 'ru' }); },
+      isVerify: s.step === 'verify', inWizard: wi >= 0,
+      isGoal: s.step === 'goal', isNiche: s.step === 'niche', isYoutube: s.step === 'youtube', isReady: s.step === 'ready',
+      resend: function () { self.setState({ resent: true }); }, resendLabel: s.resent ? t.resendDone : t.resend,
+      confirmEmail: function () { self.setState({ step: 'goal' }); },
+      stepLabel: t.stepWord + ' ' + (wi + 1) + ' ' + t.ofWord + ' ' + WIZ.length,
+      bars: WIZ.map(function (_, i) { return i <= wi ? 'background:' + accent : 'background:#E2DFD7'; }),
+      goals: t.goalsList.map(function (g) { var sel = s.goal === g[0]; return { title: g[1], desc: g[2], sel: sel, st: sel ? 'border:2px solid #16161A;background:#16161A;color:#fff' : 'border:1px solid #D9D6CE;background:#fff;color:#16161A', pick: function () { self.setState({ goal: g[0] }); } }; }),
+      niche: s.niche, onNiche: function (e) { self.setState({ niche: e.target.value }); },
+      nicheIdeas: t.nicheList.map(function (n) { return { label: n, pick: function () { self.setState({ niche: n }); } }; }),
+      presence: Object.keys(t.presenceMap).map(function (k) { return { label: t.presenceMap[k], st: k === s.presence ? on : off, pick: function () { self.setState({ presence: k }); } }; }),
+      ytNot: !s.yt, ytDone: s.yt, connectYt: function () { self.setState({ yt: true }); },
+      summary: sumStart + (s.niche ? '«' + s.niche + '»' : t.sumNoNiche) + '.',
+      isPlatform: s.step === 'platform', platH: op.platH, platP: op.platP, alsoLbl: op.alsoLbl, alsoHint: op.alsoHint,
+      plats: pl.map(function (p) { var sel = mp === p[0]; return { title: p[1], desc: p[2], sel: sel, st: sel ? 'border:2px solid #16161A;background:#16161A;color:#fff' : 'border:1px solid #D9D6CE;background:#fff;color:#16161A', pick: function () { var a = Object.assign({}, s.alsoPlat || {}); delete a[p[0]]; prefWrite({ mainPlat: p[0], alsoPlat: a }); self.setState({ mainPlat: p[0], alsoPlat: a }); } }; }),
+      alsoShow: !!mp && mp !== 'none',
+      alsoList: pl.filter(function (p) { return p[0] !== 'none' && p[0] !== mp; }).map(function (p) { var v = !!(s.alsoPlat || {})[p[0]]; return { label: (v ? '✓ ' : '+ ') + p[1], st: v ? on : off, pick: function () { var a = Object.assign({}, s.alsoPlat || {}); a[p[0]] = !v; prefWrite({ alsoPlat: a }); self.setState({ alsoPlat: a }); } }; }),
+      connH: cn[0], connBtn: cn[1], connOk: cn[2], connP: op.connP,
+      readyPlatText: mp && mp !== 'none' ? op.readyPlat + pn[mp] + op.readyAlso + [pn[mp]].concat(alsoOn.map(function (k) { return pn[k]; })).join(', ') + (mp === 'yt' ? '.' : op.readyRu) : op.readyNone,
+      firsts: t.firstsList.map(function (f, i) { return { n: '0' + (i + 1), title: f[0], desc: f[1], href: f[2], st: i === firstIdx ? 'border:2px solid ' + accent : '' }; }),
+      back: function () { if (wi > 0) self.setState({ step: WIZ.at(wi - 1) }); }, backSt: wi > 0 ? '' : 'visibility:hidden',
+      canSkip: s.step === 'niche' || s.step === 'youtube', notLast: s.step !== 'ready',
+      nextSt: canNext ? 'background:' + accent + ';color:#fff' : 'background:#E2DFD7;color:#5E5B54',
+      next: function () { if (canNext && wi < WIZ.length - 1) self.setState({ step: WIZ.at(wi + 1) }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

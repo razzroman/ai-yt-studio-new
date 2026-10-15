@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI YT Studio — прототип</title>
+<meta name="description" content="Интерактивный прототип AI YT Studio: AI-студия для авторов YouTube, VK Видео, RUTUBE и Дзена.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23C93C14'/%3E%3Cpath d='M12 9v14l11-7z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#16161A;--bg:#F4F3EF;--card:#fff;--line:#E2DFD7;--muted:#5E5B54;--accent:#C93C14;--accent-h:#B0340F;--focus:#2F5BEA}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'IBM Plex Sans',system-ui,sans-serif}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+header.hero{background:var(--ink);color:var(--bg);padding:28px 0 56px}
+.brand{display:flex;align-items:center;gap:12px;font:700 22px 'Space Grotesk',sans-serif}
+.logo{width:36px;height:36px;border-radius:9px;background:var(--accent);display:grid;place-items:center}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.lang{display:flex;border:1px solid #3A3A42;border-radius:10px;padding:3px}
+.lang button{min-width:44px;min-height:36px;border:0;border-radius:7px;background:none;color:#CFCBC2;font:500 13px 'IBM Plex Mono',monospace;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--bg);color:var(--ink)}
+.kick{font:500 12px 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#F0A58C;margin:48px 0 12px}
+h1{font:700 clamp(34px,6vw,64px)/1.05 'Space Grotesk',sans-serif;margin:0 0 18px;letter-spacing:-.02em;max-width:820px}
+.lead{font-size:clamp(16px,2vw,19px);color:#CFCBC2;max-width:720px;margin:0 0 28px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border-radius:10px;font-weight:600;text-decoration:none}
+.btn.p{background:var(--accent);color:#fff}.btn.p:hover{background:var(--accent-h)}
+.btn.s{border:1px solid #4A4A52;color:var(--bg)}.btn.s:hover{border-color:var(--bg)}
+section{padding:48px 0 8px}
+h2{font:700 clamp(24px,3vw,32px)/1.15 'Space Grotesk',sans-serif;margin:0 0 8px}
+.sub{color:var(--muted);margin:0 0 22px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.card{display:flex;flex-direction:column;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;text-decoration:none;min-height:96px}
+.card:hover{border-color:var(--ink)}
+.card b{font-weight:600}
+.card span{color:var(--muted);font-size:14px;line-height:1.45}
+.tag{font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.06em;color:var(--accent);text-transform:uppercase}
+video{width:100%;border-radius:14px;background:#000;display:block}
+.note{background:#FBEBC9;color:#5A3800;border-radius:10px;padding:14px 16px;font-size:14px;margin:40px 0 0}
+footer{padding:40px 0 56px;color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="top">
+      <div class="brand"><span class="logo"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7.5-4.5z" fill="#fff"/></svg></span>AI YT Studio</div>
+      <div class="lang" role="group" aria-label="Язык / Language"><button type="button" data-l="ru" aria-pressed="true">RU</button><button type="button" data-l="en" aria-pressed="false">EN</button></div>
+    </div>
+    <p class="kick" data-t="kick">Интерактивный прототип</p>
+    <h1 data-t="h1">AI-студия для авторов YouTube, VK Видео, RUTUBE и Дзена</h1>
+    <p class="lead" data-t="lead">Канал, сценарий, озвучка, субтитры под голос, анализ и публикация на все площадки — в одном сервисе. Это прототип: кнопки работают, данные никуда не отправляются.</p>
+    <div class="cta">
+      <a class="btn p" href="Landing.dc.html" id="openSite" data-t="open">Открыть сайт</a>
+      <a class="btn s" href="phone.html?s=MLanding" data-t="openM">Версия для телефона</a>
+      <a class="btn s" href="#demo" data-t="watch">Смотреть демо · 3 мин</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section aria-labelledby="h-web">
+    <h2 id="h-web" data-t="web">Сайт и кабинет</h2>
+    <p class="sub" data-t="webSub">Экраны для компьютера. Переходы между ними работают как в настоящем сервисе.</p>
+    <div class="grid" id="web"></div>
+  </section>
+  <section aria-labelledby="h-mob">
+    <h2 id="h-mob" data-t="mob">Телефон</h2>
+    <p class="sub" data-t="mobSub">На компьютере экраны открываются в рамке телефона, на телефоне — во весь экран.</p>
+    <div class="grid" id="mob"></div>
+  </section>
+  <section id="demo" aria-labelledby="h-demo">
+    <h2 id="h-demo" data-t="demo">Демо-видео</h2>
+    <p class="sub" data-t="demoSub">19 сцен: от регистрации до публикации, субтитров под голос и админки.</p>
+    <video controls preload="metadata" src="AI_YT_Studio_demo.mp4"></video>
+  </section>
+  <p class="note" data-t="note">Прототип для показа и тестирования. Регистрация, оплата и публикация здесь не настоящие — никакие данные не сохраняются на сервере.</p>
+</main>
+<footer class="wrap">© 2026 AI YT Studio</footer>
+
+<script>
+var WEB = [
+  ['Landing', ['Главная', 'Home'], ['Лендинг, тарифы, вопросы, регистрация', 'Landing, pricing, FAQ, sign-up']],
+  ['Onboarding', ['Онбординг', 'Onboarding'], ['Цель, ниша, основной канал и площадки', 'Goal, niche, main channel and platforms']],
+  ['Main', ['Кабинет', 'Dashboard'], ['Первый ролик, сценарий, озвучка, раскадровка, сборка и субтитры', 'First video, script, voice, storyboard, assembly and subtitles']],
+  ['Studio', ['Инструменты роста', 'Growth tools'], ['Контент-календарь, Shorts, брендбук', 'Content calendar, Shorts, brand kit']],
+  ['Account', ['Аккаунт и оплата', 'Account & billing'], ['Площадки, баланс, СБП, история', 'Platforms, balance, SBP, history']],
+  ['Admin', ['Админка', 'Admin'], ['Модели, ключи, площадки, ERID, субтитры по тарифам', 'Models, keys, platforms, ERID, subtitle plans']],
+  ['States', ['Ошибки и пустые состояния', 'Errors & empty states'], ['Что видит автор, если что-то пошло не так', 'What a creator sees when something goes wrong']],
+  ['Legal', ['Документы', 'Legal'], ['Соглашение, политика, согласия', 'Terms, privacy, consents']],
+  ['Recover', ['Восстановление пароля', 'Password reset'], ['Сброс пароля по email', 'Reset via email']]
+];
+var MOB = [
+  ['MLanding', ['Главная', 'Home'], ['Лендинг на телефоне', 'Mobile landing']],
+  ['MApp', ['Кабинет', 'Dashboard'], ['Модули, публикация, «Мои ролики», субтитры', 'Modules, publishing, my videos, subtitles']],
+  ['MStudio', ['Инструменты роста', 'Growth tools'], ['Календарь и брендбук', 'Calendar and brand kit']],
+  ['MAdmin', ['Админка', 'Admin'], ['Быстрые настройки', 'Quick settings']],
+  ['MStates', ['Ошибки', 'Errors'], ['Состояния ошибок', 'Error states']],
+  ['MLegal', ['Документы', 'Legal'], ['Юридические тексты', 'Legal texts']]
+];
+var T = {
+  ru: { kick: 'Интерактивный прототип', h1: 'AI-студия для авторов YouTube, VK Видео, RUTUBE и Дзена', lead: 'Канал, сценарий, озвучка, субтитры под голос, анализ и публикация на все площадки — в одном сервисе. Это прототип: кнопки работают, данные никуда не отправляются.', open: 'Открыть сайт', openM: 'Версия для телефона', watch: 'Смотреть демо · 3 мин', web: 'Сайт и кабинет', webSub: 'Экраны для компьютера. Переходы между ними работают как в настоящем сервисе.', mob: 'Телефон', mobSub: 'На компьютере экраны открываются в рамке телефона, на телефоне — во весь экран.', demo: 'Демо-видео', demoSub: '19 сцен: от регистрации до публикации, субтитров под голос и админки.', note: 'Прототип для показа и тестирования. Регистрация, оплата и публикация здесь не настоящие — никакие данные не сохраняются на сервере.' },
+  en: { kick: 'Interactive prototype', h1: 'An AI studio for YouTube, VK Video, RUTUBE and Dzen creators', lead: 'Channel, script, voiceover, voice-synced subtitles, analytics and publishing to every platform — in one service. This is a prototype: buttons work, no data is sent anywhere.', open: 'Open the site', openM: 'Phone version', watch: 'Watch the demo · 3 min', web: 'Site and dashboard', webSub: 'Desktop screens. Navigation between them works like the real service.', mob: 'Phone', mobSub: 'On a computer the screens open in a phone frame; on a phone, full screen.', demo: 'Demo video', demoSub: '19 scenes: from sign-up to publishing, voice-synced subtitles and admin. The video is in Russian.', note: 'A prototype for demos and testing. Sign-up, payment and publishing are not real — no data is stored on a server.' }
+};
+var lang = 'ru';
+var saved = null;
+try { saved = localStorage.getItem('aiyt.hub.lang'); } catch (e) {}
+lang = saved || ((navigator.language || '').slice(0, 2) === 'en' ? 'en' : 'ru');
+var phone = window.matchMedia('(max-width: 700px)').matches;
+function card(r, i, mobile) {
+  var href = mobile && !phone ? 'phone.html?s=' + r[0] : r[0] + '.dc.html';
+  return '<a class="card" href="' + href + '"><span class="tag">' + (mobile ? 'M' : '') + String(i + 1).padStart(2, '0') + '</span><b>' + r[1][lang === 'en' ? 1 : 0] + '</b><span>' + r[2][lang === 'en' ? 1 : 0] + '</span></a>';
+}
+function render() {
+  var t = T[lang];
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-t]').forEach(function (el) { el.textContent = t[el.getAttribute('data-t')]; });
+  document.querySelectorAll('.lang button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-l') === lang)); });
+  document.getElementById('web').innerHTML = WEB.map(function (r, i) { return card(r, i, false); }).join('');
+  document.getElementById('mob').innerHTML = MOB.map(function (r, i) { return card(r, i, true); }).join('');
+  document.getElementById('openSite').href = phone ? 'MLanding.dc.html' : 'Landing.dc.html';
+}
+document.querySelectorAll('.lang button').forEach(function (b) {
+  b.addEventListener('click', function () { lang = b.getAttribute('data-l'); try { localStorage.setItem('aiyt.hub.lang', lang); } catch (e) {} render(); });
+});
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,798 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>AI YT Studio — Growth tools</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F3EF}
+a{color:#16161A}a:hover{color:#B8320F}
+button{font-family:inherit;cursor:pointer}
+input,textarea,select{font-family:inherit}
+.ph{background-color:#E7E4DC;background-image:repeating-linear-gradient(135deg,rgba(22,22,26,0.06) 0 10px,transparent 10px 20px)}
+.phd{background-color:#23232A;background-image:repeating-linear-gradient(135deg,rgba(255,255,255,0.06) 0 10px,transparent 10px 20px)}
+.card{background:#fff;border:1px solid #E2DFD7;border-radius:12px}
+.btn2{min-height:40px;padding:0 12px;border-radius:8px;border:1px solid #D9D6CE;background:#fff;font-size:13px;color:#16161A}
+.btnd{min-height:40px;padding:0 14px;border-radius:8px;border:0;background:#16161A;color:#fff;font-size:13px}
+.h2{margin:0;font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600}
+.lbl{font-weight:500;font-size:14px}
+.fld{min-height:44px;padding:0 12px;border:1px solid #D9D6CE;border-radius:8px;font-size:15px;background:#fff;box-sizing:border-box}
+.mono{font-family:'IBM Plex Mono',monospace}
+.muted{color:#5E5B54}
+.pill{min-height:38px;padding:0 13px;border-radius:999px;font-size:13px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.sw{width:52px;height:44px;border:0;background:none;padding:0;display:flex;align-items:center;justify-content:flex-end;flex:none}
+.th{padding:10px 8px;font-weight:500;border-bottom:1px solid #E2DFD7;text-align:left;color:#5E5B54}
+.td{padding:10px 8px;border-bottom:1px solid #EFECE5}
+.intro{margin:0;color:#5E5B54;max-width:780px;line-height:1.5}
+:focus-visible{outline:3px solid #2F5BEA;outline-offset:2px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+label:focus-within{outline:3px solid #2F5BEA;outline-offset:2px}
+</style>
+</helmet>
+<div lang="{{uiLang}}" style="min-height: 100vh; background: #F4F3EF; color: #16161A; font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 15px; display: flex; flex-wrap: wrap; align-items: stretch">
+
+<nav aria-label="Main" style="flex: 1 1 240px; max-width: 100%; box-sizing: border-box; background: #16161A; color: #F4F3EF; padding: 28px 18px; display: flex; flex-direction: column; gap: 22px">
+<div style="display: flex; align-items: center; gap: 10px; padding: 0 8px">
+<div style="width: 34px; height: 34px; border-radius: 8px; background: {{accent}}; display: flex; align-items: center; justify-content: center"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7.5-4.5z" fill="#fff"></path></svg></div>
+<div style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 20px; letter-spacing: -0.02em">AI YT Studio</div>
+</div>
+<a href="Main.dc.html" style="min-height: 44px; display: flex; align-items: center; gap: 10px; padding: 0 12px; border-radius: 8px; border: 1px solid #34343C; color: #F4F3EF; text-decoration: none; font-size: 14px">← {{t.backModules}}</a>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<span class="mono" style="font-size: 11px; letter-spacing: 0.1em; color: #9C998F; padding: 0 12px 6px">{{t.groupTitle}}</span>
+<sc-for list="{{nav}}" as="n" hint-placeholder-count="8">
+<button type="button" onClick="{{n.go}}" style="display: flex; align-items: center; gap: 12px; min-height: 42px; padding: 8px 12px; border-radius: 8px; border: 0; text-align: left; font-size: 15px; {{n.st}}">
+<span class="mono" style="font-size: 12px; opacity: 0.7">{{n.num}}</span><span>{{n.label}}</span>
+</button>
+</sc-for>
+</div>
+<div style="margin-top: auto; border-top: 1px solid #34343C; padding: 16px 8px 0; display: flex; flex-direction: column; gap: 4px">
+<a href="Admin.dc.html" style="min-height: 40px; display: flex; align-items: center; color: #CFCBC2; font-size: 14px">{{t.admin}} ↗</a>
+<a href="Landing.dc.html" style="min-height: 40px; display: flex; align-items: center; color: #CFCBC2; font-size: 14px">{{t.logout}}</a>
+</div>
+</nav>
+
+<main style="flex: 999 1 560px; min-width: 0; box-sizing: border-box; padding: 28px clamp(16px, 4vw, 48px) 64px; display: flex; flex-direction: column; gap: 22px">
+<header style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<div class="mono muted" style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em">{{t.groupTitle}} · {{num}}</div>
+<h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 34px; font-weight: 600; letter-spacing: -0.02em">{{heading}}</h1>
+</div>
+<div style="display: flex; gap: 10px; align-items: center">
+<div role="group" aria-label="{{t.langSwitch}}" style="display: flex; gap: 4px; padding: 4px; background: #fff; border: 1px solid #D9D6CE; border-radius: 10px">
+<button type="button" onClick="{{setRu}}" aria-pressed="{{isRu}}" class="mono" style="min-width: 44px; min-height: 36px; border-radius: 7px; font-size: 13px; {{ruSt}}">RU</button>
+<button type="button" onClick="{{setEn}}" aria-pressed="{{isEn}}" class="mono" style="min-width: 44px; min-height: 36px; border-radius: 7px; font-size: 13px; {{enSt}}">EN</button>
+</div>
+<a href="Account.dc.html" aria-label="Account" style="width: 44px; height: 44px; border-radius: 50%; background: #16161A; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 600; text-decoration: none">YC</a>
+</div>
+</header>
+
+<!-- ============ CALENDAR ============ -->
+<sc-if value="{{isCal}}" hint-placeholder-val="{{ true }}">
+<section style="display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px">
+<div style="display: flex; align-items: center; gap: 10px">
+<button type="button" onClick="{{prevMonth}}" aria-label="{{t.prevMonth}}" class="btn2" style="width: 40px; padding: 0">‹</button>
+<span style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 600; min-width: 160px; text-align: center">{{monthTitle}}</span>
+<button type="button" onClick="{{nextMonth}}" aria-label="{{t.nextMonth}}" class="btn2" style="width: 40px; padding: 0">›</button>
+</div>
+<div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center">
+<div role="group" aria-label="{{t.viewMode}}" style="display: flex; gap: 4px; background: #E9E7E1; padding: 4px; border-radius: 10px">
+<button type="button" onClick="{{toMonth}}" aria-pressed="{{calMonth}}" style="min-height: 36px; padding: 0 14px; border-radius: 7px; font-size: 14px; {{monthSt}}">{{t.monthView}}</button>
+<button type="button" onClick="{{toBoard}}" aria-pressed="{{calBoard}}" style="min-height: 36px; padding: 0 14px; border-radius: 7px; font-size: 14px; {{boardSt}}">{{t.boardView}}</button>
+</div>
+<button type="button" onClick="{{addIdea}}" class="btnd" style="font-size: 14px">{{t.addVideo}}</button>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<sc-for list="{{legend}}" as="lg" hint-placeholder-count="6"><span style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px"><span style="width: 12px; height: 12px; border-radius: 3px; {{lg.st}}"></span>{{lg.label}}</span></sc-for>
+</div>
+<div role="group" aria-label="{{t.calPlatLbl}}" style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center"><span class="lbl" style="margin-right: 4px">{{t.calPlatLbl}}</span><sc-for list="{{calPlats}}" as="cp" hint-placeholder-count="5"><button type="button" onClick="{{cp.pick}}" aria-pressed="{{cp.on}}" style="min-height: 36px; padding: 0 14px; border-radius: 999px; font-size: 13px; {{cp.st}}">{{cp.label}}</button></sc-for></div>
+<div style="display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-start">
+<div style="flex: 3 1 560px; min-width: 0">
+<sc-if value="{{calMonth}}" hint-placeholder-val="{{ true }}">
+<div class="card" style="padding: 12px; overflow-x: auto">
+<div style="min-width: 620px; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px">
+<sc-for list="{{t.weekdays}}" as="wd" hint-placeholder-count="7"><div class="mono muted" style="font-size: 11px; text-transform: uppercase; padding: 4px 6px">{{wd}}</div></sc-for>
+<sc-for list="{{cells}}" as="c" hint-placeholder-count="35">
+<div style="min-height: 104px; border-radius: 8px; padding: 6px; box-sizing: border-box; display: flex; flex-direction: column; gap: 4px; {{c.st}}">
+<span class="mono" style="font-size: 12px; {{c.numSt}}">{{c.num}}</span>
+<sc-for list="{{c.items}}" as="it" hint-placeholder-count="1">
+<button type="button" onClick="{{it.pick}}" style="text-align: left; border: 0; border-radius: 5px; padding: 4px 6px; font-size: 12px; line-height: 1.25; min-height: 28px; display: flex; flex-direction: column; gap: 2px; {{it.st}}"><span>{{it.title}}</span><span class="mono" style="font-size: 10px; opacity: 0.8">{{it.tags}}</span></button>
+</sc-for>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{calBoard}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 6px">
+<sc-for list="{{columns}}" as="col" hint-placeholder-count="6">
+<div style="flex: 0 0 200px; background: #E9E7E1; border-radius: 10px; padding: 10px; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; align-items: center"><span style="display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 13px"><span style="width: 10px; height: 10px; border-radius: 3px; {{col.sw}}"></span>{{col.label}}</span><span class="mono muted" style="font-size: 12px">{{col.count}}</span></div>
+<sc-for list="{{col.items}}" as="ci" hint-placeholder-count="2">
+<div class="card" style="padding: 10px; display: flex; flex-direction: column; gap: 8px">
+<button type="button" onClick="{{ci.pick}}" style="border: 0; background: none; padding: 4px 0; min-height: 32px; text-align: left; font-size: 13px; font-weight: 500; line-height: 1.35">{{ci.title}}</button>
+<div style="display: flex; justify-content: space-between; align-items: center"><span class="mono muted" style="font-size: 11px">{{ci.date}} · {{ci.fmt}}</span><sc-if value="{{ci.canAdvance}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ci.advance}}" aria-label="{{t.advance}}" class="btn2" style="min-height: 30px; padding: 0 8px; font-size: 12px">→</button></sc-if></div>
+</div>
+</sc-for>
+</div>
+</sc-for>
+</div>
+</sc-if>
+</div>
+<aside class="card" style="flex: 1 1 280px; min-width: 0; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<sc-if value="{{noSel}}" hint-placeholder-val="{{ false }}"><span class="muted" style="font-size: 14px; line-height: 1.5">{{t.pickItem}}</span></sc-if>
+<sc-if value="{{hasSel}}" hint-placeholder-val="{{ true }}">
+<span style="align-self: flex-start; padding: 3px 10px; border-radius: 999px; font-size: 12px; {{sel.st}}">{{sel.status}}</span>
+<span style="font-family: 'Space Grotesk', sans-serif; font-size: 19px; font-weight: 600; line-height: 1.25">{{sel.title}}</span>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; font-size: 13px">
+<div style="background: #F4F3EF; border-radius: 8px; padding: 10px"><div class="muted">{{t.date}}</div><div style="font-weight: 500">{{sel.date}}</div></div>
+<div style="background: #F4F3EF; border-radius: 8px; padding: 10px"><div class="muted">{{t.format}}</div><div style="font-weight: 500">{{sel.fmt}}</div></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px"><span class="lbl">{{t.calPlH}}</span>
+<sc-for list="{{selPl}}" as="sp" hint-placeholder-count="4"><div style="display: flex; align-items: center; gap: 6px"><button type="button" onClick="{{sp.toggle}}" aria-pressed="{{sp.on}}" style="flex: 1; min-width: 0; min-height: 36px; padding: 0 10px; border-radius: 8px; font-size: 13px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; {{sp.st}}">{{sp.mark}} {{sp.name}}</button><button type="button" onClick="{{sp.left}}" aria-label="{{t.calShiftL}}" class="btn2" style="width: 32px; min-height: 36px; padding: 0">‹</button><span class="mono" style="min-width: 68px; text-align: center; font-size: 12px; {{sp.dateSt}}">{{sp.date}}</span><button type="button" onClick="{{sp.right}}" aria-label="{{t.calShiftR}}" class="btn2" style="width: 32px; min-height: 36px; padding: 0">›</button></div></sc-for>
+<span class="muted" style="font-size: 12px; line-height: 1.45">{{t.calPlHint}}</span></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="ptime" class="lbl">{{t.pubTime}}</label><input id="ptime" type="time" value="18:00" onChange="{{noop}}" class="fld"></div>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px">
+<span style="display: flex; flex-direction: column"><span class="lbl">{{t.autoPublish}}</span><span class="muted" style="font-size: 12px">{{t.autoPublishHint}}</span></span>
+<button type="button" role="switch" aria-checked="{{autoPub}}" aria-label="{{t.autoPublish}}" onClick="{{toggleAuto}}" class="sw"><span style="width: 46px; height: 26px; border-radius: 13px; position: relative; {{autoTrack}}"><span style="position: absolute; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; {{autoKnob}}"></span></span></button>
+</div>
+<sc-if value="{{sel.canAdvance}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{sel.advance}}" class="btnd" style="min-height: 44px; font-size: 14px">{{t.moveTo}} {{sel.nextQ}}</button></sc-if>
+<a href="Main.dc.html" class="btn2" style="min-height: 44px; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 14px">{{t.openProject}}</a>
+</sc-if>
+</aside>
+</div>
+</section>
+</sc-if>
+
+<!-- ============ SHORTS ============ -->
+<sc-if value="{{isShorts}}" hint-placeholder-val="{{ false }}">
+<section style="display: flex; flex-direction: column; gap: 18px">
+<p class="intro">{{t.shortsIntro}}</p>
+<div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+<form class="card" style="flex: 1 1 320px; min-width: 0; padding: 22px; display: flex; flex-direction: column; gap: 16px">
+<div role="radiogroup" aria-label="{{t.clipSrcLbl}}" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; background: #E9E7E1; border-radius: 10px"><sc-for list="{{clipSrcs}}" as="cs2" hint-placeholder-count="2"><button type="button" role="radio" aria-checked="{{cs2.on}}" onClick="{{cs2.pick}}" style="min-height: 40px; border-radius: 8px; font-size: 14px; font-weight: 500; {{cs2.st}}">{{cs2.label}}</button></sc-for></div>
+<sc-if value="{{clipFromScript}}" hint-placeholder-val="{{ false }}">
+<div style="background: #F4F3EF; border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 8px"><span class="mono muted" style="font-size: 11px">{{t.clipScriptKicker}}</span><span style="font-weight: 600">{{t.clipScriptName}}</span><span class="muted" style="font-size: 13px; line-height: 1.5">{{t.clipScriptHint}}</span><a href="Main.dc.html" style="min-height: 40px; display: flex; align-items: center; font-size: 14px; font-weight: 600">{{t.clipScriptLink}}</a></div>
+</sc-if>
+<sc-if value="{{clipFromVideo}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="srcv" class="lbl">{{t.sourceVideo}}</label><input id="srcv" type="text" placeholder="https://youtube.com/watch?v=…" class="fld"></div>
+<div class="ph" style="border-radius: 10px; min-height: 96px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; text-align: center; padding: 12px; color: #5E5B54; font-size: 14px">{{t.orUpload}}<label class="btn2" style="cursor: pointer; display: inline-flex; align-items: center; justify-content: center">{{t.chooseFile}}<input type="file" class="vh" accept="video/*" onChange="{{demo.filesClip}}"></label></div>
+<fieldset style="border: 0; padding: 0; margin: 0"><legend class="lbl" style="margin-bottom: 8px">{{t.clipLen}}</legend><div style="display: flex; gap: 6px; flex-wrap: wrap"><sc-for list="{{lens}}" as="ln" hint-placeholder-count="3"><button type="button" onClick="{{ln.pick}}" class="pill mono" style="{{ln.st}}">{{ln.label}}</button></sc-for></div></fieldset>
+<fieldset style="border: 0; padding: 0; margin: 0"><legend class="lbl" style="margin-bottom: 8px">{{t.clipCount}}</legend><div style="display: flex; gap: 6px; flex-wrap: wrap"><sc-for list="{{counts}}" as="cn" hint-placeholder-count="3"><button type="button" onClick="{{cn.pick}}" class="pill mono" style="{{cn.st}}">{{cn.label}}</button></sc-for></div></fieldset>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px"><span style="display: flex; flex-direction: column"><span class="lbl">{{t.reframe}}</span><span class="muted" style="font-size: 12px">{{t.reframeHint}}</span></span><button type="button" role="switch" aria-checked="{{reframe}}" aria-label="{{t.reframe}}" onClick="{{toggleReframe}}" class="sw"><span style="width: 46px; height: 26px; border-radius: 13px; position: relative; {{reframeTrack}}"><span style="position: absolute; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; {{reframeKnob}}"></span></span></button></div>
+<button type="button" onClick="{{findMoments}}" style="min-height: 48px; border-radius: 8px; border: 0; background: {{accent}}; color: #fff; font-weight: 600; font-size: 15px">{{t.findMoments}}</button>
+</sc-if>
+</form>
+<div style="flex: 2 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+<sc-if value="{{shortsEmpty}}" hint-placeholder-val="{{ true }}"><div class="ph" style="border-radius: 12px; min-height: 420px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 24px; color: #5E5B54">{{t.shortsEmpty}}</div></sc-if>
+<sc-if value="{{shortsDone}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px"><h2 class="h2">{{t.foundMoments}}</h2><button type="button" class="btnd" style="font-size: 14px" onClick="{{demo.exportSel}}">{{exportLabel}}</button></div>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px">
+<sc-for list="{{moments}}" as="mo" hint-placeholder-count="5">
+<div class="card" style="padding: 10px; display: flex; flex-direction: column; gap: 8px; {{mo.cardSt}}">
+<div class="phd" style="aspect-ratio: 9 / 16; border-radius: 8px; position: relative; display: flex; align-items: flex-end; padding: 10px; box-sizing: border-box">
+<span class="mono" style="position: absolute; left: 8px; top: 8px; font-size: 11px; color: #fff; background: rgba(0,0,0,0.55); padding: 2px 6px; border-radius: 4px">{{mo.range}}</span>
+<span style="position: absolute; right: 8px; top: 8px; font-size: 11px; padding: 2px 8px; border-radius: 999px; {{mo.potSt}}">{{mo.pot}}</span>
+<span style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px; color: #fff; text-transform: uppercase; line-height: 1.1; text-shadow: 0 2px 0 #000">{{mo.hook}}</span>
+</div>
+<label style="display: flex; gap: 8px; align-items: center; font-size: 13px; min-height: 32px"><input type="checkbox" checked="{{mo.on}}" onChange="{{mo.toggle}}" style="width: 18px; height: 18px; accent-color: #16161A">{{t.include}}</label>
+<div style="display: flex; gap: 6px"><button type="button" class="btn2" style="flex: 1; min-height: 34px; font-size: 12px" onClick="{{demo.edit}}">{{t.edit}}</button><button type="button" onClick="{{mo.toCal}}" class="btn2" style="flex: 1; min-height: 34px; font-size: 12px">{{mo.calLabel}}</button></div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+</div>
+</div>
+</section>
+</sc-if>
+
+<!-- ============ TITLE & THUMBNAIL CHECK ============ -->
+<sc-if value="{{isCheck}}" hint-placeholder-val="{{ false }}">
+<section style="display: flex; flex-direction: column; gap: 18px">
+<p class="intro">{{t.checkIntro}}</p>
+<div style="display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-start">
+<div class="card" style="flex: 1 1 420px; min-width: 0; padding: 22px; display: flex; flex-direction: column; gap: 14px">
+<h2 class="h2">{{t.titlesH}}</h2>
+<sc-for list="{{titleRows}}" as="tr" hint-placeholder-count="3">
+<div style="display: flex; flex-direction: column; gap: 8px; padding-bottom: 12px; border-bottom: 1px solid #EFECE5">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><label for="{{tr.fid}}" class="lbl">{{t.variant}} {{tr.letter}}</label><span class="mono" style="font-size: 12px; {{tr.lenSt}}">{{tr.len}}/100</span></div>
+<input id="{{tr.fid}}" type="text" value="{{tr.text}}" onChange="{{tr.onEdit}}" class="fld">
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{tr.checks}}" as="ck" hint-placeholder-count="4"><span style="display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 999px; font-size: 12px; {{ck.st}}">{{ck.icon}} {{ck.label}}</span></sc-for>
+</div>
+</div>
+</sc-for>
+<span class="muted" style="font-size: 13px">{{t.checkNote}}</span>
+</div>
+<div class="card" style="flex: 1 1 420px; min-width: 0; padding: 22px; display: flex; flex-direction: column; gap: 14px">
+<h2 class="h2">{{t.thumbsH}}</h2>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+<sc-for list="{{thumbs}}" as="tb" hint-placeholder-count="3">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div class="phd" style="aspect-ratio: 16 / 9; border-radius: 6px; display: flex; align-items: flex-end; padding: 6px; box-sizing: border-box"><span style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 12px; color: #fff; text-transform: uppercase; line-height: 1">{{tb.text}}</span></div>
+<span class="mono" style="font-size: 12px; font-weight: 500">{{t.variant}} {{tb.letter}}</span>
+<sc-for list="{{tb.checks}}" as="ck" hint-placeholder-count="3"><span style="font-size: 12px; {{ck.color}}">{{ck.icon}} {{ck.label}}</span></sc-for>
+</div>
+</sc-for>
+</div>
+<div style="border-top: 1px solid #EFECE5; padding-top: 14px; display: flex; flex-direction: column; gap: 10px">
+<span class="lbl">{{t.abTest}}</span>
+<span class="muted" style="font-size: 13px; line-height: 1.45">{{t.abHint}}</span>
+<div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center">
+<label for="abint" class="sr">{{t.abInterval}}</label>
+<select id="abint" class="fld" style="flex: 1 1 160px"><sc-for list="{{t.abIntervals}}" as="op" hint-placeholder-count="3"><option>{{op}}</option></sc-for></select>
+<button type="button" onClick="{{toggleAb}}" style="min-height: 44px; padding: 0 16px; border-radius: 8px; border: 0; font-size: 14px; font-weight: 600; {{abBtnSt}}">{{abBtn}}</button>
+</div>
+<sc-if value="{{abRunning}}" hint-placeholder-val="{{ false }}"><div style="background: #DDF0E8; color: #0B5A45; border-radius: 8px; padding: 10px 12px; font-size: 13px">{{t.abRunning}}</div></sc-if>
+</div>
+</div>
+</div>
+</section>
+</sc-if>
+
+<!-- ============ TRENDS ============ -->
+<sc-if value="{{isTrends}}" hint-placeholder-val="{{ false }}">
+<section style="display: flex; flex-direction: column; gap: 18px">
+<form class="card" style="padding: 18px; display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end">
+<div style="flex: 2 1 260px; display: flex; flex-direction: column; gap: 6px"><label for="tniche" class="lbl">{{t.niche}}</label><input id="tniche" type="text" placeholder="{{t.nichePh}}" class="fld"></div>
+<div style="flex: 1 1 160px; display: flex; flex-direction: column; gap: 6px"><label for="tper" class="lbl">{{t.period}}</label><select id="tper" class="fld"><sc-for list="{{t.periods}}" as="op" hint-placeholder-count="3"><option>{{op}}</option></sc-for></select></div>
+<div style="flex: 1 1 160px; display: flex; flex-direction: column; gap: 6px"><label for="tsize" class="lbl">{{t.chSize}}</label><select id="tsize" class="fld"><sc-for list="{{t.sizes}}" as="op" hint-placeholder-count="3"><option>{{op}}</option></sc-for></select></div>
+<button type="button" style="min-height: 44px; padding: 0 20px; border-radius: 8px; border: 0; background: {{accent}}; color: #fff; font-weight: 600; font-size: 15px" onClick="{{demo.scan}}">{{t.scan}}</button>
+</form>
+<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap"><span class="mono" style="padding: 4px 10px; border-radius: 999px; background: #FDE7DF; color: #8A2A0C; font-size: 12px">{{t.demo}}</span><span class="muted" style="font-size: 13px">{{t.demoNote}}</span></div>
+<div class="card" style="padding: 18px; display: flex; flex-direction: column; gap: 10px">
+<h2 class="h2">{{t.risingTopics}}</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><sc-for list="{{t.topics}}" as="tp" hint-placeholder-count="6"><span style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; background: #F4F3EF; font-size: 14px"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#0F7B5F" stroke-width="1.8" aria-hidden="true"><path d="M2 9l3.5-3.5 2 2L10 4M7 4h3v3"></path></svg>{{tp}}</span></sc-for></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px">
+<sc-for list="{{trends}}" as="tv" hint-placeholder-count="6">
+<div class="card" style="overflow: hidden; display: flex; flex-direction: column">
+<div class="phd" style="aspect-ratio: 16 / 9; position: relative"><span class="mono" style="position: absolute; right: 8px; bottom: 8px; font-size: 11px; color: #fff; background: rgba(0,0,0,0.6); padding: 2px 6px; border-radius: 4px">{{tv.len}}</span><span class="mono" style="position: absolute; left: 8px; top: 8px; font-size: 11px; padding: 2px 8px; border-radius: 999px; background: {{accent}}; color: #fff">{{tv.mult}}</span></div>
+<div style="padding: 14px; display: flex; flex-direction: column; gap: 8px; flex: 1">
+<span style="font-weight: 600; line-height: 1.35">{{tv.title}}</span>
+<span class="muted" style="font-size: 13px">{{tv.channel}} · {{tv.subs}}</span>
+<div style="display: flex; gap: 6px; margin-top: auto; padding-top: 6px"><a href="Main.dc.html" class="btn2" style="flex: 1; display: flex; align-items: center; justify-content: center; text-decoration: none">{{t.makeVideo}}</a><button type="button" onClick="{{tv.toCal}}" class="btn2" style="flex: 1">{{tv.calLabel}}</button></div>
+</div>
+</div>
+</sc-for>
+</div>
+</section>
+</sc-if>
+
+<!-- ============ REPURPOSE ============ -->
+<sc-if value="{{isRepurpose}}" hint-placeholder-val="{{ false }}">
+<section style="display: flex; flex-direction: column; gap: 18px">
+<p class="intro">{{t.repIntro}}</p>
+<div class="card" style="padding: 18px; display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end">
+<div style="flex: 2 1 260px; display: flex; flex-direction: column; gap: 6px"><label for="rsrc" class="lbl">{{t.repSource}}</label><select id="rsrc" class="fld"><sc-for list="{{t.repSources}}" as="op" hint-placeholder-count="2"><option>{{op}}</option></sc-for></select></div>
+<fieldset style="flex: 3 1 360px; border: 0; padding: 0; margin: 0"><legend class="lbl" style="margin-bottom: 8px">{{t.repTargets}}</legend>
+<div style="display: flex; gap: 8px; flex-wrap: wrap"><sc-for list="{{platforms}}" as="pf" hint-placeholder-count="4"><button type="button" onClick="{{pf.toggle}}" aria-pressed="{{pf.on}}" class="pill" style="{{pf.st}}">{{pf.mark}} {{pf.name}}</button></sc-for></div>
+</fieldset>
+<button type="button" onClick="{{adapt}}" style="min-height: 44px; padding: 0 20px; border-radius: 8px; border: 0; background: {{accent}}; color: #fff; font-weight: 600; font-size: 15px">{{t.adapt}}</button>
+</div>
+<sc-if value="{{repDone}}" hint-placeholder-val="{{ true }}">
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px">
+<sc-for list="{{repCards}}" as="rc" hint-placeholder-count="3">
+<div class="card" style="padding: 14px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: center"><span style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 17px">{{rc.name}}</span><span class="mono muted" style="font-size: 12px">{{rc.spec}}</span></div>
+<div style="display: flex; gap: 12px">
+<div class="phd" style="width: 96px; flex: none; aspect-ratio: 9 / 16; border-radius: 6px"></div>
+<div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+<label for="{{rc.fid}}" class="muted" style="font-size: 12px">{{t.caption}}</label>
+<textarea id="{{rc.fid}}" rows="5" style="padding: 8px; border: 1px solid #E2DFD7; border-radius: 8px; font-size: 13px; line-height: 1.4; resize: vertical">{{rc.caption}}</textarea>
+</div>
+</div>
+<span style="font-size: 13px; color: #2F5BEA; line-height: 1.4">{{rc.tags}}</span>
+<div style="display: flex; gap: 6px"><button type="button" class="btn2" style="flex: 1" onClick="{{demo.download}}">{{t.download}}</button><button type="button" class="btnd" style="flex: 1" onClick="{{demo.publish}}">{{t.publish}}</button></div>
+</div>
+</sc-for>
+</div>
+<span class="muted" style="font-size: 13px">{{t.repNote}}</span>
+</sc-if>
+</section>
+</sc-if>
+
+<!-- ============ BRAND KIT ============ -->
+<sc-if value="{{isBrand}}" hint-placeholder-val="{{ false }}">
+<section style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+<div class="card" style="flex: 1 1 340px; min-width: 0; padding: 22px; display: flex; flex-direction: column; gap: 16px">
+<p class="intro" style="font-size: 14px">{{t.brandIntro}}</p>
+<span class="lbl">{{t.colors}}</span>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+<sc-for list="{{brandColors}}" as="bc" hint-placeholder-count="3">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<input id="{{bc.fid}}" type="color" value="{{bc.value}}" onChange="{{bc.onEdit}}" style="width: 100%; height: 48px; border: 1px solid #D9D6CE; border-radius: 8px; padding: 2px; background: #fff; cursor: pointer">
+<label for="{{bc.fid}}" style="font-size: 12px">{{bc.label}}</label>
+<span class="mono muted" style="font-size: 11px">{{bc.value}}</span>
+</div>
+</sc-for>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="bfont" class="lbl">{{t.headFont}}</label><select id="bfont" class="fld" onChange="{{onFont}}" value="{{font}}"><sc-for list="{{fonts}}" as="fo" hint-placeholder-count="4"><option value="{{fo.v}}">{{fo.label}}</option></sc-for></select></div>
+<fieldset style="border: 0; padding: 0; margin: 0"><legend class="lbl" style="margin-bottom: 8px">{{t.thumbStyle}}</legend><div style="display: flex; gap: 6px; flex-wrap: wrap"><sc-for list="{{tStyles}}" as="ts" hint-placeholder-count="3"><button type="button" onClick="{{ts.pick}}" class="pill" style="{{ts.st}}">{{ts.label}}</button></sc-for></div></fieldset>
+<div class="ph" style="border-radius: 10px; min-height: 80px; display: flex; align-items: center; justify-content: center; gap: 10px; color: #5E5B54; font-size: 14px">{{t.logo}} <label class="btn2" style="cursor: pointer; display: inline-flex; align-items: center; justify-content: center">{{t.chooseFile}}<input type="file" class="vh" accept="image/png,image/svg+xml,image/jpeg" onChange="{{demo.filesLogo}}"></label></div>
+<sc-for list="{{brandSw}}" as="bs" hint-placeholder-count="3">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px"><span class="lbl">{{bs.label}}</span><button type="button" role="switch" aria-checked="{{bs.on}}" aria-label="{{bs.label}}" onClick="{{bs.toggle}}" class="sw"><span style="width: 46px; height: 26px; border-radius: 13px; position: relative; {{bs.track}}"><span style="position: absolute; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; {{bs.knob}}"></span></span></button></div>
+</sc-for>
+<button type="button" style="min-height: 48px; border-radius: 8px; border: 0; background: {{accent}}; color: #fff; font-weight: 600; font-size: 15px" onClick="{{demo.saveBrand}}">{{t.saveBrand}}</button>
+</div>
+<div style="flex: 2 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<div class="card" style="padding: 18px; display: flex; flex-direction: column; gap: 12px">
+<h2 class="h2">{{t.preview}}</h2>
+<div style="aspect-ratio: 16 / 9; border-radius: 10px; position: relative; overflow: hidden; display: flex; padding: 6%; box-sizing: border-box; {{thumbBg}}">
+<div style="display: flex; flex-direction: column; justify-content: {{thumbJustify}}; gap: 10px; max-width: 62%">
+<span style="font-family: {{fontCss}}; font-weight: 700; font-size: clamp(22px, 3.6vw, 44px); line-height: 1; text-transform: uppercase; {{thumbTextSt}}">{{t.thumbText}}</span>
+<span style="align-self: flex-start; padding: 6px 12px; border-radius: 6px; font-family: {{fontCss}}; font-weight: 700; font-size: 16px; {{thumbTagSt}}">{{t.thumbTag}}</span>
+</div>
+<div class="phd" style="position: absolute; right: 5%; bottom: 0; width: 34%; height: 78%; border-radius: 12px 12px 0 0"></div>
+<sc-if value="{{watermark}}" hint-placeholder-val="{{ true }}"><span style="position: absolute; right: 12px; top: 10px; width: 30px; height: 30px; border-radius: 50%; {{wmSt}}"></span></sc-if>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px">
+<div class="card" style="padding: 14px; display: flex; flex-direction: column; gap: 8px"><span class="lbl">{{t.avatarPrev}}</span><div style="width: 72px; height: 72px; border-radius: 50%; {{avatarSt}}"></div></div>
+<div class="card" style="padding: 14px; display: flex; flex-direction: column; gap: 8px; grid-column: span 2"><span class="lbl">{{t.bannerPrev}}</span><div style="height: 72px; border-radius: 8px; display: flex; align-items: center; padding: 0 16px; {{bannerSt}}"><span style="font-family: {{fontCss}}; font-weight: 700; font-size: 22px; {{bannerTextSt}}">{{t.bannerText}}</span></div></div>
+</div>
+</div>
+</section>
+</sc-if>
+
+<!-- ============ COMMENTS ============ -->
+<sc-if value="{{isComments}}" hint-placeholder-val="{{ false }}">
+<section style="display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap"><span class="mono" style="padding: 4px 10px; border-radius: 999px; background: #FDE7DF; color: #8A2A0C; font-size: 12px">{{t.demo}}</span><span class="muted" style="font-size: 13px">{{t.commentsNote}}</span></div>
+<div class="card" style="padding: 18px; display: flex; flex-direction: column; gap: 10px">
+<h2 class="h2">{{t.summaryH}}</h2>
+<p style="margin: 0; line-height: 1.55; color: #3A3833">{{t.summary}}</p>
+</div>
+<div style="display: flex; gap: 8px; flex-wrap: wrap"><sc-for list="{{cFilters}}" as="cf" hint-placeholder-count="5"><button type="button" onClick="{{cf.pick}}" class="pill" style="{{cf.st}}">{{cf.label}}</button></sc-for></div>
+<sc-for list="{{comments}}" as="cm" hint-placeholder-count="4">
+<div class="card" style="padding: 16px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap"><span style="display: flex; gap: 10px; align-items: center"><span style="width: 32px; height: 32px; border-radius: 50%; background: #E2DFD7; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600">{{cm.ini}}</span><span style="display: flex; flex-direction: column"><span style="font-weight: 500; font-size: 14px">{{cm.author}}</span><span class="muted" style="font-size: 12px">{{cm.video}}</span></span></span><span style="align-self: flex-start; padding: 3px 10px; border-radius: 999px; font-size: 12px; {{cm.catSt}}">{{cm.cat}}</span></div>
+<p style="margin: 0; line-height: 1.5">{{cm.text}}</p>
+<sc-if value="{{cm.pending}}" hint-placeholder-val="{{ true }}">
+<label for="{{cm.fid}}" class="muted" style="font-size: 12px">{{t.aiDraft}}</label>
+<textarea id="{{cm.fid}}" rows="2" style="padding: 10px; border: 1px solid #E2DFD7; border-radius: 8px; font-size: 14px; line-height: 1.45; resize: vertical; background: #FCFBF8">{{cm.draft}}</textarea>
+<div style="display: flex; gap: 8px; flex-wrap: wrap"><button type="button" onClick="{{cm.send}}" class="btnd">{{t.send}}</button><button type="button" class="btn2" onClick="{{demo.regen}}">{{t.regen}}</button><button type="button" onClick="{{cm.skip}}" class="btn2">{{t.skip}}</button></div>
+</sc-if>
+<sc-if value="{{cm.done}}" hint-placeholder-val="{{ false }}"><div style="padding: 8px 12px; border-radius: 8px; font-size: 13px; {{cm.doneSt}}">{{cm.doneLabel}}</div></sc-if>
+</div>
+</sc-for>
+</section>
+</sc-if>
+
+<!-- ============ TEAM ============ -->
+<sc-if value="{{isTeam}}" hint-placeholder-val="{{ false }}">
+<section style="display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-start">
+<div class="card" style="flex: 2 1 460px; min-width: 0; padding: 20px; display: flex; flex-direction: column; gap: 6px">
+<h2 class="h2" style="margin-bottom: 6px">{{t.members}}</h2>
+<sc-for list="{{members}}" as="mb" hint-placeholder-count="4">
+<div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid #EFECE5; flex-wrap: wrap">
+<span style="width: 38px; height: 38px; border-radius: 50%; background: #16161A; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; flex: none">{{mb.ini}}</span>
+<span style="flex: 1 1 160px; display: flex; flex-direction: column; min-width: 0"><span style="font-weight: 500">{{mb.name}}</span><span class="muted" style="font-size: 13px">{{mb.email}}</span></span>
+<sc-if value="{{mb.pending}}" hint-placeholder-val="{{ false }}"><span style="padding: 3px 10px; border-radius: 999px; background: #FBEBC9; color: #7A4B00; font-size: 12px">{{t.invited}}</span></sc-if>
+<label for="{{mb.fid}}" class="sr">{{t.role}} — {{mb.name}}</label>
+<select id="{{mb.fid}}" class="fld" style="min-height: 38px; font-size: 14px" value="{{mb.role}}" onChange="{{mb.onRole}}"><sc-for list="{{roleOpts}}" as="ro" hint-placeholder-count="4"><option value="{{ro.v}}">{{ro.label}}</option></sc-for></select>
+</div>
+</sc-for>
+</div>
+<form class="card" style="flex: 1 1 300px; min-width: 0; padding: 20px; display: flex; flex-direction: column; gap: 12px">
+<h2 class="h2">{{t.inviteH}}</h2>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="iemail" class="lbl">Email</label><input id="iemail" type="email" placeholder="editor@example.com" value="{{inviteEmail}}" onChange="{{onInviteEmail}}" class="fld"></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="irole" class="lbl">{{t.role}}</label><select id="irole" class="fld" value="{{inviteRole}}" onChange="{{onInviteRole}}"><sc-for list="{{roleOpts}}" as="ro" hint-placeholder-count="4"><option value="{{ro.v}}">{{ro.label}}</option></sc-for></select></div>
+<button type="button" onClick="{{invite}}" style="min-height: 46px; border-radius: 8px; border: 0; background: {{accent}}; color: #fff; font-weight: 600; font-size: 15px">{{t.sendInvite}}</button>
+<span class="muted" style="font-size: 12px">{{t.seats}}</span>
+</form>
+</div>
+<div class="card" style="padding: 20px; display: flex; flex-direction: column; gap: 10px">
+<h2 class="h2">{{t.permsH}}</h2>
+<div style="overflow-x: auto">
+<table style="width: 100%; min-width: 560px; border-collapse: collapse; font-size: 14px">
+<thead><tr><th class="th">{{t.action}}</th><sc-for list="{{roleOpts}}" as="ro" hint-placeholder-count="4"><th class="th">{{ro.label}}</th></sc-for></tr></thead>
+<tbody><sc-for list="{{perms}}" as="pm" hint-placeholder-count="6"><tr><td class="td">{{pm.label}}</td><sc-for list="{{pm.cells}}" as="pc" hint-placeholder-count="4"><td class="td" style="{{pc.st}}">{{pc.mark}}</td></sc-for></tr></sc-for></tbody>
+</table>
+</div>
+</div>
+</section>
+</sc-if>
+
+</main>
+<div role="status" aria-live="polite" style="position: fixed; left: 50%; bottom: 24px; z-index: 60; max-width: min(92vw, 560px); background: #16161A; color: #fff; padding: 12px 18px; border-radius: 10px; font-size: 14px; line-height: 1.45; box-shadow: 0 8px 24px rgba(0,0,0,0.25); transition: opacity .2s, transform .2s; {{toastSt}}">{{toastText}}</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#C93C14","options":["#C93C14","#2F5BEA","#0F7B5F","#16161A"]},"startLang":{"editor":"enum","options":["ru","en"],"default":"ru"},"instagram":{"editor":"enum","options":["on","off"],"default":"on"},"$preview":{"width":1440,"height":1240}}'>
+var CLX = {
+  ru: { clipSrcLbl: "Источник Shorts", clipSrc: { video: "Из готового видео", script: "Из сценария" }, clipScriptKicker: "СЦЕНАРИЙ ПРОЕКТА", clipScriptName: "Почему 80% океана не исследовано",
+    clipScriptHint: "Shorts из сценария делаются до выхода длинного ролика: AI выбирает сильные сцены, пишет новый хук и призыв к полному видео. Нарезка из готового видео — после публикации.",
+    clipScriptLink: "Открыть AI-контент → вкладка «Shorts» →" },
+  en: { clipSrcLbl: "Shorts source", clipSrc: { video: "From a finished video", script: "From the script" }, clipScriptKicker: "PROJECT SCRIPT", clipScriptName: "Why 80% of the ocean is unexplored",
+    clipScriptHint: "Shorts from the script are made before the long video is out: AI picks strong scenes, writes a new hook and a call to watch the full video. Cutting from a finished video comes after publishing.",
+    clipScriptLink: "Open AI Content → “Shorts” tab →" }
+};
+var L = {
+  ru: {
+    groupTitle: "ИНСТРУМЕНТЫ РОСТА", backModules: "Основные модули", admin: "Админ-панель", logout: "Выйти", langSwitch: "Язык сайта",
+    nav: ["Контент-календарь", "Нарезка Shorts", "Заголовки и обложки", "Радар трендов", "Перенос на платформы", "Брендбук канала", "Комментарии", "Команда"],
+    month: "Октябрь 2026", prevMonth: "Предыдущий месяц", nextMonth: "Следующий месяц", viewMode: "Вид", monthView: "Месяц", boardView: "Доска", addVideo: "+ Видео",
+    weekdays: ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"],
+    statuses: { idea: "Идея", script: "Сценарий", visual: "Визуал", ready: "Готово", scheduled: "Запланировано", published: "Опубликовано" },
+    fmts: { long: "Длинное", short: "Shorts" },
+    items: ["Почему океан не изучен", "5 светящихся существ", "Самая глубокая точка Земли", "Что видит сонар", "Глубоководная добыча", "Медуза за 60 секунд", "Новости глубин: октябрь", "Марианская впадина в 3D"],
+    newIdea: "Новая идея", pickItem: "Выберите видео в календаре, чтобы запланировать публикацию или сменить этап.",
+    date: "Дата", format: "Формат", pubTime: "Время публикации", autoPublish: "Автопубликация", autoPublishHint: "Ролик выйдет сам на всех выбранных площадках", moveTo: "Перевести в", openProject: "Открыть проект", advance: "Следующий этап",
+    shortsIntro: "Загрузите длинное видео — AI найдёт самые сильные моменты, переведёт их в вертикальный формат 9:16 и добавит субтитры.",
+    sourceVideo: "Ссылка на видео", orUpload: "или загрузите файл MP4 / MOV", chooseFile: "Выбрать файл",
+    clipLen: "Длина клипа", clipCount: "Количество клипов", reframe: "Авто-кадрирование", reframeHint: "Камера следит за лицом или объектом",
+    findMoments: "Найти моменты", shortsEmpty: "Здесь появятся найденные моменты в формате 9:16 с хуком и субтитрами.",
+    foundMoments: "Найденные моменты", exportSel: "Экспортировать выбранные", include: "Включить в экспорт", edit: "Редактировать", toCal: "В календарь", inCal: "В календаре ✓",
+    potHigh: "Высокий потенциал", potMid: "Средний",
+    hooks: ["Карты Марса точнее, чем дна океана", "4000 метров — сложнее, чем космос", "Робот, который нырнул глубже всех", "Существо светится в полной темноте", "Что мы нашли у гидротермальных источников"],
+    checkIntro: "Сравните варианты заголовков и обложек до публикации, а после — запустите A/B-тест обложек на реальных зрителях.",
+    titlesH: "Заголовки", variant: "Вариант", checkNote: "Проверки работают по правилам YouTube и лучшим практикам; итоговую кликабельность покажет A/B-тест.",
+    chkLen: "Длина до 60 символов", chkLenBad: "Обрезается в поиске", chkQ: "Вызывает любопытство", chkNum: "Есть число", chkKw: "Ключевое слово в начале",
+    titles: ["Марс изучен лучше, чем наш океан", "Что на самом деле скрыто на глубине 4000 метров и почему туда так сложно добраться?", "Последнее неисследованное место на Земле"],
+    thumbsH: "Обложки", thumbTexts: ["Что там внизу?", "Белое пятно", "4000 м вниз"],
+    tChecks: [[["✓", "Читается на телефоне", true], ["✓", "Высокий контраст", true], ["✓", "1 объект в кадре", true]], [["✓", "Читается на телефоне", true], ["!", "Низкий контраст", false], ["✓", "1 объект в кадре", true]], [["✓", "Читается на телефоне", true], ["✓", "Высокий контраст", true], ["!", "Много деталей", false]]],
+    abTest: "A/B-тест обложек", abHint: "Обложки будут меняться по очереди; победит вариант с наибольшим CTR.", abInterval: "Интервал смены", abIntervals: ["Каждые 24 часа", "Каждые 12 часов", "Каждые 48 часов"],
+    abStart: "Запустить тест", abStop: "Остановить", abRunning: "Тест запущен. Результаты появятся через 7 дней на этой странице.",
+    niche: "Ниша или тема", nichePh: "Наука об океане", period: "Период", periods: ["За 7 дней", "За 30 дней", "За 90 дней"], chSize: "Размер канала", sizes: ["До 10 тыс.", "До 100 тыс.", "Любой"], scan: "Найти тренды",
+    demo: "ДЕМО-ДАННЫЕ", demoNote: "Видео и цифры — заглушки до подключения YouTube Data API.",
+    risingTopics: "Растущие темы", topics: ["глубоководные роботы", "биолюминесценция", "Марианская впадина", "подводные вулканы", "глубоководная добыча", "акулы-призраки"],
+    trendVids: [["Мы опустили камеру на 6000 метров", "@deep_atlas", "8 тыс.", "×12", "11:20"], ["Почему у глубоководных рыб нет цвета", "@ocean_notes", "3 тыс.", "×9", "8:05"], ["Подводный вулкан проснулся", "@bezdna_tv", "25 тыс.", "×7", "14:40"], ["Самое редкое существо океана", "@abyss_lab", "1 тыс.", "×15", "0:58"], ["Как работает батискаф", "@hydro_story", "40 тыс.", "×5", "9:30"], ["Шум из глубины, который никто не объяснил", "@sonar_club", "6 тыс.", "×8", "12:10"]],
+    makeVideo: "Сделать видео",
+    repIntro: "Один сценарий или видео — сразу для нескольких платформ: формат, длина, подпись и хэштеги подстраиваются автоматически.",
+    repSource: "Что адаптировать", repSources: ["Почему океан не изучен (видео)", "Самая глубокая точка Земли (сценарий)"], repTargets: "Платформы", adapt: "Адаптировать",
+    plats: [["YouTube Shorts", "9:16 · до 60 с"], ["TikTok", "9:16 · до 3 мин"], ["Instagram Reels", "9:16 · до 90 с"], ["Telegram", "16:9 / 9:16"], ["VK Клипы", "9:16 · до 3 мин"], ["RUTUBE Shorts", "9:16 · до 60 с"], ["Дзен · ролики", "9:16 · до 3 мин"]],
+    caps: ["Карты Марса у нас точнее, чем карты дна океана. Что же там внизу? 🔽 Полное видео на канале.", "4000 метров под водой — сложнее, чем космос. Объясняем за минуту 👇", "Последнее неисследованное место на Земле. Сохраняй, чтобы не потерять.", "Новое видео: почему 80% океана до сих пор не исследовано. Смотрите по ссылке.", "Карта Марса точнее карты дна океана. Почему так — рассказываем в полном видео.", "Что скрывают 4000 метров под водой? Коротко — за минуту.", "80% океана не исследовано. Объясняем, почему — в ролике."],
+    tagsList: ["#океан #наука #shorts", "#океан #наука #фактыдня #рекомендации", "#океан #наука #reels #интересно", "#наука #океан", "#океан #наука #клипы", "#океан #наука #shorts", "#океан #наука #дзен"],
+    caption: "Подпись", download: "Скачать", publish: "Опубликовать", repNote: "Публикация в TikTok и Instagram требует подключения их аккаунтов через официальные API.",
+    brandIntro: "Брендбук применяется ко всем генерациям: обложкам, аватару, баннеру, субтитрам и заставкам.",
+    colors: "Цвета бренда", colorNames: ["Основной", "Акцент", "Текст"], headFont: "Шрифт заголовков",
+    thumbStyle: "Стиль обложек", tStyles: { bold: "Крупный текст", minimal: "Минимализм", split: "Плашка" },
+    logo: "Логотип (PNG / SVG)", bsw: ["Логотип на обложках", "Заставка в начале видео", "Субтитры в цветах бренда"], saveBrand: "Сохранить брендбук",
+    preview: "Превью обложки", thumbText: "Что скрыто на дне?", thumbTag: "4000 м", avatarPrev: "Аватар", bannerPrev: "Баннер канала", bannerText: "Бездна. Объясняем",
+    commentsNote: "Комментарии — примеры; после подключения канала здесь будут реальные.",
+    summaryH: "О чём пишут зрители", summary: "Зрителям нравится подача и графика. Чаще всего просят продолжение про Марианскую впадину и спрашивают, где взяты съёмки. Несколько человек жалуются на громкую музыку в начале.",
+    cFilters: { all: "Все", question: "Вопросы", praise: "Похвала", criticism: "Критика", idea: "Идеи" },
+    commentList: [["question", "А откуда эти кадры с глубины? Это реальные съёмки?", "Часть кадров — реальные съёмки исследовательских экспедиций, часть — визуализация. Источники указаны в описании 👇"], ["idea", "Сделайте отдельное видео про Марианскую впадину!", "Уже в работе — выйдет на следующей неделе. Подпишитесь, чтобы не пропустить!"], ["criticism", "Музыка в начале громче голоса, ничего не слышно", "Спасибо, что заметили! Поправим баланс звука в следующих видео."], ["praise", "Лучшее объяснение, что я видел. Подписался", "Спасибо! Рады, что понравилось — впереди ещё много глубин 🌊"]],
+    authors: ["Алексей", "Мария", "Денис", "Ольга"], videoName: "Почему океан не изучен",
+    cats: { question: "Вопрос", praise: "Похвала", criticism: "Критика", idea: "Идея" },
+    aiDraft: "Черновик ответа от AI", send: "Отправить", regen: "Другой вариант", skip: "Пропустить", sent: "Ответ отправлен", skipped: "Пропущено",
+    members: "Участники", invited: "Приглашён", role: "Роль", inviteH: "Пригласить в команду", sendInvite: "Отправить приглашение", seats: "Мест в тарифе: 5. Доступно на тарифе «Студия».",
+    roles: { owner: "Владелец", editor: "Монтажёр", writer: "Сценарист", viewer: "Наблюдатель" },
+    permsH: "Права доступа", action: "Действие",
+    permRows: ["Создавать и править сценарии", "Генерировать изображения и видео", "Собирать и публиковать видео", "Смотреть аналитику", "Управлять командой", "Оплата и тариф"],
+    permMatrix: [[1, 1, 1, 0], [1, 1, 0, 0], [1, 1, 0, 0], [1, 1, 1, 1], [1, 0, 0, 0], [1, 0, 0, 0]]
+  },
+  en: {
+    groupTitle: "GROWTH TOOLS", backModules: "Core modules", admin: "Admin panel", logout: "Log out", langSwitch: "Site language",
+    nav: ["Content calendar", "Shorts clipper", "Titles & thumbnails", "Trend radar", "Repurpose", "Brand kit", "Comments", "Team"],
+    month: "October 2026", prevMonth: "Previous month", nextMonth: "Next month", viewMode: "View", monthView: "Month", boardView: "Board", addVideo: "+ Video",
+    weekdays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    statuses: { idea: "Idea", script: "Script", visual: "Visuals", ready: "Ready", scheduled: "Scheduled", published: "Published" },
+    fmts: { long: "Long-form", short: "Short" },
+    items: ["Why the ocean is unexplored", "5 glowing creatures", "The deepest point on Earth", "What sonar sees", "Deep-sea mining", "Jellyfish in 60 seconds", "Deep news: October", "The Mariana Trench in 3D"],
+    newIdea: "New idea", pickItem: "Pick a video in the calendar to schedule it or move it to the next stage.",
+    date: "Date", format: "Format", pubTime: "Publish time", autoPublish: "Auto-publish", autoPublishHint: "The video goes live by itself on every selected platform", moveTo: "Move to", openProject: "Open project", advance: "Next stage",
+    shortsIntro: "Upload a long video — AI finds the strongest moments, reframes them to vertical 9:16 and adds subtitles.",
+    sourceVideo: "Video link", orUpload: "or upload an MP4 / MOV file", chooseFile: "Choose file",
+    clipLen: "Clip length", clipCount: "Number of clips", reframe: "Auto-reframe", reframeHint: "The frame follows the face or subject",
+    findMoments: "Find moments", shortsEmpty: "Found moments will appear here as 9:16 clips with a hook and subtitles.",
+    foundMoments: "Found moments", exportSel: "Export selected", include: "Include in export", edit: "Edit", toCal: "To calendar", inCal: "In calendar ✓",
+    potHigh: "High potential", potMid: "Medium",
+    hooks: ["Mars is mapped better than our seabed", "4,000 m is harder than space", "The robot that dove the deepest", "This creature glows in total darkness", "What we found at the hydrothermal vents"],
+    checkIntro: "Compare title and thumbnail variants before publishing, then run a thumbnail A/B test on real viewers.",
+    titlesH: "Titles", variant: "Variant", checkNote: "Checks follow YouTube rules and best practice; real click-through comes from the A/B test.",
+    chkLen: "Under 60 characters", chkLenBad: "Cut off in search", chkQ: "Sparks curiosity", chkNum: "Has a number", chkKw: "Keyword up front",
+    titles: ["We Mapped Mars Better Than Our Own Ocean", "What Is Really Hiding 4,000 Metres Below and Why Is It So Hard to Get There?", "The Last Unexplored Place on Earth"],
+    thumbsH: "Thumbnails", thumbTexts: ["What’s down there?", "Unmapped", "4,000 m below"],
+    tChecks: [[["✓", "Readable on phones", true], ["✓", "High contrast", true], ["✓", "Single subject", true]], [["✓", "Readable on phones", true], ["!", "Low contrast", false], ["✓", "Single subject", true]], [["✓", "Readable on phones", true], ["✓", "High contrast", true], ["!", "Too busy", false]]],
+    abTest: "Thumbnail A/B test", abHint: "Thumbnails rotate in turn; the one with the best CTR wins.", abInterval: "Rotation interval", abIntervals: ["Every 24 hours", "Every 12 hours", "Every 48 hours"],
+    abStart: "Start test", abStop: "Stop", abRunning: "Test is running. Results will show up on this page in [N] days.",
+    niche: "Niche or topic", nichePh: "Ocean science", period: "Period", periods: ["Last 7 days", "Last 30 days", "Last 90 days"], chSize: "Channel size", sizes: ["Under 10K", "Under 100K", "Any"], scan: "Find trends",
+    demo: "DEMO DATA", demoNote: "Videos and numbers are placeholders until the YouTube Data API is connected.",
+    risingTopics: "Rising topics", topics: ["deep-sea robots", "bioluminescence", "Mariana Trench", "underwater volcanoes", "deep-sea mining", "ghost sharks"],
+    trendVids: [["We dropped a camera to 6,000 metres", "@deep_atlas", "8K", "×12", "11:20"], ["Why deep-sea fish have no colour", "@ocean_notes", "3K", "×9", "8:05"], ["An underwater volcano woke up", "@bezdna_tv", "25K", "×7", "14:40"], ["The rarest creature in the ocean", "@abyss_lab", "1K", "×15", "0:58"], ["How a bathyscaphe works", "@hydro_story", "40K", "×5", "9:30"], ["The deep-sea sound nobody explained", "@sonar_club", "6K", "×8", "12:10"]],
+    makeVideo: "Make a video",
+    repIntro: "One script or video for several platforms at once: format, length, caption and hashtags adapt automatically.",
+    repSource: "What to adapt", repSources: ["Why the ocean is unexplored (video)", "The deepest point on Earth (script)"], repTargets: "Platforms", adapt: "Adapt",
+    plats: [["YouTube Shorts", "9:16 · up to 60 s"], ["TikTok", "9:16 · up to 3 min"], ["Instagram Reels", "9:16 · up to 90 s"], ["Telegram", "16:9 / 9:16"], ["VK Clips", "9:16 · up to 3 min"], ["RUTUBE Shorts", "9:16 · up to 60 s"], ["Dzen · short videos", "9:16 · up to 3 min"]],
+    caps: ["We’ve mapped Mars better than our own seabed. So what’s down there? 🔽 Full video on the channel.", "4,000 m underwater is harder than space. Explained in a minute 👇", "The last unexplored place on Earth. Save this so you don’t lose it.", "New video: why 80% of the ocean is still unexplored. Watch via the link.", "We’ve mapped Mars better than the seabed. Why — in the full video.", "What hides 4,000 m underwater? In one minute.", "80% of the ocean is unexplored. Here’s why."],
+    tagsList: ["#ocean #science #shorts", "#ocean #science #facts #fyp", "#ocean #science #reels", "#science #ocean", "#ocean #science #clips", "#ocean #science #shorts", "#ocean #science #dzen"],
+    caption: "Caption", download: "Download", publish: "Publish", repNote: "Publishing to TikTok and Instagram requires connecting those accounts through their official APIs.",
+    brandIntro: "The brand kit applies to every generation: thumbnails, avatar, banner, subtitles and intros.",
+    colors: "Brand colours", colorNames: ["Primary", "Accent", "Text"], headFont: "Headline font",
+    thumbStyle: "Thumbnail style", tStyles: { bold: "Big text", minimal: "Minimal", split: "Label" },
+    logo: "Logo (PNG / SVG)", bsw: ["Logo on thumbnails", "Intro at video start", "Subtitles in brand colours"], saveBrand: "Save brand kit",
+    preview: "Thumbnail preview", thumbText: "What’s on the seabed?", thumbTag: "4,000 m", avatarPrev: "Avatar", bannerPrev: "Channel banner", bannerText: "Abyss Explained",
+    commentsNote: "Comments are examples; real ones appear after the channel is connected.",
+    summaryH: "What viewers are saying", summary: "Viewers like the delivery and visuals. Most ask for a follow-up on the Mariana Trench and where the footage comes from. A few say the intro music is too loud.",
+    cFilters: { all: "All", question: "Questions", praise: "Praise", criticism: "Criticism", idea: "Ideas" },
+    commentList: [["question", "Where is this deep-sea footage from? Is it real?", "Some shots are real footage from research expeditions, some are visualisations. Sources are in the description 👇"], ["idea", "Please make a video just about the Mariana Trench!", "Already in the works — it’s out next week. Subscribe so you don’t miss it!"], ["criticism", "The music at the start is louder than the voice, can’t hear anything", "Thanks for flagging! We’ll fix the audio balance in the next videos."], ["praise", "Best explanation I’ve seen. Subscribed", "Thank you! Glad you liked it — lots more depth to come 🌊"]],
+    authors: ["Alex", "Maria", "Dan", "Olga"], videoName: "Why the ocean is unexplored",
+    cats: { question: "Question", praise: "Praise", criticism: "Criticism", idea: "Idea" },
+    aiDraft: "AI reply draft", send: "Send", regen: "Another version", skip: "Skip", sent: "Reply sent", skipped: "Skipped",
+    members: "Members", invited: "Invited", role: "Role", inviteH: "Invite to team", sendInvite: "Send invite", seats: "Seats on plan: 5. Available on the Studio plan.",
+    roles: { owner: "Owner", editor: "Editor", writer: "Scriptwriter", viewer: "Viewer" },
+    permsH: "Permissions", action: "Action",
+    permRows: ["Create and edit scripts", "Generate images and video", "Assemble and publish videos", "View analytics", "Manage team", "Billing and plan"],
+    permMatrix: [[1, 1, 1, 0], [1, 1, 0, 0], [1, 1, 0, 0], [1, 1, 1, 1], [1, 0, 0, 0], [1, 0, 0, 0]]
+  }
+};
+var ST = ['idea', 'script', 'visual', 'ready', 'scheduled', 'published'];
+var ST_COL = { idea: 'background:#ECEAE4;color:#3A3833', script: 'background:#FBEBC9;color:#6B4200', visual: 'background:#E4E2F5;color:#3B3580', ready: 'background:#D6E8E1;color:#0B5A45', scheduled: 'background:#16161A;color:#fff', published: 'background:#C93C14;color:#fff' };
+var ITEMS0 = [
+  { k: 0, day: 6, st: 'published', f: 'long' }, { k: 1, day: 9, st: 'published', f: 'short' },
+  { k: 2, day: 13, st: 'scheduled', f: 'long' }, { k: 3, day: 16, st: 'ready', f: 'short' },
+  { k: 4, day: 20, st: 'visual', f: 'long' }, { k: 5, day: 23, st: 'script', f: 'short' },
+  { k: 6, day: 27, st: 'idea', f: 'long' }, { k: 7, day: 30, st: 'idea', f: 'long' }
+];
+var CPK = ['yt', 'vk', 'rt', 'dz'];
+var CPX = {
+  ru: { calPlatLbl: "Площадки", calAll: "Все площадки", calPl: { yt: "YouTube", vk: "VK Видео", rt: "RUTUBE", dz: "Дзен" }, calPlS: { yt: "YouTube Shorts", vk: "VK Клипы", rt: "RUTUBE Shorts", dz: "Дзен · ролики" }, calAb: { yt: "YT", vk: "VK", rt: "RT", dz: "ДЗ" },
+    calPlH: "Где и когда выйдет", calPlHint: "Выпускайте на площадках в разные дни: например, сначала YouTube, на следующий день RUTUBE и Дзен. Кнопки ‹ › сдвигают дату.", calOffLbl: "не выходит", calShiftL: "На день раньше", calShiftR: "На день позже", calSum: "Выходов в октябре", autoHint2: "Ролик выйдет сам на всех выбранных площадках в указанные дни" },
+  en: { calPlatLbl: "Platforms", calAll: "All platforms", calPl: { yt: "YouTube", vk: "VK Video", rt: "RUTUBE", dz: "Dzen" }, calPlS: { yt: "YouTube Shorts", vk: "VK Clips", rt: "RUTUBE Shorts", dz: "Dzen short videos" }, calAb: { yt: "YT", vk: "VK", rt: "RT", dz: "DZ" },
+    calPlH: "Where and when it goes live", calPlHint: "Release on platforms on different days: e.g. YouTube first, RUTUBE and Dzen the next day. The ‹ › buttons shift the date.", calOffLbl: "not released", calShiftL: "One day earlier", calShiftR: "One day later", calSum: "Releases in October", autoHint2: "The video goes live by itself on every selected platform on its day" }
+};
+function calPl0(f, i) { return f === 'short' ? { yt: 0, vk: 0, rt: 0 } : (i % 2 ? { yt: 0, vk: 0, rt: 1, dz: 1 } : { yt: 0, vk: 0, rt: 1, dz: 2 }); }
+var FONTS = [{ v: 'grotesk', css: "'Space Grotesk', sans-serif", label: 'Space Grotesk' }, { v: 'mono', css: "'IBM Plex Mono', monospace", label: 'IBM Plex Mono' }, { v: 'sans', css: "'IBM Plex Sans', sans-serif", label: 'IBM Plex Sans' }, { v: 'serif', css: "Georgia, serif", label: 'Georgia' }];
+
+var ADM_KEY = 'aiytstudio.admin.v1';
+var ADM_KEYS = ['platOn', 'igScope', 'axProv', 'axEnabled', 'medEnabled', 'eridOn', 'payOn'];
+function admRead() { try { var v = window.localStorage.getItem(ADM_KEY); var o = v ? JSON.parse(v) : {}; return o && typeof o === 'object' ? o : {}; } catch (e) { return {}; } }
+function admWrite(o) { try { window.localStorage.setItem(ADM_KEY, JSON.stringify(o)); } catch (e) {} }
+function admPick(s) { var o = {}; ADM_KEYS.forEach(function (k) { if (s[k] !== undefined) o[k] = s[k]; }); return o; }
+function admWatch(comp, onChange) {
+  var last = JSON.stringify(admRead());
+  var chk = function () { var v = JSON.stringify(admRead()); if (v !== last) { last = v; onChange(); } };
+  var h = function (e) { if (!e || e.key === ADM_KEY || e.key === null) chk(); };
+  try { window.addEventListener('storage', h); } catch (e) {}
+  var id = setInterval(chk, 1000);
+  comp._admStop = function () { clearInterval(id); try { window.removeEventListener('storage', h); } catch (e) {} };
+}
+function admEff(props, lang) {
+  var a = admRead(), pl = a.platOn || {}, prov = a.axProv || {}, axEn = a.axEnabled || {}, med = a.medEnabled || {}, pay = a.payOn || {};
+  var AXIDS = ['opus', 'astra', 'sol', 'luna', 'haiku', 'deepseek', 'ygpt', 'ylite', 'gmax', 'glite'];
+  var PROVK = { opus: 'a', haiku: 'a', astra: 'o', sol: 'o', luna: 'o', deepseek: 'd', ygpt: 'y', ylite: 'y', gmax: 'g', glite: 'g' };
+  return {
+    platOk: function (k) { if (k === 'yt') return true; if (pl[k] === false) return false; if (k === 'ig') { if (props.instagram === 'off') return false; if (a.igScope === 'en' && lang === 'ru') return false; } return true; },
+    axOk: function (id) { var pk = PROVK[id]; if (pk === 'a' && props.claudeChats === 'off') return false; if (pk === 'o' && props.gptChats === 'off') return false; if (pk && prov[pk]) return false; var i = AXIDS.indexOf(id); if (i >= 0 && axEn[i] === false) return false; return true; },
+    medOk: function (id) { return med[id] !== false; },
+    payOk: function (k) { return pay[k] !== false; },
+    eridOn: a.eridOn !== false
+  };
+}
+
+var EN_FIX = [[/Сбер · свой сервер/g, 'Sber · own server'], [/Свой сервер \(GPU\)/g, 'Own server (GPU)'], [/Яндекс/g, 'Yandex'], [/Сбер/g, 'Sber']];
+function enFix(v) {
+  if (typeof v === 'string') { var r = v; EN_FIX.forEach(function (p) { r = r.replace(p[0], p[1]); }); return r; }
+  if (Array.isArray(v)) return v.map(enFix);
+  if (v && typeof v === 'object') { var o = {}; Object.keys(v).forEach(function (k) { o[k] = typeof v[k] === 'function' ? v[k] : enFix(v[k]); }); return o; }
+  return v;
+}
+function csvHref(rows) {
+  var esc = function (x) { x = String(x == null ? '' : x); return /[",;\n]/.test(x) ? '"' + x.replace(/"/g, '""') + '"' : x; };
+  return 'data:text/csv;charset=utf-8,' + encodeURIComponent('﻿' + rows.map(function (r) { return r.map(esc).join(';'); }).join('\r\n'));
+}
+function demoBuild(self, s, msgs) {
+  var show = function (m) { if (self._tt) clearTimeout(self._tt); self.setState({ toast: m }); self._tt = setTimeout(function () { self.setState({ toast: '' }); }, 4000); };
+  var o = {};
+  Object.keys(msgs).forEach(function (k) {
+    o[k] = function (e) {
+      var m = msgs[k];
+      if (e && e.target && e.target.files) { var n = e.target.files.length; if (!n) return; m = m.replace('{n}', n).replace('{name}', e.target.files[0].name); }
+      if (k.indexOf('copy') === 0 && msgs['_' + k]) { try { navigator.clipboard.writeText(msgs['_' + k]); } catch (er) {} }
+      show(m);
+    };
+  });
+  return { demo: o, toastText: s.toast || '', toastSt: s.toast ? 'opacity:1;transform:translate(-50%,0)' : 'opacity:0;transform:translate(-50%,10px);pointer-events:none' };
+}
+var DEMO = { ru: {"filesClip": "Видео загружено: {name}. Нажмите «Найти моменты».", "filesLogo": "Логотип загружен: {name}.", "scan": "Обновляем тренды в нише — новые темы появятся в списке через минуту.", "download": "Файлы для всех площадок скачиваются одним архивом.", "publish": "Запланировано на выбранных площадках — смотрите в контент-календаре.", "saveBrand": "Брендбук сохранён. Цвета и шрифт уже доступны в настройках субтитров.", "regen": "Готов новый вариант ответа.", "exportSel": "Выбранные Shorts отправлены на экспорт — они появятся в очереди задач.", "edit": "Открыт редактор момента: можно сдвинуть начало и конец фрагмента."}, en: {"filesClip": "Video uploaded: {name}. Click “Find moments”.", "filesLogo": "Logo uploaded: {name}.", "scan": "Refreshing trends in your niche — new topics will appear in a minute.", "download": "Files for all platforms download as one archive.", "publish": "Scheduled on the selected platforms — see the content calendar.", "saveBrand": "Brand kit saved. Its colors and font are already in the subtitle settings.", "regen": "A new reply option is ready.", "exportSel": "Selected Shorts were sent for export — they will appear in the task queue.", "edit": "Moment editor opened: you can move the start and end of the clip."} };
+class Component extends DCLogic {
+  componentDidMount() { var self = this; admWatch(this, function () { self.forceUpdate(); }); this.brandSave(); }
+  componentDidUpdate() { var k = JSON.stringify([this.state.colors, this.state.font]); if (k !== this._brandK) { this._brandK = k; this.brandSave(); } }
+  brandSave() { try { window.localStorage.setItem('aiytstudio.brand.v1', JSON.stringify({ colors: this.state.colors, font: this.state.font })); } catch (e) {} }
+  componentWillUnmount() { if (this._admStop) this._admStop(); }
+  constructor(props) {
+    super(props);
+    this.state = {
+      clipSrc: 'video',
+      lang: null, view: 0,
+      cal: 'month', calPlat: 'all', items: ITEMS0.map(function (it, i) { return Object.assign({}, it, { pl: calPl0(it.f, i) }); }), sel: 2, autoPub: true, nextDay: 21,
+      len: '45', count: '5', reframe: true, shortsDone: false, momOff: {}, momCal: {},
+      titleEdits: {}, ab: false,
+      trendCal: {},
+      plats: [true, true, true, false, true, false, false], repDone: true,
+      colors: ['#0E2A3B', '#FFB800', '#FFFFFF'], font: 'grotesk', tStyle: 'bold', bsw: [true, true, false],
+      cFilter: 'all', cState: {},
+      members: [{ n: 'Yuri C.', e: 'you@example.com', r: 'owner' }, { n: 'Anna K.', e: 'anna@example.com', r: 'editor' }, { n: 'Mark T.', e: 'mark@example.com', r: 'writer' }],
+      invEmail: '', invRole: 'editor'
+    };
+  }
+  sw(on) { return { track: on ? 'background:#0F7B5F' : 'background:#B9B6AE', knob: on ? 'left:23px' : 'left:3px' }; }
+  pills(list, cur, key) {
+    var on = 'background:#16161A;color:#fff;border:1px solid #16161A', off = 'background:#fff;color:#16161A;border:1px solid #D9D6CE', self = this;
+    return list.map(function (o) { var id = o[0], label = o[1]; return { label: label, st: id === cur ? on : off, pick: function () { var s = {}; s[key] = id; self.setState(s); } }; });
+  }
+  addToCal(titleText) {
+    var it = this.state.items.concat([{ k: -1, title: titleText, day: this.state.nextDay, st: 'idea', f: 'short', pl: calPl0('short', 0) }]);
+    this.setState({ items: it, nextDay: Math.min(31, this.state.nextDay + 1) });
+  }
+  renderVals() {
+    var s = this.state, lang = s.lang || this.props.startLang || 'ru';
+    var v = Object.assign({}, this._rv(), demoBuild(this, s, DEMO[lang] || DEMO.ru), { uiLang: lang }, this._extra ? this._extra(lang) : {});
+    return lang === 'en' ? enFix(v) : v;
+  }
+  _rv() {
+    var s = this.state, self = this;
+    var accent = this.props.accent ?? '#C93C14';
+    var lang = s.lang || this.props.startLang || 'ru';
+    var t = Object.assign({}, L[lang] || L.ru, CLX[lang] || CLX.ru, CPX[lang] || CPX.ru);
+    var admC = admEff(this.props, lang), cpk = CPK.filter(function (k) { return admC.platOk(k); }), cf = cpk.indexOf(s.calPlat) >= 0 ? s.calPlat : 'all';
+    var plOf = function (it) { var o = it.pl || calPl0(it.f, 0), r = {}; cpk.forEach(function (k) { if (o[k] !== undefined && o[k] !== null) r[k] = o[k]; }); return r; };
+    var setPl = function (idx, k, v) { var arr = s.items.slice(); var it = Object.assign({}, arr[idx]); var o = Object.assign({}, it.pl || {}); if (v === null) delete o[k]; else o[k] = v; it.pl = o; arr[idx] = it; self.setState({ items: arr }); };
+    var on = 'background:#16161A;color:#fff;border:1px solid #16161A', off = 'background:#fff;color:#16161A;border:1px solid #D9D6CE';
+    var langOn = 'background:#16161A;color:#fff;border:0', langOff = 'background:transparent;color:#16161A;border:0';
+    var segOn = 'background:#fff;color:#16161A;border:1px solid #D9D6CE', segOff = 'background:transparent;color:#5E5B54;border:1px solid transparent';
+    var monthShort = lang === 'ru' ? ' окт' : ' Oct';
+
+    // calendar
+    var titleOf = function (it) { return it.k >= 0 ? t.items[it.k] : (it.title || t.newIdea); };
+    var advanceFn = function (idx) { return function () { var arr = s.items.slice(); var it = Object.assign({}, arr[idx]); var p = ST.indexOf(it.st); if (p < ST.length - 1) it.st = ST[p + 1]; arr[idx] = it; self.setState({ items: arr }); }; };
+    var mo = s.mOff || 0, MON = { '-1': [1, 30, 'Сентябрь 2026', 'September 2026', ' сен', ' Sep'], '0': [3, 31, null, null, null, null], '1': [6, 30, 'Ноябрь 2026', 'November 2026', ' ноя', ' Nov'] }[mo];
+    var cells = [];
+    for (var b = 0; b < MON[0]; b++) cells.push({ num: '', st: 'background:transparent', numSt: '', items: [] });
+    for (var d = 1; d <= MON[1]; d++) {
+      var dayItems = [];
+      if (mo === 0) s.items.forEach(function (it, idx) { var po = plOf(it), here = Object.keys(po).filter(function (k) { return it.day + po[k] === d && (cf === 'all' || cf === k); }); if (here.length) dayItems.push({ title: titleOf(it), tags: here.map(function (k) { return t.calAb[k]; }).join(' · '), st: ST_COL[it.st] + (idx === s.sel ? ';outline:2px solid ' + accent + ';outline-offset:1px' : ''), pick: (function (i) { return function () { self.setState({ sel: i }); }; })(idx) }); });
+      var today = mo === 0 && d === 15;
+      cells.push({ num: String(d), st: today ? 'background:#fff;border:2px solid #16161A' : 'background:#FAF9F6;border:1px solid #ECEAE4', numSt: today ? 'font-weight:600;color:#16161A' : 'color:#5E5B54', items: dayItems });
+    }
+    while (cells.length % 7) cells.push({ num: '', st: 'background:transparent', numSt: '', items: [] });
+    var columns = ST.map(function (stId) {
+      var its = [];
+      s.items.forEach(function (it, idx) { var po = plOf(it); if (it.st === stId && (cf === 'all' || po[cf] !== undefined)) its.push({ title: titleOf(it), date: (cf === 'all' ? it.day : it.day + po[cf]) + monthShort, fmt: t.fmts[it.f] + ' · ' + Object.keys(po).map(function (k) { return t.calAb[k]; }).join(' '), pick: function () { self.setState({ sel: idx }); }, advance: advanceFn(idx), canAdvance: stId !== 'published' }); });
+      return { label: t.statuses[stId], sw: ST_COL[stId], count: String(its.length), items: its };
+    });
+    var selIt = s.items[s.sel];
+    var selNextIdx = selIt ? ST.indexOf(selIt.st) + 1 : 0;
+    var auto = this.sw(s.autoPub);
+
+    // shorts
+    var ranges = ['0:12–0:57', '2:40–3:25', '4:05–4:50', '6:18–7:03', '7:30–8:15'];
+    var countN = +s.count;
+    var moments = t.hooks.slice(0, Math.min(countN, 5)).map(function (h, i) {
+      var included = !s.momOff[i], inCal = !!s.momCal[i], high = i % 2 === 0;
+      return { hook: h, range: ranges[i], on: included, cardSt: included ? '' : 'opacity:0.55',
+        pot: high ? t.potHigh : t.potMid, potSt: high ? 'background:#DDF0E8;color:#0B5A45' : 'background:#FBEBC9;color:#6B4200',
+        toggle: function () { var m = Object.assign({}, s.momOff); m[i] = included; self.setState({ momOff: m }); },
+        calLabel: inCal ? t.inCal : t.toCal,
+        toCal: function () { if (inCal) return; var m = Object.assign({}, s.momCal); m[i] = true; self.setState({ momCal: m }); self.addToCal(h); } };
+    });
+    var selCount = moments.filter(function (m) { return m.on; }).length;
+
+    // title checks
+    var good = 'background:#DDF0E8;color:#0B5A45', warn = 'background:#FBEBC9;color:#6B4200';
+    var titleRows = t.titles.map(function (base, i) {
+      var text = s.titleEdits[i] != null ? s.titleEdits[i] : base;
+      var len = text.length;
+      var checks = [];
+      checks.push(len <= 60 ? { icon: '✓', label: t.chkLen, st: good } : { icon: '!', label: t.chkLenBad, st: warn });
+      checks.push(/[?!]/.test(text) ? { icon: '✓', label: t.chkQ, st: good } : { icon: '–', label: t.chkQ, st: 'background:#F4F3EF;color:#5E5B54' });
+      checks.push(/\d/.test(text) ? { icon: '✓', label: t.chkNum, st: good } : { icon: '–', label: t.chkNum, st: 'background:#F4F3EF;color:#5E5B54' });
+      var kw = lang === 'ru' ? /^(океан|марс|глуб|что|последн)/i : /^(ocean|we mapped|what|the last|deep)/i;
+      checks.push(kw.test(text) ? { icon: '✓', label: t.chkKw, st: good } : { icon: '–', label: t.chkKw, st: 'background:#F4F3EF;color:#5E5B54' });
+      return { letter: 'ABC'.charAt(i), fid: 'ttl' + i, text: text, len: len, lenSt: len > 60 ? 'color:#8A2A0C' : 'color:#5E5B54', checks: checks,
+        onEdit: function (e) { var m = Object.assign({}, s.titleEdits); m[i] = e.target.value; self.setState({ titleEdits: m }); } };
+    });
+    var thumbs = t.thumbTexts.map(function (tx, i) { return { letter: 'ABC'.charAt(i), text: tx, checks: t.tChecks[i].map(function (c) { return { icon: c[0], label: c[1], color: c[2] ? 'color:#0B5A45' : 'color:#7A4B00' }; }) }; });
+
+    // trends
+    var trends = t.trendVids.map(function (v, i) {
+      var inCal = !!s.trendCal[i];
+      return { title: v[0], channel: v[1], subs: v[2], mult: v[3], len: v[4], calLabel: inCal ? t.inCal : t.toCal,
+        toCal: function () { if (inCal) return; var m = Object.assign({}, s.trendCal); m[i] = true; self.setState({ trendCal: m }); self.addToCal(v[0]); } };
+    });
+
+    // repurpose
+    var adm = admEff(this.props, lang), PLK = ['yt', 'tt', 'ig', 'tg', 'vk', 'rt', 'dz'];
+    var igOff = !adm.platOk('ig');
+    var platforms = t.plats.map(function (p, i) { var o = s.plats[i] && !(igOff && i === 2); return { name: p[0], on: o, mark: o ? '✓' : '+', st: o ? on : off, toggle: function () { var a = s.plats.slice(); a[i] = !a[i]; self.setState({ plats: a }); } }; }).filter(function (p, i) { return adm.platOk(PLK[i]); });
+    if (igOff) t = Object.assign({}, t, { repNote: lang === 'en' ? 'Publishing to TikTok requires connecting the account through its official API. Instagram has been turned off by the service administrator.' : 'Публикация в TikTok требует подключения аккаунта через официальный API. Instagram отключён администратором сервиса.' });
+    var repCards = [];
+    t.plats.forEach(function (p, i) { if (s.plats[i] && adm.platOk(PLK[i])) repCards.push({ name: p[0], spec: p[1], caption: t.caps[i], tags: t.tagsList[i], fid: 'cap' + i }); });
+
+    // brand
+    var c0 = s.colors[0], c1 = s.colors[1], c2 = s.colors[2];
+    var font = FONTS.filter(function (f) { return f.v === s.font; })[0] || FONTS[0];
+    var thumbBg = 'background:' + c0;
+    var thumbTextSt = 'color:' + c2 + ';' + (s.tStyle === 'bold' ? 'text-shadow:0 3px 0 rgba(0,0,0,0.35)' : '');
+    var thumbTagSt = s.tStyle === 'split' ? 'background:' + c1 + ';color:' + c0 : (s.tStyle === 'minimal' ? 'background:transparent;color:' + c1 + ';border:2px solid ' + c1 : 'background:' + c1 + ';color:' + c0);
+
+    // comments
+    var cats = { question: 'background:#E4E2F5;color:#3B3580', praise: 'background:#DDF0E8;color:#0B5A45', criticism: 'background:#F7DDD5;color:#8A2A0C', idea: 'background:#FBEBC9;color:#6B4200' };
+    var comments = [];
+    t.commentList.forEach(function (c, i) {
+      if (s.cFilter !== 'all' && s.cFilter !== c[0]) return;
+      var st = s.cState[i];
+      comments.push({ ini: t.authors[i].charAt(0), author: t.authors[i], video: t.videoName, text: c[1], draft: c[2], cat: t.cats[c[0]], catSt: cats[c[0]], fid: 'rep' + i,
+        pending: !st, done: !!st, doneLabel: st === 'sent' ? t.sent : t.skipped, doneSt: st === 'sent' ? 'background:#DDF0E8;color:#0B5A45' : 'background:#F4F3EF;color:#5E5B54',
+        send: function () { var m = Object.assign({}, s.cState); m[i] = 'sent'; self.setState({ cState: m }); },
+        skip: function () { var m = Object.assign({}, s.cState); m[i] = 'skip'; self.setState({ cState: m }); } });
+    });
+
+    // team
+    var roleKeys = Object.keys(t.roles);
+    var roleOpts = roleKeys.map(function (k) { return { v: k, label: t.roles[k] }; });
+    var members = s.members.map(function (m, i) {
+      return { name: m.n, email: m.e, ini: m.n.split(' ').map(function (x) { return x.charAt(0); }).join('').slice(0, 2).toUpperCase(), role: m.r, pending: !!m.p, fid: 'mrole' + i,
+        onRole: function (e) { var a = s.members.slice(); a[i] = Object.assign({}, a[i], { r: e.target.value }); self.setState({ members: a }); } };
+    });
+
+    var clipSrcs = Object.keys(t.clipSrc).map(function (k) { var v = k === s.clipSrc; return { label: t.clipSrc[k], on: v, st: v ? 'border:1px solid #D9D6CE;background:#fff;color:#16161A' : 'border:1px solid transparent;background:transparent;color:#5E5B54', pick: function () { self.setState({ clipSrc: k }); } }; });
+    return {
+      clipSrcs: clipSrcs, clipFromVideo: s.clipSrc === 'video', clipFromScript: s.clipSrc === 'script',
+      t: t, accent: accent,
+      isRu: lang === 'ru', isEn: lang === 'en', ruSt: lang === 'ru' ? langOn : langOff, enSt: lang === 'en' ? langOn : langOff,
+      setRu: function () { self.setState({ lang: 'ru' }); }, setEn: function () { self.setState({ lang: 'en' }); },
+      nav: t.nav.map(function (l, i) { return { label: l, num: '0' + (i + 1), go: function () { self.setState({ view: i }); }, st: i === s.view ? 'background:#2A2A31;color:#fff;font-weight:600' : 'background:transparent;color:#CFCBC2' }; }),
+      heading: t.nav[s.view], num: '0' + (s.view + 1),
+      isCal: s.view === 0, isShorts: s.view === 1, isCheck: s.view === 2, isTrends: s.view === 3, isRepurpose: s.view === 4, isBrand: s.view === 5, isComments: s.view === 6, isTeam: s.view === 7,
+      noop: function () {},
+      // calendar
+      calMonth: s.cal === 'month', calBoard: s.cal === 'board', monthSt: s.cal === 'month' ? segOn : segOff, boardSt: s.cal === 'board' ? segOn : segOff,
+      toMonth: function () { self.setState({ cal: 'month' }); }, toBoard: function () { self.setState({ cal: 'board' }); },
+      addIdea: function () { self.addToCal(null); self.setState({ sel: s.items.length }); },
+      legend: ST.map(function (k) { return { label: t.statuses[k], st: ST_COL[k] }; }),
+      cells: cells, columns: columns, monthTitle: mo === 0 ? t.month : (lang === 'en' ? MON[3] : MON[2]), calEmpty: mo !== 0, prevMonth: function () { self.setState({ mOff: Math.max(-1, mo - 1) }); }, nextMonth: function () { self.setState({ mOff: Math.min(1, mo + 1) }); },
+      calPlats: (function () { var cnt = {}, tot = 0; s.items.forEach(function (it) { var po = plOf(it); Object.keys(po).forEach(function (k) { cnt[k] = (cnt[k] || 0) + 1; tot++; }); }); return [{ k: 'all', label: t.calAll + ' · ' + tot }].concat(cpk.map(function (k) { return { k: k, label: t.calPl[k] + ' · ' + (cnt[k] || 0) }; })).map(function (o) { var v = cf === o.k; return { label: o.label, on: v, st: v ? on : off, pick: function () { self.setState({ calPlat: o.k }); } }; }); })(),
+      selPl: selIt ? cpk.map(function (k) { var po = plOf(selIt), has = po[k] !== undefined, idx = s.sel, dd = has ? selIt.day + po[k] : 0; return { name: (selIt.f === 'short' ? t.calPlS : t.calPl)[k], on: has, mark: has ? '✓' : '+', st: has ? on : off, date: has ? dd + monthShort : t.calOffLbl, dateSt: has ? '' : 'color:#706C64', toggle: function () { setPl(idx, k, has ? null : 0); }, left: function () { if (has && dd > 1) setPl(idx, k, po[k] - 1); }, right: function () { if (has && dd < 31) setPl(idx, k, po[k] + 1); } }; }) : [],
+      hasSel: !!selIt, noSel: !selIt,
+      sel: selIt ? { title: titleOf(selIt), status: t.statuses[selIt.st], st: ST_COL[selIt.st], date: selIt.day + monthShort + ' 2026', fmt: t.fmts[selIt.f], canAdvance: selNextIdx < ST.length, next: selNextIdx < ST.length ? t.statuses[ST[selNextIdx]] : '', nextQ: selNextIdx < ST.length ? (lang === 'en' ? '“' + t.statuses[ST[selNextIdx]] + '”' : '«' + t.statuses[ST[selNextIdx]] + '»') : '', advance: advanceFn(s.sel) } : { title: '', status: '', st: '', date: '', fmt: '', canAdvance: false, next: '', advance: null },
+      autoPub: s.autoPub, autoTrack: auto.track, autoKnob: auto.knob, toggleAuto: function () { self.setState({ autoPub: !s.autoPub }); },
+      // shorts
+      lens: this.pills([['30', '30 s'], ['45', '45 s'], ['60', '60 s']], s.len, 'len'),
+      counts: this.pills([['3', '3'], ['5', '5'], ['10', '10']], s.count, 'count'),
+      reframe: s.reframe, reframeTrack: this.sw(s.reframe).track, reframeKnob: this.sw(s.reframe).knob, toggleReframe: function () { self.setState({ reframe: !s.reframe }); },
+      findMoments: function () { self.setState({ shortsDone: true }); }, shortsDone: s.shortsDone, shortsEmpty: !s.shortsDone,
+      moments: moments, exportLabel: t.exportSel + ' (' + selCount + ')',
+      // check
+      titleRows: titleRows, thumbs: thumbs,
+      abRunning: s.ab, abBtn: s.ab ? t.abStop : t.abStart, abBtnSt: s.ab ? 'background:#F4F3EF;color:#16161A;border:1px solid #D9D6CE' : 'background:' + accent + ';color:#fff',
+      toggleAb: function () { self.setState({ ab: !s.ab }); },
+      // trends
+      trends: trends,
+      // repurpose
+      platforms: platforms, repCards: repCards, repDone: repCards.length > 0, adapt: function () { self.setState({ repDone: true }); },
+      // brand
+      brandColors: t.colorNames.map(function (n, i) { return { label: n, value: s.colors[i], fid: 'bc' + i, onEdit: function (e) { var a = s.colors.slice(); a[i] = e.target.value; self.setState({ colors: a }); } }; }),
+      fonts: FONTS, font: s.font, fontCss: font.css, onFont: function (e) { self.setState({ font: e.target.value }); },
+      tStyles: this.pills(Object.keys(t.tStyles).map(function (k) { return [k, t.tStyles[k]]; }), s.tStyle, 'tStyle'),
+      brandSw: t.bsw.map(function (l, i) { var x = self.sw(s.bsw[i]); return { label: l, on: s.bsw[i], track: x.track, knob: x.knob, toggle: function () { var a = s.bsw.slice(); a[i] = !a[i]; self.setState({ bsw: a }); } }; }),
+      thumbBg: thumbBg, thumbTextSt: thumbTextSt, thumbTagSt: thumbTagSt, thumbJustify: s.tStyle === 'minimal' ? 'flex-end' : 'center',
+      watermark: s.bsw[0], wmSt: 'background:' + c1 + ';border:2px solid ' + c2,
+      avatarSt: 'background:' + c0 + ';border:4px solid ' + c1,
+      bannerSt: 'background:' + c0, bannerTextSt: 'color:' + c1,
+      // comments
+      cFilters: this.pills(Object.keys(t.cFilters).map(function (k) { return [k, t.cFilters[k]]; }), s.cFilter, 'cFilter'),
+      comments: comments,
+      // team
+      roleOpts: roleOpts, members: members,
+      perms: t.permRows.map(function (r, ri) { return { label: r, cells: t.permMatrix[ri].map(function (v) { return { mark: v ? '✓' : '—', st: v ? 'color:#0B5A45;font-weight:600' : 'color:#B9B6AE' }; }) }; }),
+      inviteEmail: s.invEmail, inviteRole: s.invRole,
+      onInviteEmail: function (e) { self.setState({ invEmail: e.target.value }); },
+      onInviteRole: function (e) { self.setState({ invRole: e.target.value }); },
+      invite: function () { var em = s.invEmail || 'new@example.com'; self.setState({ members: s.members.concat([{ n: em.split('@')[0], e: em, r: s.invRole, p: true }]), invEmail: '' }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

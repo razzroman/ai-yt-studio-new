@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>AI YT Studio — Legal</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F3EF}
+a{color:#16161A}a:hover{color:#B8320F}
+button{font-family:inherit;cursor:pointer}
+.mono{font-family:'IBM Plex Mono',monospace}
+.muted{color:#5E5B54}
+:focus-visible{outline:3px solid #2F5BEA;outline-offset:2px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</helmet>
+<div lang="{{uiLang}}" style="min-height: 100vh; background: #F4F3EF; color: #16161A; font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 15px; display: flex; flex-direction: column">
+<header style="padding: 20px clamp(16px, 4vw, 48px); display: flex; justify-content: space-between; align-items: center; gap: 12px; border-bottom: 1px solid #E2DFD7; background: #F4F3EF">
+<a href="Landing.dc.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none">
+<span style="width: 32px; height: 32px; border-radius: 8px; background: #C93C14; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7.5-4.5z" fill="#fff"></path></svg></span>
+<span style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 19px">AI YT Studio</span>
+</a>
+<div style="display: flex; gap: 10px; align-items: center">
+<a href="Landing.dc.html" style="font-size: 14px; min-height: 44px; display: flex; align-items: center">← {{t.back}}</a>
+<button type="button" onClick="{{toggleLang}}" aria-label="{{t.langSwitch}}" class="mono" style="min-width: 44px; height: 44px; border-radius: 10px; border: 1px solid #D9D6CE; background: #fff; font-size: 13px">{{langLabel}}</button>
+</div>
+</header>
+
+<div style="flex: 1; display: flex; flex-wrap: wrap; gap: 32px; padding: 32px clamp(16px, 4vw, 48px) 64px; align-items: flex-start">
+<nav aria-label="{{t.docsNav}}" style="flex: 1 1 240px; max-width: 300px; display: flex; flex-direction: column; gap: 4px">
+<span class="mono muted" style="font-size: 11px; letter-spacing: 0.08em; padding: 0 12px 8px">{{t.docsNav}}</span>
+<sc-for list="{{docs}}" as="d" hint-placeholder-count="5">
+<button type="button" onClick="{{d.pick}}" aria-current="{{d.on}}" style="min-height: 44px; padding: 8px 12px; border-radius: 8px; text-align: left; font-size: 15px; {{d.st}}">{{d.title}}</button>
+</sc-for>
+</nav>
+
+<article style="flex: 999 1 520px; min-width: 0; max-width: 820px; background: #fff; border: 1px solid #E2DFD7; border-radius: 14px; padding: clamp(20px, 4vw, 40px); display: flex; flex-direction: column; gap: 18px">
+<div role="note" style="border-radius: 10px; padding: 12px 14px; background: #FDF1D6; color: #7A5200; font-size: 14px; line-height: 1.5">{{t.draftNote}}</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.15">{{doc.title}}</h1>
+<span class="muted" style="font-size: 14px">{{t.edition}}</span>
+</div>
+<p style="margin: 0; line-height: 1.6">{{doc.intro}}</p>
+<div style="background: #F4F3EF; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px">
+<span class="mono muted" style="font-size: 11px; letter-spacing: 0.08em">{{t.toc}}</span>
+<ol style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; font-size: 14px"><sc-for list="{{doc.secs}}" as="sx" hint-placeholder-count="6"><li>{{sx.h}}</li></sc-for></ol>
+</div>
+<sc-for list="{{doc.secs}}" as="sc" hint-placeholder-count="6">
+<section style="display: flex; flex-direction: column; gap: 6px; padding-top: 14px; border-top: 1px solid #EFECE5">
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 19px; font-weight: 600">{{sc.n}}. {{sc.h}}</h2>
+<p style="margin: 0; line-height: 1.6; color: #3A3833">{{sc.p}}</p>
+</section>
+</sc-for>
+<div style="padding-top: 14px; border-top: 1px solid #EFECE5; font-size: 14px; line-height: 1.6" class="muted">{{t.contacts}}</div>
+</article>
+</div>
+<div role="status" aria-live="polite" style="position: fixed; left: 50%; bottom: 24px; z-index: 60; max-width: min(92vw, 560px); background: #16161A; color: #fff; padding: 12px 18px; border-radius: 10px; font-size: 14px; line-height: 1.45; box-shadow: 0 8px 24px rgba(0,0,0,0.25); transition: opacity .2s, transform .2s; {{toastSt}}">{{toastText}}</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"startLang":{"editor":"enum","options":["ru","en"],"default":"ru"},"$preview":{"width":1440,"height":1300}}'>
+var L = {
+  ru: {
+    back: "На главную", langSwitch: "Сменить язык на английский", docsNav: "ДОКУМЕНТЫ", toc: "СОДЕРЖАНИЕ",
+    draftNote: "Черновик структуры для юриста. Названия разделов показывают, что должно быть в документе; окончательный текст пишет и проверяет юрист до запуска.",
+    edition: "Редакция от [дата публикации] · AI YT Studio",
+    contacts: "Исполнитель и оператор персональных данных: [ФИО], самозанятый — плательщик налога на профессиональный доход (НПД), ИНН [ИНН]. Вопросы по документам: legal@[домен].",
+    docs: [
+      { id: "terms", title: "Пользовательское соглашение", intro: "Правила пользования сервисом AI YT Studio: кто может пользоваться, что разрешено и что нет, как работают кредиты и что происходит с созданным контентом.",
+        secs: [["Термины", "Сервис, пользователь, аккаунт, кредиты, генерация, контент пользователя."], ["Регистрация и аккаунт", "Возраст, подтверждение email, ответственность за доступ к аккаунту, один человек — один бесплатный аккаунт."], ["Кредиты и тарифы", "Как начисляются и списываются кредиты; возврат кредитов при сбое сервиса или отказе модерации; ссылка на оферту."], ["Права на контент", "Кому принадлежат сценарии, изображения и видео; права сервиса на обработку для работы функций; материалы третьих лиц и лицензии."], ["Запрещённое использование", "Ссылка на Правила контента: дипфейки реальных людей, нарушение авторских прав, спам, обход ограничений YouTube."], ["Подключение YouTube", "Какой доступ запрашивается через Google, как его отозвать; сервис не связан с Google."], ["Ответственность и ограничения", "Сервис не гарантирует монетизацию, рост или одобрение YouTube; ограничения ответственности."], ["Изменение соглашения и контакты", "Как уведомляем об изменениях; применимое право — право РФ; порядок споров; контакты исполнителя."]] },
+      { id: "offer", title: "Публичная оферта", intro: "Условия покупки платных тарифов и пакетов кредитов. Исполнитель — физическое лицо, применяющее налог на профессиональный доход (самозанятый). Принимается при оплате.",
+        secs: [["Предмет оферты", "Простая неисключительная лицензия на доступ к сервису исполнителя по тарифу «Автор» или «Студия» и пакеты кредитов."], ["Цены и валюта", "Цены в рублях. НДС не облагается: исполнитель применяет НПД."], ["Оплата и активация", "Тариф и кредиты активируются только после успешной и подтверждённой банком оплаты; льготного периода нет."], ["Автопродление и отмена", "Подписка продлевается автоматически; отмена в аккаунте; доступ сохраняется до конца оплаченного периода."], ["Чеки", "На каждую оплату формируется чек самозанятого через «Мой налог» и отправляется на email покупателя."], ["Возвраты", "Когда возможен возврат денег; при возврате чек аннулируется в «Мой налог»; возврат кредитов при сбое сервиса."], ["Реквизиты исполнителя", "ФИО, ИНН, отметка о применении НПД, email для связи, банковские реквизиты для возвратов. ОГРН у самозанятого нет."]] },
+      { id: "privacy", title: "Политика конфиденциальности", intro: "Какие данные собирает AI YT Studio, зачем, где хранит и как пользователь может ими управлять.",
+        secs: [["Какие данные собираем", "Email, имя, данные оплаты (через платёжного провайдера), данные YouTube-канала по разрешению, содержимое проектов, технические журналы."], ["Цели обработки", "Работа сервиса, оплата, безопасность, улучшение функций, рассылки — только с согласия."], ["Передача третьим лицам", "AI-провайдеры, платёжный шлюз, хостинг — только в объёме, нужном для функции. Передача за рубеж — только после уведомления Роскомнадзора; в страны вне перечня Роскомнадзора — после его решения (до 10 рабочих дней). Список получателей и стран — в приложении к политике."], ["Голос и аудиозаписи", "Запись голоса (для клонирования и своей озвучки) и аудиодорожки роликов обрабатываются только для озвучки и субтитров. Записи на русском языке распознаются на серверах в России (Yandex SpeechKit, SaluteSpeech). За рубеж запись передаётся только для клонирования голоса и только с отдельного согласия. Голос не используется для идентификации человека. Запись удаляется через 30 дней после подтверждения голоса или по запросу; клон голоса удаляется вместе с аккаунтом или по кнопке «Удалить голос»."], ["Хранение и защита", "Данные пользователей из России записываются и хранятся в базах на серверах в России (152-ФЗ); сроки хранения, шифрование, доступ исполнителя и подрядчиков."], ["Права пользователя", "Доступ, исправление, выгрузка, удаление аккаунта, отзыв согласия."], ["Cookies и аналитика", "Какие cookies используются и как их отключить."]] },
+      { id: "consent", title: "Согласие на обработку персональных данных", intro: "Отдельное согласие, которое пользователь даёт при регистрации (требование закона о персональных данных, если сервис работает с пользователями из России).",
+        secs: [["Оператор", "ФИО и ИНН самозанятого — оператора персональных данных, email для обращений. До начала обработки подаётся уведомление в Роскомнадзор."], ["Перечень данных", "Какие персональные данные обрабатываются."], ["Цели и действия", "Для чего и какие действия с данными совершаются."], ["Трансграничная передача", "Передача данных AI-провайдерам за рубежом и в какие страны; отдельное уведомление Роскомнадзора о трансграничной передаче."], ["Запись голоса", "Отдельная отметка перед записью своего голоса: согласие на обработку записи для озвучки и субтитров и, если включено клонирование, на передачу записи провайдеру клонирования за рубежом. Без этой отметки запись не начинается; согласие можно отозвать в настройках голоса."], ["Срок и отзыв", "Срок действия согласия и как его отозвать."]] },
+      { id: "content", title: "Правила контента", intro: "Что нельзя создавать в AI YT Studio. По этим правилам работает модерация генераций.",
+        secs: [["Реальные люди", "Нельзя генерировать изображения, видео и голос узнаваемых реальных людей без их согласия."], ["Авторские права", "Нельзя копировать чужие видео, музыку, персонажей и логотипы."], ["Опасный и незаконный контент", "Насилие, ненависть, вред детям, мошенничество и другие запрещённые темы."], ["Метка синтетического контента", "Реалистичные AI-сцены публикуются с меткой, как требует YouTube."], ["Модерация и обжалование", "Как работает проверка, возврат кредитов при отказе, как обжаловать решение."]] }
+    ]
+  },
+  en: {
+    back: "To homepage", langSwitch: "Switch language to Russian", docsNav: "DOCUMENTS", toc: "CONTENTS",
+    draftNote: "Structure draft for a lawyer. Section titles show what the document must cover; the final text is written and reviewed by a lawyer before launch.",
+    edition: "Version of [publication date] · AI YT Studio",
+    contacts: "Provider and personal-data operator: [full name], a self-employed individual in Russia paying the professional income tax (NPD), tax ID [INN]. Questions about these documents: legal@[domain].",
+    docs: [
+      { id: "terms", title: "Terms of Service", intro: "Rules for using AI YT Studio: who can use it, what is and isn’t allowed, how credits work and what happens to the content you create.",
+        secs: [["Definitions", "Service, user, account, credits, generation, user content."], ["Sign-up and account", "Age, email confirmation, responsibility for account access, one free account per person."], ["Credits and plans", "How credits are added and spent; refunds of credits on service failure or moderation rejection; link to the offer."], ["Content ownership", "Who owns scripts, images and videos; the service’s right to process them to run features; third-party materials and licenses."], ["Prohibited use", "See Content Rules: deepfakes of real people, copyright infringement, spam, circumventing YouTube limits."], ["Connecting YouTube", "What access is requested via Google and how to revoke it; not affiliated with Google."], ["Liability and limits", "No guarantee of monetization, growth or YouTube approval; limitation of liability."], ["Changes and contacts", "How we notify about changes; governing law — Russian law; disputes; provider contacts."]] },
+      { id: "offer", title: "Public Offer", intro: "Terms for buying paid plans and credit packs. The provider is a self-employed individual in Russia paying the professional income tax (NPD). Accepted at payment.",
+        secs: [["Subject", "A simple non-exclusive license to access the provider’s service on the Creator or Studio plan, and credit packs."], ["Prices and currency", "Prices in rubles. No VAT: the provider pays the professional income tax (NPD)."], ["Payment and activation", "Plans and credits activate only after a successful payment confirmed by the bank; there is no grace period."], ["Auto-renewal and cancellation", "Subscriptions renew automatically; cancel in the account; access stays until the end of the paid period."], ["Receipts", "Each payment gets a self-employed receipt issued via the “Moy Nalog” tax app and emailed to the buyer."], ["Refunds", "When money can be refunded; the receipt is cancelled in “Moy Nalog” on refund; credit refunds on service failure."], ["Provider details", "Full name, tax ID (INN), NPD status, contact email, bank details for refunds."]] },
+      { id: "privacy", title: "Privacy Policy", intro: "What data AI YT Studio collects, why, where it is stored and how users can control it.",
+        secs: [["Data we collect", "Email, name, payment data (via the payment provider), YouTube channel data with permission, project content, technical logs."], ["Purposes", "Running the service, payments, security, improving features, newsletters — only with consent."], ["Sharing with third parties", "AI providers, payment gateway, hosting — only as needed for a feature. Transfers abroad happen only after notifying Roskomnadzor; to countries outside its list, only after its decision (up to 10 working days). Recipients and countries are listed in an annex to this policy."], ["Voice and audio recordings", "Voice recordings (for cloning and your own voiceover) and video audio tracks are processed only for voiceover and subtitles. Russian-language recordings are transcribed on servers in Russia (Yandex SpeechKit, SaluteSpeech). A recording goes abroad only for voice cloning and only with separate consent. The voice is not used to identify a person. The recording is deleted 30 days after voice verification or on request; the voice clone is deleted with the account or via “Delete voice”."], ["Storage and security", "Data of users in Russia is recorded and stored in databases on servers in Russia (Federal Law 152-FZ); retention periods, encryption, access by the provider and contractors."], ["User rights", "Access, correction, export, account deletion, withdrawing consent."], ["Cookies and analytics", "Which cookies are used and how to turn them off."]] },
+      { id: "consent", title: "Consent to Personal Data Processing", intro: "A separate consent given at sign-up (required by personal-data law if the service works with users in Russia).",
+        secs: [["Operator", "Full name and tax ID of the self-employed operator, contact email. A notice is filed with Roskomnadzor before processing starts."], ["Data list", "Which personal data is processed."], ["Purposes and actions", "Why and what is done with the data."], ["Cross-border transfer", "Transfer to AI providers abroad and to which countries; a separate cross-border transfer notice to Roskomnadzor."], ["Voice recording", "A separate checkbox before recording your voice: consent to process the recording for voiceover and subtitles and, if cloning is on, to send it to the cloning provider abroad. Recording doesn’t start without it; consent can be withdrawn in voice settings."], ["Term and withdrawal", "How long the consent lasts and how to withdraw it."]] },
+      { id: "content", title: "Content Rules", intro: "What you can’t create in AI YT Studio. Generation moderation follows these rules.",
+        secs: [["Real people", "No images, video or voice of recognizable real people without their consent."], ["Copyright", "No copying others’ videos, music, characters or logos."], ["Harmful and illegal content", "Violence, hate, harm to children, fraud and other prohibited topics."], ["Synthetic content label", "Realistic AI scenes are published with a label, as YouTube requires."], ["Moderation and appeals", "How review works, credit refunds on rejection, how to appeal."]] }
+    ]
+  }
+};
+
+var EN_FIX = [[/Сбер · свой сервер/g, 'Sber · own server'], [/Свой сервер \(GPU\)/g, 'Own server (GPU)'], [/Яндекс/g, 'Yandex'], [/Сбер/g, 'Sber']];
+function enFix(v) {
+  if (typeof v === 'string') { var r = v; EN_FIX.forEach(function (p) { r = r.replace(p[0], p[1]); }); return r; }
+  if (Array.isArray(v)) return v.map(enFix);
+  if (v && typeof v === 'object') { var o = {}; Object.keys(v).forEach(function (k) { o[k] = typeof v[k] === 'function' ? v[k] : enFix(v[k]); }); return o; }
+  return v;
+}
+function csvHref(rows) {
+  var esc = function (x) { x = String(x == null ? '' : x); return /[",;\n]/.test(x) ? '"' + x.replace(/"/g, '""') + '"' : x; };
+  return 'data:text/csv;charset=utf-8,' + encodeURIComponent('﻿' + rows.map(function (r) { return r.map(esc).join(';'); }).join('\r\n'));
+}
+function demoBuild(self, s, msgs) {
+  var show = function (m) { if (self._tt) clearTimeout(self._tt); self.setState({ toast: m }); self._tt = setTimeout(function () { self.setState({ toast: '' }); }, 4000); };
+  var o = {};
+  Object.keys(msgs).forEach(function (k) {
+    o[k] = function (e) {
+      var m = msgs[k];
+      if (e && e.target && e.target.files) { var n = e.target.files.length; if (!n) return; m = m.replace('{n}', n).replace('{name}', e.target.files[0].name); }
+      if (k.indexOf('copy') === 0 && msgs['_' + k]) { try { navigator.clipboard.writeText(msgs['_' + k]); } catch (er) {} }
+      show(m);
+    };
+  });
+  return { demo: o, toastText: s.toast || '', toastSt: s.toast ? 'opacity:1;transform:translate(-50%,0)' : 'opacity:0;transform:translate(-50%,10px);pointer-events:none' };
+}
+var DEMO = { ru: {}, en: {} };
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { lang: null, doc: 'terms' }; }
+  renderVals() {
+    var s = this.state, lang = s.lang || this.props.startLang || 'ru';
+    var v = Object.assign({}, this._rv(), demoBuild(this, s, DEMO[lang] || DEMO.ru), { uiLang: lang }, this._extra ? this._extra(lang) : {});
+    return lang === 'en' ? enFix(v) : v;
+  }
+  _rv() {
+    var s = this.state, self = this;
+    var lang = s.lang || this.props.startLang || 'ru';
+    var t = L[lang] || L.ru;
+    var cur = t.docs.filter(function (d) { return d.id === s.doc; })[0] || t.docs[0];
+    return {
+      t: t,
+      langLabel: lang === 'ru' ? 'EN' : 'RU', toggleLang: function () { self.setState({ lang: lang === 'ru' ? 'en' : 'ru' }); },
+      docs: t.docs.map(function (d) { var on = d.id === cur.id; return { title: d.title, on: on, st: on ? 'border:0;background:#16161A;color:#fff;font-weight:600' : 'border:0;background:transparent;color:#16161A', pick: function () { self.setState({ doc: d.id }); } }; }),
+      doc: { title: cur.title, intro: cur.intro, secs: cur.secs.map(function (x, i) { return { n: i + 1, h: x[0], p: x[1] }; }) }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>AI YT Studio — Mobile growth tools</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F3EF}
+a{color:#16161A}
+button{font-family:inherit;cursor:pointer}
+input,textarea{font-family:inherit}
+.phd{background-color:#23232A;background-image:repeating-linear-gradient(135deg,rgba(255,255,255,0.06) 0 10px,transparent 10px 20px)}
+.card{background:#fff;border:1px solid #E2DFD7;border-radius:14px}
+.mono{font-family:'IBM Plex Mono',monospace}
+.muted{color:#5E5B54}
+.h2{margin:0;font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600}
+.btn2{min-height:40px;padding:0 12px;border-radius:10px;border:1px solid #D9D6CE;background:#fff;font-size:13px;color:#16161A}
+.cta{min-height:52px;border-radius:12px;border:0;color:#fff;font-weight:600;font-size:16px;width:100%}
+:focus-visible{outline:3px solid #2F5BEA;outline-offset:2px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</helmet>
+<div lang="{{uiLang}}" style="width: 390px; height: 844px; position: relative; overflow: hidden; display: flex; flex-direction: column; background: #F4F3EF; color: #16161A; font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 16px">
+<header style="flex: none; padding: 12px 16px 8px; display: flex; align-items: center; gap: 10px; background: #F4F3EF">
+<a href="MApp.dc.html" aria-label="{{t.back}}" style="width: 44px; height: 44px; border-radius: 10px; border: 1px solid #D9D6CE; background: #fff; display: flex; align-items: center; justify-content: center; flex: none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16161A" stroke-width="2" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></a>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column"><span class="mono muted" style="font-size: 11px; letter-spacing: 0.08em">{{t.group}}</span><h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{heading}}</h1></div>
+<button type="button" onClick="{{toggleLang}}" aria-label="{{t.langSwitch}}" class="mono" style="min-width: 44px; height: 44px; border-radius: 10px; border: 1px solid #D9D6CE; background: #fff; font-size: 13px">{{langLabel}}</button>
+</header>
+<nav aria-label="{{t.group}}" style="flex: none; display: flex; gap: 8px; overflow-x: auto; padding: 4px 16px 12px; border-bottom: 1px solid #E2DFD7">
+<sc-for list="{{tabs}}" as="tb" hint-placeholder-count="5"><button type="button" onClick="{{tb.pick}}" aria-current="{{tb.cur}}" style="flex: none; min-height: 40px; padding: 0 14px; border-radius: 999px; font-size: 14px; {{tb.st}}">{{tb.label}}</button></sc-for>
+</nav>
+<div style="flex: 1; overflow-y: auto; padding: 14px 16px 24px; display: flex; flex-direction: column; gap: 12px">
+
+<sc-if value="{{isCal}}" hint-placeholder-val="{{ true }}">
+<span class="muted" style="font-size: 14px">{{t.month}}</span>
+<div role="group" aria-label="{{mcpLbl}}" style="flex: none; display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px"><sc-for list="{{mcpChips}}" as="mc" hint-placeholder-count="5"><button type="button" onClick="{{mc.pick}}" aria-pressed="{{mc.on}}" style="flex: none; min-height: 40px; padding: 0 14px; border-radius: 999px; font-size: 14px; {{mc.st}}">{{mc.label}}</button></sc-for></div>
+<sc-for list="{{agenda}}" as="a" hint-placeholder-count="6">
+<div class="card" style="padding: 14px; display: flex; gap: 12px; align-items: center">
+<div style="width: 48px; flex: none; display: flex; flex-direction: column; align-items: center"><span style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600; line-height: 1">{{a.day}}</span><span class="mono muted" style="font-size: 11px">{{a.wd}}</span></div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px"><span style="font-weight: 500; font-size: 15px; line-height: 1.3">{{a.title}}</span><span class="mono muted" style="font-size: 11px; line-height: 1.4">{{a.pls}}</span><span style="align-self: flex-start; padding: 2px 8px; border-radius: 999px; font-size: 12px; {{a.st}}">{{a.status}}</span></div>
+<sc-if value="{{a.canAdvance}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{a.advance}}" aria-label="{{t.advance}}" class="btn2" style="width: 44px; min-height: 44px; padding: 0">→</button></sc-if>
+</div>
+</sc-for>
+</sc-if>
+
+<sc-if value="{{isShorts}}" hint-placeholder-val="{{ false }}">
+<div class="card" style="padding: 14px; display: flex; flex-direction: column; gap: 10px">
+<label for="msrc" style="font-weight: 500; font-size: 14px">{{t.sourceVideo}}</label>
+<input id="msrc" type="url" placeholder="https://youtube.com/watch?v=…" style="min-height: 48px; padding: 0 12px; border: 1px solid #D9D6CE; border-radius: 10px; font-size: 16px">
+<button type="button" onClick="{{find}}" class="cta" style="background: {{accent}}">{{t.findMoments}}</button>
+</div>
+<sc-if value="{{shortsDone}}" hint-placeholder-val="{{ false }}">
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+<sc-for list="{{moments}}" as="mo" hint-placeholder-count="4">
+<label style="display: flex; flex-direction: column; gap: 6px; {{mo.dim}}">
+<span class="phd" style="aspect-ratio: 9 / 16; border-radius: 10px; position: relative; display: flex; align-items: flex-end; padding: 8px; box-sizing: border-box"><span class="mono" style="position: absolute; left: 6px; top: 6px; font-size: 10px; color: #fff; background: rgba(0,0,0,0.55); padding: 2px 5px; border-radius: 4px">{{mo.range}}</span><span style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 13px; color: #fff; text-transform: uppercase; line-height: 1.1">{{mo.hook}}</span></span>
+<span style="display: flex; gap: 8px; align-items: center; font-size: 13px; min-height: 32px"><input type="checkbox" checked="{{mo.on}}" onChange="{{mo.toggle}}" style="width: 20px; height: 20px; accent-color: #16161A">{{t.include}}</span>
+</label>
+</sc-for>
+</div>
+<button type="button" class="cta" style="background: #16161A" onClick="{{demo.exportSel}}">{{exportLabel}}</button>
+</sc-if>
+</sc-if>
+
+<sc-if value="{{isTrends}}" hint-placeholder-val="{{ false }}">
+<span class="mono" style="align-self: flex-start; padding: 4px 10px; border-radius: 999px; background: #FDE7DF; color: #8A2A0C; font-size: 11px">{{t.demo}}</span>
+<div style="display: flex; gap: 8px; flex-wrap: wrap"><sc-for list="{{t.topics}}" as="tp" hint-placeholder-count="5"><span style="padding: 6px 12px; border-radius: 999px; background: #fff; border: 1px solid #E2DFD7; font-size: 13px">↗ {{tp}}</span></sc-for></div>
+<sc-for list="{{trends}}" as="tv" hint-placeholder-count="4">
+<div class="card" style="overflow: hidden">
+<div class="phd" style="aspect-ratio: 16 / 9; position: relative"><span class="mono" style="position: absolute; left: 8px; top: 8px; font-size: 11px; padding: 2px 8px; border-radius: 999px; background: {{accent}}; color: #fff">{{tv.mult}}</span></div>
+<div style="padding: 12px 14px; display: flex; flex-direction: column; gap: 8px"><span style="font-weight: 600; line-height: 1.35">{{tv.title}}</span><span class="muted" style="font-size: 13px">{{tv.meta}}</span><button type="button" onClick="{{tv.toCal}}" class="btn2" style="min-height: 44px">{{tv.calLabel}}</button></div>
+</div>
+</sc-for>
+</sc-if>
+
+<sc-if value="{{isComments}}" hint-placeholder-val="{{ false }}">
+<div class="card" style="padding: 14px; display: flex; flex-direction: column; gap: 6px"><span class="h2">{{t.summaryH}}</span><span style="font-size: 14px; line-height: 1.5; color: #3A3833">{{t.summary}}</span></div>
+<sc-for list="{{comments}}" as="cm" hint-placeholder-count="3">
+<div class="card" style="padding: 14px; display: flex; flex-direction: column; gap: 8px">
+<span style="display: flex; justify-content: space-between; gap: 8px"><span style="font-weight: 500; font-size: 14px">{{cm.author}}</span><span style="padding: 2px 8px; border-radius: 999px; font-size: 12px; {{cm.catSt}}">{{cm.cat}}</span></span>
+<span style="font-size: 15px; line-height: 1.45">{{cm.text}}</span>
+<sc-if value="{{cm.pending}}" hint-placeholder-val="{{ true }}">
+<label for="{{cm.fid}}" class="muted" style="font-size: 12px">{{t.aiDraft}}</label>
+<textarea id="{{cm.fid}}" rows="3" style="padding: 10px; border: 1px solid #E2DFD7; border-radius: 10px; font-size: 15px; line-height: 1.45; resize: none; background: #FCFBF8">{{cm.draft}}</textarea>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px"><button type="button" onClick="{{cm.send}}" style="min-height: 44px; border-radius: 10px; border: 0; background: #16161A; color: #fff; font-size: 14px">{{t.send}}</button><button type="button" onClick="{{cm.skip}}" class="btn2" style="min-height: 44px">{{t.skip}}</button></div>
+</sc-if>
+<sc-if value="{{cm.done}}" hint-placeholder-val="{{ false }}"><span style="padding: 8px 10px; border-radius: 8px; font-size: 13px; {{cm.doneSt}}">{{cm.doneLabel}}</span></sc-if>
+</div>
+</sc-for>
+</sc-if>
+
+<sc-if value="{{isBrand}}" hint-placeholder-val="{{ false }}">
+<div class="card" style="padding: 16px; display: flex; flex-direction: column; gap: 14px">
+<h2 class="h2" style="margin: 0">{{bx.bH}}</h2><span class="muted" style="font-size: 14px; line-height: 1.5">{{bx.bP}}</span>
+<span style="font-weight: 600; font-size: 14px">{{bx.bColors}}</span>
+<sc-for list="{{bCols}}" as="bc" hint-placeholder-count="3"><div style="display: flex; align-items: center; gap: 12px"><label for="{{bc.fid}}" style="flex: 1; font-size: 15px">{{bc.name}}</label><span class="mono muted" style="font-size: 13px">{{bc.value}}</span><input id="{{bc.fid}}" type="color" value="{{bc.value}}" onChange="{{bc.onEdit}}" style="width: 52px; height: 44px; border: 1px solid #D9D6CE; border-radius: 10px; padding: 3px; background: #fff"></div></sc-for>
+<span style="font-weight: 600; font-size: 14px">{{bx.bFont}}</span>
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><sc-for list="{{bFonts}}" as="bf" hint-placeholder-count="4"><button type="button" aria-pressed="{{bf.on}}" onClick="{{bf.pick}}" style="min-height: 44px; padding: 0 14px; border-radius: 999px; font-size: 14px; {{bf.st}}">{{bf.label}}</button></sc-for></div>
+</div>
+<a href="Studio.dc.html" style="min-height: 48px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 12px; border-radius: 12px; border: 1px solid #D9D6CE; text-decoration: none; color: #16161A; font-size: 14px">{{bx.bMore}}</a>
+</sc-if>
+
+<sc-if value="{{isTitles}}" hint-placeholder-val="{{ false }}">
+<sc-for list="{{titleRows}}" as="tr" hint-placeholder-count="3">
+<div class="card" style="padding: 14px; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between"><label for="{{tr.fid}}" style="font-weight: 500; font-size: 14px">{{t.variant}} {{tr.letter}}</label><span class="mono" style="font-size: 12px; {{tr.lenSt}}">{{tr.len}}/100</span></div>
+<textarea id="{{tr.fid}}" rows="2" value="{{tr.text}}" onChange="{{tr.onEdit}}" style="padding: 10px; border: 1px solid #D9D6CE; border-radius: 10px; font-size: 16px; line-height: 1.4; resize: none"></textarea>
+<div style="display: flex; flex-wrap: wrap; gap: 6px"><sc-for list="{{tr.checks}}" as="ck" hint-placeholder-count="3"><span style="padding: 3px 9px; border-radius: 999px; font-size: 12px; {{ck.st}}">{{ck.icon}} {{ck.label}}</span></sc-for></div>
+</div>
+</sc-for>
+</sc-if>
+
+</div>
+<div role="status" aria-live="polite" style="position: absolute; left: 50%; bottom: 92px; z-index: 60; width: 340px; box-sizing: border-box; background: #16161A; color: #fff; padding: 12px 18px; border-radius: 10px; font-size: 14px; line-height: 1.45; box-shadow: 0 8px 24px rgba(0,0,0,0.25); transition: opacity .2s, transform .2s; {{toastSt}}">{{toastText}}</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#C93C14","options":["#C93C14","#2F5BEA","#0F7B5F","#16161A"]},"startLang":{"editor":"enum","options":["ru","en"],"default":"ru"},"$preview":{"width":390,"height":844}}'>
+var L = {
+  ru: { group: "ИНСТРУМЕНТЫ РОСТА", back: "Назад в кабинет", langSwitch: "Сменить язык на английский",
+    tabs: ["Календарь", "Shorts", "Тренды", "Комментарии", "Заголовки", "Брендбук"], month: "Октябрь 2026 · ближайшие видео", advance: "Следующий этап",
+    weekdays: ["ВС", "ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ"],
+    statuses: { idea: "Идея", script: "Сценарий", visual: "Визуал", ready: "Готово", scheduled: "Запланировано", published: "Опубликовано" },
+    items: ["Самая глубокая точка Земли", "Что видит сонар", "Глубоководная добыча", "Медуза за 60 секунд", "Новости глубин: октябрь", "Марианская впадина в 3D"],
+    sourceVideo: "Ссылка на длинное видео", findMoments: "Найти моменты", include: "В экспорт", exportSel: "Экспортировать выбранные",
+    hooks: ["Карты Марса точнее, чем дна океана", "4000 метров — сложнее, чем космос", "Робот, который нырнул глубже всех", "Существо светится в темноте"],
+    demo: "ДЕМО-ДАННЫЕ", topics: ["глубоководные роботы", "биолюминесценция", "Марианская впадина", "подводные вулканы"],
+    trendVids: [["Мы опустили камеру на 6000 метров", "@deep_atlas · 8 тыс.", "×12"], ["Почему у глубоководных рыб нет цвета", "@ocean_notes · 3 тыс.", "×9"], ["Самое редкое существо океана", "@bezdna_tv · 1 тыс.", "×15"]],
+    toCal: "В календарь", inCal: "В календаре ✓",
+    summaryH: "О чём пишут зрители", summary: "Хвалят подачу, просят видео про Марианскую впадину, жалуются на громкую музыку в начале.",
+    commentList: [["question", "Алексей", "А откуда эти кадры с глубины? Это реальные съёмки?", "Часть кадров — реальные съёмки экспедиций, часть — визуализация. Источники в описании 👇"], ["idea", "Мария", "Сделайте видео про Марианскую впадину!", "Уже в работе — выйдет на следующей неделе!"], ["criticism", "Денис", "Музыка в начале громче голоса", "Спасибо! Поправим баланс звука в следующих видео."]],
+    cats: { question: "Вопрос", idea: "Идея", criticism: "Критика" }, aiDraft: "Черновик ответа от AI", send: "Отправить", skip: "Пропустить", sent: "Ответ отправлен", skipped: "Пропущено",
+    variant: "Вариант", titles: ["Марс изучен лучше, чем наш океан", "Что на самом деле скрыто на глубине 4000 метров и почему туда так сложно добраться?", "Последнее неисследованное место на Земле"],
+    chkLen: "До 60 символов", chkLenBad: "Обрежется в поиске", chkQ: "Любопытство", chkNum: "Есть число" },
+  en: { group: "GROWTH TOOLS", back: "Back to dashboard", langSwitch: "Switch language to Russian",
+    tabs: ["Calendar", "Shorts", "Trends", "Comments", "Titles", "Brand kit"], month: "October 2026 · upcoming videos", advance: "Next stage",
+    weekdays: ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"],
+    statuses: { idea: "Idea", script: "Script", visual: "Visuals", ready: "Ready", scheduled: "Scheduled", published: "Published" },
+    items: ["The deepest point on Earth", "What sonar sees", "Deep-sea mining", "Jellyfish in 60 seconds", "Deep news: October", "The Mariana Trench in 3D"],
+    sourceVideo: "Long video link", findMoments: "Find moments", include: "Export", exportSel: "Export selected",
+    hooks: ["Mars is mapped better than our seabed", "4,000 m is harder than space", "The robot that dove the deepest", "This creature glows in the dark"],
+    demo: "DEMO DATA", topics: ["deep-sea robots", "bioluminescence", "Mariana Trench", "underwater volcanoes"],
+    trendVids: [["We dropped a camera to 6,000 metres", "@abyss_lab · 8K", "×12"], ["Why deep-sea fish have no colour", "@hydro_story · 3K", "×9"], ["The rarest creature in the ocean", "@sonar_club · 1K", "×15"]],
+    toCal: "To calendar", inCal: "In calendar ✓",
+    summaryH: "What viewers are saying", summary: "They like the delivery, ask for a Mariana Trench video, and say the intro music is too loud.",
+    commentList: [["question", "Alex", "Where is this deep-sea footage from? Is it real?", "Some shots are real expedition footage, some are visualisations. Sources in the description 👇"], ["idea", "Maria", "Please make a video about the Mariana Trench!", "Already in the works — out next week!"], ["criticism", "Dan", "The intro music is louder than the voice", "Thanks! We’ll fix the audio balance in the next videos."]],
+    cats: { question: "Question", idea: "Idea", criticism: "Criticism" }, aiDraft: "AI reply draft", send: "Send", skip: "Skip", sent: "Reply sent", skipped: "Skipped",
+    variant: "Variant", titles: ["We Mapped Mars Better Than Our Own Ocean", "What Is Really Hiding 4,000 Metres Below and Why Is It So Hard to Get There?", "The Last Unexplored Place on Earth"],
+    chkLen: "Under 60 chars", chkLenBad: "Cut off in search", chkQ: "Curiosity", chkNum: "Has a number" }
+};
+var ST = ['idea', 'script', 'visual', 'ready', 'scheduled', 'published'];
+var ST_COL = { idea: 'background:#ECEAE4;color:#3A3833', script: 'background:#FBEBC9;color:#6B4200', visual: 'background:#E4E2F5;color:#3B3580', ready: 'background:#D6E8E1;color:#0B5A45', scheduled: 'background:#16161A;color:#fff', published: 'background:#C93C14;color:#fff' };
+var ITEMS = [{ k: 0, day: 13, st: 'scheduled' }, { k: 1, day: 16, st: 'ready' }, { k: 2, day: 20, st: 'visual' }, { k: 3, day: 23, st: 'script' }, { k: 4, day: 27, st: 'idea' }, { k: 5, day: 30, st: 'idea' }];
+var ADM_KEY = 'aiytstudio.admin.v1';
+var ADM_KEYS = ['platOn', 'igScope', 'axProv', 'axEnabled', 'medEnabled', 'eridOn', 'payOn'];
+function admRead() { try { var v = window.localStorage.getItem(ADM_KEY); var o = v ? JSON.parse(v) : {}; return o && typeof o === 'object' ? o : {}; } catch (e) { return {}; } }
+function admWrite(o) { try { window.localStorage.setItem(ADM_KEY, JSON.stringify(o)); } catch (e) {} }
+function admPick(s) { var o = {}; ADM_KEYS.forEach(function (k) { if (s[k] !== undefined) o[k] = s[k]; }); return o; }
+function admWatch(comp, onChange) {
+  var last = JSON.stringify(admRead());
+  var chk = function () { var v = JSON.stringify(admRead()); if (v !== last) { last = v; onChange(); } };
+  var h = function (e) { if (!e || e.key === ADM_KEY || e.key === null) chk(); };
+  try { window.addEventListener('storage', h); } catch (e) {}
+  var id = setInterval(chk, 1000);
+  comp._admStop = function () { clearInterval(id); try { window.removeEventListener('storage', h); } catch (e) {} };
+}
+function admEff(props, lang) {
+  var a = admRead(), pl = a.platOn || {}, prov = a.axProv || {}, axEn = a.axEnabled || {}, med = a.medEnabled || {}, pay = a.payOn || {};
+  var AXIDS = ['opus', 'astra', 'sol', 'luna', 'haiku', 'deepseek', 'ygpt', 'ylite', 'gmax', 'glite'];
+  var PROVK = { opus: 'a', haiku: 'a', astra: 'o', sol: 'o', luna: 'o', deepseek: 'd', ygpt: 'y', ylite: 'y', gmax: 'g', glite: 'g' };
+  return {
+    platOk: function (k) { if (k === 'yt') return true; if (pl[k] === false) return false; if (k === 'ig') { if (props.instagram === 'off') return false; if (a.igScope === 'en' && lang === 'ru') return false; } return true; },
+    axOk: function (id) { var pk = PROVK[id]; if (pk === 'a' && props.claudeChats === 'off') return false; if (pk === 'o' && props.gptChats === 'off') return false; if (pk && prov[pk]) return false; var i = AXIDS.indexOf(id); if (i >= 0 && axEn[i] === false) return false; return true; },
+    medOk: function (id) { return med[id] !== false; },
+    payOk: function (k) { return pay[k] !== false; },
+    eridOn: a.eridOn !== false
+  };
+}
+var MCPK = ['yt', 'vk', 'rt', 'dz'];
+var MCP = { ru: { all: "Все", pl: { yt: "YouTube", vk: "VK", rt: "RUTUBE", dz: "Дзен" }, ab: { yt: "YT", vk: "VK", rt: "RT", dz: "ДЗ" }, mon: " окт", lbl: "Площадки" },
+  en: { all: "All", pl: { yt: "YouTube", vk: "VK", rt: "RUTUBE", dz: "Dzen" }, ab: { yt: "YT", vk: "VK", rt: "RT", dz: "DZ" }, mon: " Oct", lbl: "Platforms" } };
+var MPL0 = [{ yt: 0, vk: 0, rt: 1, dz: 2 }, { yt: 0, vk: 0, rt: 0 }, { yt: 0, vk: 0, rt: 1, dz: 1 }, { yt: 0, vk: 0, rt: 0 }, { yt: 0, vk: 0, rt: 1, dz: 2 }, { yt: 0, vk: 0, rt: 1, dz: 1 }];
+
+var EN_FIX = [[/Сбер · свой сервер/g, 'Sber · own server'], [/Свой сервер \(GPU\)/g, 'Own server (GPU)'], [/Яндекс/g, 'Yandex'], [/Сбер/g, 'Sber']];
+function enFix(v) {
+  if (typeof v === 'string') { var r = v; EN_FIX.forEach(function (p) { r = r.replace(p[0], p[1]); }); return r; }
+  if (Array.isArray(v)) return v.map(enFix);
+  if (v && typeof v === 'object') { var o = {}; Object.keys(v).forEach(function (k) { o[k] = typeof v[k] === 'function' ? v[k] : enFix(v[k]); }); return o; }
+  return v;
+}
+function csvHref(rows) {
+  var esc = function (x) { x = String(x == null ? '' : x); return /[",;\n]/.test(x) ? '"' + x.replace(/"/g, '""') + '"' : x; };
+  return 'data:text/csv;charset=utf-8,' + encodeURIComponent('﻿' + rows.map(function (r) { return r.map(esc).join(';'); }).join('\r\n'));
+}
+function demoBuild(self, s, msgs) {
+  var show = function (m) { if (self._tt) clearTimeout(self._tt); self.setState({ toast: m }); self._tt = setTimeout(function () { self.setState({ toast: '' }); }, 4000); };
+  var o = {};
+  Object.keys(msgs).forEach(function (k) {
+    o[k] = function (e) {
+      var m = msgs[k];
+      if (e && e.target && e.target.files) { var n = e.target.files.length; if (!n) return; m = m.replace('{n}', n).replace('{name}', e.target.files[0].name); }
+      if (k.indexOf('copy') === 0 && msgs['_' + k]) { try { navigator.clipboard.writeText(msgs['_' + k]); } catch (er) {} }
+      show(m);
+    };
+  });
+  return { demo: o, toastText: s.toast || '', toastSt: s.toast ? 'opacity:1;transform:translate(-50%,0)' : 'opacity:0;transform:translate(-50%,10px);pointer-events:none' };
+}
+var BRX = {
+  ru: { bH: "Брендбук канала", bP: "Цвета и шрифт канала. Они сразу появляются первыми в настройках субтитров и обложек.", bColors: "Цвета", bNames: ["Основной", "Акцент", "Текст"], bFont: "Шрифт", bSaved: "Сохранено — цвета уже в субтитрах", bMore: "Перенос на платформы и команда — в полной версии инструментов роста ↗" },
+  en: { bH: "Channel brand kit", bP: "Your channel’s colors and font. They appear first in the subtitle and thumbnail settings.", bColors: "Colors", bNames: ["Primary", "Accent", "Text"], bFont: "Font", bSaved: "Saved — the colors are already in subtitles", bMore: "Repurposing and team are in the full growth tools ↗" }
+};
+var BFONTS = [['grotesk', 'Space Grotesk', "'Space Grotesk', sans-serif"], ['sans', 'IBM Plex Sans', "'IBM Plex Sans', sans-serif"], ['serif', 'Georgia', 'Georgia, serif'], ['mono', 'IBM Plex Mono', "'IBM Plex Mono', monospace"]];
+function brandGet() { try { var v = window.localStorage.getItem('aiytstudio.brand.v1'); var o = v ? JSON.parse(v) : null; if (o && Array.isArray(o.colors)) return o; } catch (e) {} return { colors: ['#0E2A3B', '#FFB800', '#FFFFFF'], font: 'grotesk' }; }
+function brandPut(o) { try { window.localStorage.setItem('aiytstudio.brand.v1', JSON.stringify(o)); } catch (e) {} }
+var DEMO = { ru: {"exportSel": "Выбранные Shorts отправлены на экспорт — они появятся в очереди задач."}, en: {"exportSel": "Selected Shorts were sent for export — they will appear in the task queue."} };
+class Component extends DCLogic {
+  componentDidMount() { var self = this; admWatch(this, function () { self.forceUpdate(); }); }
+  componentWillUnmount() { if (this._admStop) this._admStop(); }
+  constructor(props) { super(props); this.state = { lang: null, tab: 0, mcp: 'all', items: ITEMS.slice(), extra: [], shorts: false, off: {}, trendCal: {}, cState: {}, titleEdits: {} }; }
+  renderVals() {
+    var s = this.state, lang = s.lang || this.props.startLang || 'ru';
+    var v = Object.assign({}, this._rv(), demoBuild(this, s, DEMO[lang] || DEMO.ru), { uiLang: lang }, this._extra ? this._extra(lang) : {});
+    return lang === 'en' ? enFix(v) : v;
+  }
+  _extra(lang) {
+    var self = this, x = BRX[lang] || BRX.ru, b = brandGet();
+    var on = 'background:#16161A;color:#fff;border:1px solid #16161A', off = 'background:#fff;color:#16161A;border:1px solid #D9D6CE';
+    return { bx: x,
+      bCols: b.colors.slice(0, 3).map(function (c, i) { return { name: x.bNames[i], value: c, fid: 'mbc' + i, sw: 'background:' + c, onEdit: function (e) { var o = brandGet(); o.colors = o.colors.slice(); o.colors[i] = e.target.value; brandPut(o); self.setState({ brandRev: (self.state.brandRev || 0) + 1, toast: x.bSaved }); } }; }),
+      bFonts: BFONTS.map(function (f) { var sel = f[0] === b.font; return { label: f[1], on: sel, st: (sel ? on : off) + ';font-family:' + f[2], pick: function () { var o = brandGet(); o.font = f[0]; brandPut(o); self.setState({ brandRev: (self.state.brandRev || 0) + 1, toast: x.bSaved }); } }; }) };
+  }
+  _rv() {
+    var s = this.state, self = this;
+    var accent = this.props.accent ?? '#C93C14';
+    var lang = s.lang || this.props.startLang || 'ru';
+    var t = L[lang] || L.ru;
+    var on = 'background:#16161A;color:#fff;border:1px solid #16161A', off = 'background:#fff;color:#16161A;border:1px solid #D9D6CE';
+    var mc = MCP[lang] || MCP.ru, admM = admEff(this.props, lang), mk = MCPK.filter(function (k) { return admM.platOk(k); }), mf = mk.indexOf(s.mcp) >= 0 ? s.mcp : 'all';
+    var mplTxt = function (day, po) { var by = {}; Object.keys(po).forEach(function (k) { if (mk.indexOf(k) < 0) return; var d = day + po[k]; (by[d] = by[d] || []).push(mc.ab[k]); }); return Object.keys(by).sort(function (a, b) { return a - b; }).map(function (d) { return by[d].join(', ') + ' · ' + d + mc.mon; }).join('  ·  '); };
+    var mHas = function (po) { return mf === 'all' || po[mf] !== undefined; };
+    var all = s.items.map(function (it, i) { var po = MPL0[it.k] || { yt: 0 }; return { title: t.items[it.k], day: mf === 'all' ? it.day : it.day + po[mf], st: it.st, idx: i, extra: false, pls: mplTxt(it.day, po), show: mHas(po) }; })
+      .concat(s.extra.map(function (e, j) { var po = { yt: 0, vk: 0, rt: 0 }; return { title: e.title, day: e.day, st: 'idea', idx: j, extra: true, pls: mplTxt(e.day, po), show: mHas(po) }; }))
+      .filter(function (a) { return a.show; })
+      .sort(function (a, b) { return a.day - b.day; });
+    var good = 'background:#DDF0E8;color:#0B5A45', warn = 'background:#FBEBC9;color:#6B4200', neutral = 'background:#F4F3EF;color:#5E5B54';
+    var cats = { question: 'background:#E4E2F5;color:#3B3580', idea: 'background:#FBEBC9;color:#6B4200', criticism: 'background:#F7DDD5;color:#8A2A0C' };
+    var moments = t.hooks.map(function (h, i) { var inc = !s.off[i]; return { hook: h, range: ['0:12', '2:40', '4:05', '6:18'].at(i) + ' · 45s', on: inc, dim: inc ? '' : 'opacity:0.55', toggle: function () { var m = Object.assign({}, s.off); m[i] = inc; self.setState({ off: m }); } }; });
+    return {
+      t: t, accent: accent,
+      langLabel: lang === 'ru' ? 'EN' : 'RU', toggleLang: function () { self.setState({ lang: lang === 'ru' ? 'en' : 'ru' }); },
+      heading: t.tabs[s.tab],
+      tabs: t.tabs.map(function (l, i) { return { label: l, cur: i === s.tab ? 'page' : 'false', st: i === s.tab ? on : off, pick: function () { self.setState({ tab: i }); } }; }),
+      isCal: s.tab === 0, isShorts: s.tab === 1, isTrends: s.tab === 2, isComments: s.tab === 3, isTitles: s.tab === 4, isBrand: s.tab === 5,
+      mcpChips: [['all', mc.all]].concat(mk.map(function (k) { return [k, mc.pl[k]]; })).map(function (o) { var v = mf === o[0]; return { label: o[1], on: v, st: v ? on : off, pick: function () { self.setState({ mcp: o[0] }); } }; }), mcpLbl: mc.lbl,
+      agenda: all.map(function (a) {
+        var dow = new Date(Date.UTC(2026, 9, a.day)).getUTCDay();
+        return { title: a.title, pls: a.pls, day: String(a.day), wd: t.weekdays.at(dow), status: t.statuses[a.st], st: ST_COL[a.st], canAdvance: !a.extra && a.st !== 'published',
+          advance: function () { var arr = s.items.slice(); var it = Object.assign({}, arr[a.idx]); var p = ST.indexOf(it.st); if (p < ST.length - 1) it.st = ST.at(p + 1); arr[a.idx] = it; self.setState({ items: arr }); } };
+      }),
+      find: function () { self.setState({ shorts: true }); }, shortsDone: s.shorts, moments: moments,
+      exportLabel: t.exportSel + ' (' + moments.filter(function (m) { return m.on; }).length + ')',
+      trends: t.trendVids.map(function (v, i) { var inCal = !!s.trendCal[i]; return { title: v[0], meta: v[1], mult: v[2], calLabel: inCal ? t.inCal : t.toCal, toCal: function () { if (inCal) return; var m = Object.assign({}, s.trendCal); m[i] = true; self.setState({ trendCal: m, extra: s.extra.concat([{ title: v[0], day: 21 + s.extra.length }]) }); } }; }),
+      comments: t.commentList.map(function (c, i) { var st = s.cState[i]; return { author: c[1], text: c[2], draft: c[3], cat: t.cats[c[0]], catSt: cats[c[0]], fid: 'mrep' + i, pending: !st, done: !!st, doneLabel: st === 'sent' ? t.sent : t.skipped, doneSt: st === 'sent' ? good : neutral,
+        send: function () { var m = Object.assign({}, s.cState); m[i] = 'sent'; self.setState({ cState: m }); }, skip: function () { var m = Object.assign({}, s.cState); m[i] = 'skip'; self.setState({ cState: m }); } }; }),
+      titleRows: t.titles.map(function (base, i) { var text = s.titleEdits[i] != null ? s.titleEdits[i] : base, len = text.length;
+        return { letter: 'ABC'.charAt(i), fid: 'mt' + i, text: text, len: len, lenSt: len > 60 ? 'color:#8A2A0C' : 'color:#5E5B54',
+          checks: [len <= 60 ? { icon: '✓', label: t.chkLen, st: good } : { icon: '!', label: t.chkLenBad, st: warn }, /[?!]/.test(text) ? { icon: '✓', label: t.chkQ, st: good } : { icon: '–', label: t.chkQ, st: neutral }, /\d/.test(text) ? { icon: '✓', label: t.chkNum, st: good } : { icon: '–', label: t.chkNum, st: neutral }],
+          onEdit: function (e) { var m = Object.assign({}, s.titleEdits); m[i] = e.target.value; self.setState({ titleEdits: m }); } }; })
+    };
+  }
+}
+</script>
+</body>
+</html>

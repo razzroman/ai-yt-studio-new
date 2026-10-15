@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>AI YT Studio — Home</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F3EF}
+a{color:#16161A}a:hover{color:#B8320F}
+.ph{background-color:#E7E4DC;background-image:repeating-linear-gradient(135deg,rgba(22,22,26,0.06) 0 10px,transparent 10px 20px)}
+.phd{background-color:#23232A;background-image:repeating-linear-gradient(135deg,rgba(255,255,255,0.06) 0 10px,transparent 10px 20px)}
+button{font-family:inherit;cursor:pointer}
+input{font-family:inherit}
+header nav a,footer a{display:inline-flex;align-items:center;min-height:32px}
+:focus-visible{outline:3px solid #2F5BEA;outline-offset:2px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</helmet>
+<div lang="{{uiLang}}" style="background: #F4F3EF; color: #16161A; font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 16px">
+
+<!-- Top bar -->
+<header style="position: relative; background: #16161A; color: #F4F3EF">
+<div style="max-width: 1240px; margin: 0 auto; padding: 16px clamp(16px, 4vw, 40px); display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between">
+<a href="#top" style="display: flex; align-items: center; gap: 10px; color: #F4F3EF; text-decoration: none">
+<span style="width: 34px; height: 34px; border-radius: 8px; background: {{accent}}; display: flex; align-items: center; justify-content: center"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7.5-4.5z" fill="#fff"></path></svg></span>
+<span style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 20px; letter-spacing: -0.02em">AI YT Studio</span>
+</a>
+<nav aria-label="Sections" style="display: flex; flex-wrap: wrap; gap: 4px 20px; font-size: 15px">
+<a href="#features" style="color: #CFCBC2; text-decoration: none; padding: 10px 0">{{t.navFeatures}}</a>
+<a href="#how" style="color: #CFCBC2; text-decoration: none; padding: 10px 0">{{t.navHow}}</a>
+<a href="#pricing" style="color: #CFCBC2; text-decoration: none; padding: 10px 0">{{t.navPricing}}</a>
+<a href="#faq" style="color: #CFCBC2; text-decoration: none; padding: 10px 0">{{t.navFaq}}</a>
+</nav>
+<div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap">
+<div role="group" aria-label="{{t.langSwitch}}" style="display: flex; gap: 4px; padding: 4px; border: 1px solid #4A4A52; border-radius: 10px">
+<button type="button" onClick="{{setRu}}" aria-pressed="{{isRu}}" style="min-width: 44px; min-height: 36px; border-radius: 7px; border: 0; font-family: 'IBM Plex Mono', monospace; font-size: 13px; {{ruSt}}">RU</button>
+<button type="button" onClick="{{setEn}}" aria-pressed="{{isEn}}" style="min-width: 44px; min-height: 36px; border-radius: 7px; border: 0; font-family: 'IBM Plex Mono', monospace; font-size: 13px; {{enSt}}">EN</button>
+</div>
+<a href="#signup" onClick="{{toLogin}}" style="min-height: 44px; display: inline-flex; align-items: center; padding: 0 16px; border-radius: 8px; border: 1px solid #4A4A52; color: #F4F3EF; text-decoration: none; font-size: 15px">{{t.login}}</a>
+<a href="#signup" onClick="{{toSignup}}" style="min-height: 44px; display: inline-flex; align-items: center; padding: 0 18px; border-radius: 8px; background: {{accent}}; color: #fff; text-decoration: none; font-size: 15px; font-weight: 600">{{t.signup}}</a>
+</div>
+</div>
+</header>
+
+<!-- Hero + auth -->
+<section id="top" style="background: #16161A; color: #F4F3EF; padding: 56px 0 80px">
+<div style="max-width: 1240px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); display: flex; flex-wrap: wrap; gap: 48px; align-items: center">
+<div style="flex: 1 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+<span style="align-self: flex-start; padding: 6px 12px; border-radius: 999px; border: 1px solid #4A4A52; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.06em; color: #CFCBC2">{{t.badge}}</span>
+<h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: clamp(38px, 5.4vw, 64px); line-height: 1.02; letter-spacing: -0.03em; font-weight: 600">{{t.heroTitle}}</h1>
+<p style="margin: 0; font-size: 19px; line-height: 1.55; color: #CFCBC2; max-width: 560px">{{t.heroSub}}</p>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<sc-for list="{{chips}}" as="c" hint-placeholder-count="4">
+<span style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: #23232A; font-size: 14px"><span style="width: 8px; height: 8px; border-radius: 50%; background: {{accent}}"></span>{{c}}</span>
+</sc-for>
+</div>
+<a href="#features" style="align-self: flex-start; color: #F4F3EF; font-size: 15px; min-height: 32px; display: inline-flex; align-items: center">{{t.seeFeatures}}</a>
+</div>
+
+<div id="signup" style="flex: 1 1 380px; max-width: 460px; min-width: 0; background: #fff; color: #16161A; border-radius: 16px; padding: 28px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+<div role="tablist" aria-label="{{t.authAria}}" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; background: #F4F3EF; padding: 4px; border-radius: 10px">
+<button type="button" role="tab" aria-selected="{{isSignup}}" onClick="{{toSignup}}" style="min-height: 44px; border-radius: 8px; font-size: 15px; font-weight: 500; {{signupTabSt}}">{{t.tabSignup}}</button>
+<button type="button" role="tab" aria-selected="{{isLogin}}" onClick="{{toLogin}}" style="min-height: 44px; border-radius: 8px; font-size: 15px; font-weight: 500; {{loginTabSt}}">{{t.tabLogin}}</button>
+</div>
+<div style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600">{{formTitle}}</div>
+<a href="Main.dc.html" style="min-height: 48px; border-radius: 8px; border: 1px solid #D9D6CE; background: #fff; color: #16161A; text-decoration: none; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 10px">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16161A" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 12h8"></path></svg>{{t.google}}</a>
+<div style="display: flex; align-items: center; gap: 12px; color: #5E5B54; font-size: 13px"><span style="flex: 1; height: 1px; background: #E2DFD7"></span>{{t.or}}<span style="flex: 1; height: 1px; background: #E2DFD7"></span></div>
+<form style="display: flex; flex-direction: column; gap: 14px">
+<sc-if value="{{isSignup}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="rname" style="font-size: 14px; font-weight: 500">{{t.name}}</label>
+<input id="rname" type="text" autocomplete="name" style="min-height: 46px; padding: 0 12px; border: 1px solid #D9D6CE; border-radius: 8px; font-size: 15px">
+</div>
+</sc-if>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="remail" style="font-size: 14px; font-weight: 500">{{t.email}}</label>
+<input id="remail" type="email" autocomplete="email" placeholder="you@example.com" style="min-height: 46px; padding: 0 12px; border: 1px solid #D9D6CE; border-radius: 8px; font-size: 15px">
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px">
+<label for="rpass" style="font-size: 14px; font-weight: 500">{{t.password}}</label>
+<sc-if value="{{isLogin}}" hint-placeholder-val="{{ false }}"><a href="Recover.dc.html" style="font-size: 13px">{{t.forgot}}</a></sc-if>
+</div>
+<input id="rpass" type="password" autocomplete="current-password" style="min-height: 46px; padding: 0 12px; border: 1px solid #D9D6CE; border-radius: 8px; font-size: 15px">
+<sc-if value="{{isSignup}}" hint-placeholder-val="{{ true }}"><span style="font-size: 13px; color: #5E5B54">{{t.passHint}}</span></sc-if>
+</div>
+<sc-if value="{{isSignup}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; gap: 10px; align-items: flex-start">
+<input id="terms" type="checkbox" style="width: 20px; height: 20px; margin: 2px 0 0; accent-color: #16161A; flex: none">
+<label for="terms" style="font-size: 13px; color: #3A3833; line-height: 1.45">{{t.termsA}} <a href="Legal.dc.html">{{t.termsL1}}</a> {{t.termsAnd}} <a href="Legal.dc.html">{{t.termsL2}}</a></label>
+</div>
+<div style="display: flex; gap: 10px; align-items: flex-start">
+<input id="pdc" type="checkbox" style="width: 20px; height: 20px; margin: 2px 0 0; accent-color: #16161A; flex: none">
+<label for="pdc" style="font-size: 13px; color: #3A3833; line-height: 1.45">{{t.pdA}} <a href="Legal.dc.html">{{t.pdL}}</a></label>
+</div>
+</sc-if>
+<a href="{{submitHref}}" style="min-height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 8px; background: {{accent}}; color: #fff; text-decoration: none; font-weight: 600; font-size: 16px">{{submitLabel}}</a>
+</form>
+<div style="font-size: 14px; color: #5E5B54; text-align: center">{{switchText}} <button type="button" onClick="{{switchMode}}" style="border: 0; background: none; padding: 6px 2px; font-size: 14px; font-weight: 600; text-decoration: underline; color: #16161A">{{switchLink}}</button></div>
+</div>
+</div>
+</section>
+
+<!-- Features -->
+<section id="features" style="padding: 96px 0 40px">
+<div style="max-width: 1240px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); display: flex; flex-direction: column; gap: 48px">
+<div style="display: flex; flex-direction: column; gap: 12px; max-width: 720px">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 0.08em; color: #B8320F">{{t.featEyebrow}}</span>
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: clamp(30px, 3.6vw, 44px); letter-spacing: -0.02em; font-weight: 600; line-height: 1.08">{{t.featTitle}}</h2>
+</div>
+<sc-for list="{{features}}" as="f" hint-placeholder-count="4">
+<article style="display: flex; flex-wrap: wrap; gap: 40px; align-items: center; padding: 40px 0; border-top: 1px solid #D9D6CE">
+<div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #B8320F">{{f.num}}</span>
+<h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 30px; font-weight: 600; letter-spacing: -0.02em">{{f.title}}</h3>
+<p style="margin: 0; font-size: 17px; line-height: 1.6; color: #3A3833">{{f.desc}}</p>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{f.points}}" as="pt" hint-placeholder-count="4">
+<li style="display: flex; gap: 12px; align-items: baseline; font-size: 15px; line-height: 1.5"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#B8320F" stroke-width="2" aria-hidden="true" style="flex: none"><path d="M3 8.5l3 3 7-7"></path></svg><span>{{pt}}</span></li>
+</sc-for>
+</ul>
+</div>
+<div class="phd" style="flex: 1 1 420px; min-width: 0; aspect-ratio: 16 / 10; border-radius: 14px; display: flex; align-items: flex-end; padding: 18px; box-sizing: border-box">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #fff; background: rgba(0,0,0,0.55); padding: 4px 8px; border-radius: 4px">{{f.shot}}</span>
+</div>
+</article>
+</sc-for>
+</div>
+</section>
+
+<!-- How it works -->
+<section id="how" style="padding: 80px 0; background: #fff; border-top: 1px solid #E2DFD7; border-bottom: 1px solid #E2DFD7">
+<div style="max-width: 1240px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); display: flex; flex-direction: column; gap: 40px">
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: clamp(30px, 3.6vw, 44px); letter-spacing: -0.02em; font-weight: 600">{{t.howTitle}}</h2>
+<ol style="margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px">
+<sc-for list="{{how}}" as="h" hint-placeholder-count="4">
+<li style="display: flex; flex-direction: column; gap: 12px; padding-top: 18px; border-top: 3px solid #16161A">
+<span style="font-family: 'Space Grotesk', sans-serif; font-size: 40px; font-weight: 600; color: #B8320F; line-height: 1">{{h.n}}</span>
+<span style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 600">{{h.t}}</span>
+<span style="color: #5E5B54; line-height: 1.55; font-size: 15px">{{h.d}}</span>
+</li>
+</sc-for>
+</ol>
+</div>
+</section>
+
+<sc-if value="{{ruShow}}" hint-placeholder-val="{{ true }}">
+<section id="russia" style="padding: 88px 0 8px">
+<div style="max-width: 1240px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); display: flex; flex-direction: column; gap: 32px">
+<div style="display: flex; flex-direction: column; gap: 12px; max-width: 760px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 0.12em; color: #B8320F">{{ruEyebrow}}</span><h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: clamp(30px, 3.6vw, 44px); letter-spacing: -0.02em; font-weight: 600; line-height: 1.08">{{ruTitle}}</h2><p style="margin: 0; color: #5E5B54; font-size: 17px; line-height: 1.55">{{ruSub}}</p></div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px"><sc-for list="{{ruCards}}" as="rc" hint-placeholder-count="4"><div style="background: #fff; border: 1px solid #E2DFD7; border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 10px"><span style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600; line-height: 1.2">{{rc.t}}</span><span style="color: #5E5B54; font-size: 15px; line-height: 1.55; flex: 1">{{rc.d}}</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8A2A0C">{{rc.tag}}</span></div></sc-for></div>
+</div>
+</section>
+</sc-if>
+
+<!-- Pricing -->
+<section id="pricing" style="padding: 96px 0">
+<div style="max-width: 1240px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); display: flex; flex-direction: column; gap: 40px">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: clamp(30px, 3.6vw, 44px); letter-spacing: -0.02em; font-weight: 600">{{t.priceTitle}}</h2>
+<p style="margin: 0; color: #5E5B54; font-size: 17px">{{t.priceSub}}</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 20px; align-items: stretch">
+<sc-for list="{{plans}}" as="p" hint-placeholder-count="3">
+<div style="border-radius: 14px; padding: 28px; display: flex; flex-direction: column; gap: 18px; {{p.st}}">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+<span style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600">{{p.name}}</span>
+<sc-if value="{{p.popular}}" hint-placeholder-val="{{ false }}"><span style="padding: 4px 10px; border-radius: 999px; background: {{accent}}; color: #fff; font-size: 12px; font-family: 'IBM Plex Mono', monospace">{{t.popular}}</span></sc-if>
+</div>
+<div style="display: flex; align-items: baseline; gap: 6px"><span style="font-family: 'Space Grotesk', sans-serif; font-size: 38px; font-weight: 600">{{p.price}}</span><span style="font-size: 14px; opacity: 0.75">{{t.perMonth}}</span></div>
+<div style="font-size: 15px; line-height: 1.5; opacity: 0.85">{{p.desc}}</div>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 15px">
+<sc-for list="{{p.items}}" as="it" hint-placeholder-count="4">
+<li style="display: flex; gap: 10px; align-items: baseline"><span aria-hidden="true">—</span><span>{{it}}</span></li>
+</sc-for>
+</ul>
+<a href="#signup" onClick="{{toSignup}}" style="margin-top: auto; min-height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 8px; text-decoration: none; font-weight: 600; {{p.btnSt}}">{{p.cta}}</a>
+</div>
+</sc-for>
+</div>
+</div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" style="padding: 0 0 96px">
+<div style="max-width: 880px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); display: flex; flex-direction: column; gap: 24px">
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: clamp(30px, 3.6vw, 44px); letter-spacing: -0.02em; font-weight: 600">{{t.faqTitle}}</h2>
+<div style="display: flex; flex-direction: column">
+<sc-for list="{{faq}}" as="q" hint-placeholder-count="5">
+<div style="border-top: 1px solid #D9D6CE">
+<button type="button" onClick="{{q.toggle}}" aria-expanded="{{q.open}}" style="width: 100%; min-height: 64px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 16px 0; border: 0; background: none; text-align: left; font-size: 18px; font-weight: 500; color: #16161A">
+<span>{{q.q}}</span><span aria-hidden="true" style="font-family: 'IBM Plex Mono', monospace; font-size: 20px">{{q.sign}}</span>
+</button>
+<sc-if value="{{q.open}}" hint-placeholder-val="{{ false }}">
+<p style="margin: 0 0 20px; color: #3A3833; line-height: 1.6; font-size: 16px; max-width: 720px">{{q.a}}</p>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+</section>
+
+<!-- CTA -->
+<section style="padding: 0 clamp(16px, 4vw, 40px) 80px">
+<div style="max-width: 1240px; margin: 0 auto; background: {{accent}}; color: #fff; border-radius: 18px; padding: clamp(32px, 5vw, 56px); box-sizing: border-box; display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; align-items: center">
+<div style="display: flex; flex-direction: column; gap: 10px; max-width: 620px">
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: clamp(28px, 3.4vw, 40px); letter-spacing: -0.02em; font-weight: 600; line-height: 1.1">{{t.ctaTitle}}</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.5">{{t.ctaSub}}</p>
+</div>
+<a href="#signup" onClick="{{toSignup}}" style="min-height: 52px; display: inline-flex; align-items: center; padding: 0 26px; border-radius: 10px; background: #16161A; color: #fff; text-decoration: none; font-weight: 600; font-size: 16px">{{t.signup}}</a>
+</div>
+</section>
+
+<!-- Footer -->
+<footer style="background: #16161A; color: #CFCBC2; padding: 48px 0">
+<div style="max-width: 1240px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); display: flex; flex-wrap: wrap; gap: 32px; justify-content: space-between">
+<div style="display: flex; flex-direction: column; gap: 10px; max-width: 320px">
+<span style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 20px; color: #F4F3EF">AI YT Studio</span>
+<span style="font-size: 14px; line-height: 1.5">{{t.footTag}}</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 48px; font-size: 14px">
+<div style="display: flex; flex-direction: column; gap: 10px"><span style="color: #F4F3EF; font-weight: 600">{{t.footProduct}}</span><a href="#features" style="color: #CFCBC2">{{t.navFeatures}}</a><a href="#pricing" style="color: #CFCBC2">{{t.navPricing}}</a><a href="#faq" style="color: #CFCBC2">{{t.navFaq}}</a></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><span style="color: #F4F3EF; font-weight: 600">{{t.footLegal}}</span><a href="Legal.dc.html" style="color: #CFCBC2">{{t.terms1}}</a><a href="Legal.dc.html" style="color: #CFCBC2">{{t.privacy}}</a><a href="Legal.dc.html" style="color: #CFCBC2">{{t.offerL}}</a><a href="#top" style="color: #CFCBC2">{{t.contacts}}</a></div>
+</div>
+</div>
+<div style="max-width: 1240px; margin: 32px auto 0; padding: 0 clamp(16px, 4vw, 40px); font-size: 13px; color: #9C998F">{{t.footNote}}</div>
+</footer>
+
+<div role="status" aria-live="polite" style="position: fixed; left: 50%; bottom: 24px; z-index: 60; max-width: min(92vw, 560px); background: #16161A; color: #fff; padding: 12px 18px; border-radius: 10px; font-size: 14px; line-height: 1.45; box-shadow: 0 8px 24px rgba(0,0,0,0.25); transition: opacity .2s, transform .2s; {{toastSt}}">{{toastText}}</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#C93C14","options":["#C93C14","#2F5BEA","#0F7B5F","#16161A"]},"startLang":{"editor":"enum","options":["ru","en"],"default":"ru"},"$preview":{"width":1440,"height":4300}}'>
+var L = {
+  ru: {
+    navFeatures: "Возможности", navHow: "Как это работает", navPricing: "Тарифы", navFaq: "Вопросы",
+    langSwitch: "Язык сайта", login: "Войти", signup: "Начать бесплатно",
+    badge: "AI-СТУДИЯ ДЛЯ YOUTUBE, VK ВИДЕО, RUTUBE И ДЗЕНА",
+    heroTitle: "Канал, сценарий, анализ и видео — в одной студии.",
+    heroSub: "AI YT Studio помогает запустить и вести канал на YouTube, VK Видео, RUTUBE и Дзене: подобрать нишу, написать сценарий с AI, изучить конкурентов, собрать видео и опубликовать его сразу на все площадки.",
+    chips: ["Создание канала", "AI-сценарии", "Анализ каналов", "Фото и видео", "VK · RUTUBE · Дзен"],
+    seeFeatures: "Посмотреть все возможности ↓",
+    authAria: "Регистрация или вход", tabSignup: "Регистрация", tabLogin: "Вход",
+    titleSignup: "Создайте аккаунт", titleLogin: "С возвращением",
+    google: "Продолжить с Google", or: "или",
+    name: "Имя", email: "Email", password: "Пароль", forgot: "Забыли пароль?",
+    passHint: "Минимум 8 символов",
+    terms: "Я принимаю Условия использования и Политику конфиденциальности", termsA: "Я принимаю", termsL1: "Пользовательское соглашение", termsAnd: "и", termsL2: "Политику конфиденциальности", pdA: "Даю", pdL: "согласие на обработку персональных данных",
+    submitSignup: "Создать аккаунт", submitLogin: "Войти в кабинет",
+    haveAcc: "Уже есть аккаунт?", noAcc: "Ещё нет аккаунта?",
+    featEyebrow: "ВОЗМОЖНОСТИ", featTitle: "Четыре инструмента, которые закрывают весь путь от идеи до публикации",
+    features: [
+      ["Создание канала", "Расскажите, о чём хотите снимать, — AI предложит нишу, названия, описание, аватар и баннер, а также план публикаций на первый месяц.", ["Подбор ниши под ваши интересы и время", "Варианты названия и описания канала", "Генерация аватара и баннера", "Рубрики и план на 4 недели"], "Экран: Создание канала"],
+      ["AI-контент", "Введите тему — получите посценный сценарий с таймкодами и описанием кадров, а также заголовки, описание и теги для поиска.", ["Сценарии для длинных видео и Shorts", "Выбор тона и языка видео", "Заголовки, описания и теги", "AI-озвучка готового текста"], "Экран: AI-контент"],
+      ["Анализ каналов", "Вставьте ссылку на любой канал — увидите рост, видео-аутлаеры, ритм публикаций и выводы о том, что стоит перенять.", ["Статистика своего канала и конкурентов", "Поиск видео-аутлаеров", "Сравнение нескольких каналов", "AI-выводы и идеи для видео"], "Экран: Анализ каналов"],
+      ["Фото и видео по сценарию", "Каждая сцена сценария превращается в изображение или видеоклип выбранного стиля. Отдельно — варианты обложек.", ["Раскадровка из сценария", "Изображения и видеоклипы", "Форматы 16:9, 9:16 и 1:1", "Варианты обложек"], "Экран: Фото и видео"]
+    ],
+    howTitle: "Как это работает",
+    how: [["Зарегистрируйтесь", "Создайте аккаунт за минуту — по email или через Google."], ["Опишите канал", "Расскажите о теме и аудитории, получите концепцию и план."], ["Создавайте контент", "Сценарии, изображения, клипы и обложки — в одном проекте."], ["Анализируйте и растите", "Следите за конкурентами и снимайте на темы, которые работают."]],
+    priceTitle: "Тарифы", priceSub: "Начните бесплатно и переходите на платный тариф, когда понадобится больше генераций.",
+    popular: "ПОПУЛЯРНЫЙ", perMonth: "/ мес",
+    plans: [
+      ["Старт", "0 ₽", "Чтобы попробовать все модули.", ["1 канал", "60 кредитов в месяц", "Сценарии и анализ", "Изображения с водяным знаком", "Субтитры с выделением звучащего слова"], "Начать бесплатно"],
+      ["Автор", "2 490 ₽", "Для регулярных публикаций.", ["До 3 каналов", "1 000 кредитов в месяц", "Видеоклипы и озвучка", "Без водяного знака", "Субтитры: акценты и 10 своих стилей"], "Выбрать «Автор»"],
+      ["Студия", "6 490 ₽", "Для команд и агентств.", ["Неограниченно каналов", "3 500 кредитов в месяц", "Командный доступ", "Приоритетная генерация", "Общие стили субтитров для команды"], "Выбрать «Студия»"]
+    ],
+    faqTitle: "Частые вопросы",
+    faq: [
+      ["Нужно ли подключать мой канал?", "Нет. Создавать каналы, сценарии и визуал можно без подключения. Подключение YouTube, VK Видео, RUTUBE или Дзена нужно для публикации и анализа вашей статистики."], ["Можно ли публиковать в VK Видео, RUTUBE и Дзен?", "Да. Готовый ролик публикуется сразу на YouTube, VK Видео, RUTUBE и Дзен, а Shorts — ещё в VK Клипы и RUTUBE Shorts. Просмотры по всем площадкам видны в одном месте."], ["Как оплатить и будет ли чек?", "Картой, через СБП, SberPay или T-Pay. На каждую оплату приходит чек «Мой налог» — его можно скачать в истории платежей."], ["Помогаете с маркировкой рекламы?", "Да. Сервис получает токен erid через оператора рекламных данных и готовит пометку «Реклама» для описания и кадра. Ответственность за маркировку остаётся на авторе."],
+      ["Что такое кредиты?", "Кредиты расходуются на генерации: сценарий, изображение, видеоклип или анализ канала. Стоимость каждого действия указана в кабинете."],
+      ["Кому принадлежит созданный контент?", "[Условия использования контента — уточнить с юристом перед запуском.]"],
+      ["На каких языках работает сервис?", "Интерфейс доступен на русском и английском, а сценарии можно генерировать на нескольких языках."],
+      ["Можно ли отменить подписку?", "Да, в любой момент в настройках кабинета. Доступ сохранится до конца оплаченного периода."]
+    ],
+    ctaTitle: "Запустите первый канал уже сегодня", ctaSub: "Регистрация бесплатна, карта не нужна.",
+    footTag: "AI-студия для создания и развития видеоканалов на YouTube, VK Видео, RUTUBE и Дзене.", footProduct: "Продукт", footLegal: "Компания",
+    terms1: "Условия использования", offerL: "Оферта", privacy: "Конфиденциальность", contacts: "Контакты",
+    footNote: "© 2026 AI YT Studio. YouTube — товарный знак Google LLC; VK Видео, RUTUBE и Дзен — товарные знаки их правообладателей. Сервис не связан с этими компаниями."
+  },
+  en: {
+    navFeatures: "Features", navHow: "How it works", navPricing: "Pricing", navFaq: "FAQ",
+    langSwitch: "Site language", login: "Log in", signup: "Start free",
+    badge: "AI STUDIO FOR YOUTUBE",
+    heroTitle: "Channel, script, analytics and video — in one studio.",
+    heroSub: "AI YT Studio helps you launch a YouTube channel from scratch: find a niche, write scripts with AI, study competitors and turn the script into images and video scenes.",
+    chips: ["Channel builder", "AI scripts", "Channel analytics", "Photo & video"],
+    seeFeatures: "See all features ↓",
+    authAria: "Sign up or log in", tabSignup: "Sign up", tabLogin: "Log in",
+    titleSignup: "Create your account", titleLogin: "Welcome back",
+    google: "Continue with Google", or: "or",
+    name: "Name", email: "Email", password: "Password", forgot: "Forgot password?",
+    passHint: "At least 8 characters",
+    terms: "I accept the Terms of Use and Privacy Policy", termsA: "I accept the", termsL1: "Terms of Service", termsAnd: "and", termsL2: "Privacy Policy", pdA: "I give my", pdL: "consent to personal data processing",
+    submitSignup: "Create account", submitLogin: "Log in to dashboard",
+    haveAcc: "Already have an account?", noAcc: "No account yet?",
+    featEyebrow: "FEATURES", featTitle: "Four tools that cover the whole path from idea to upload",
+    features: [
+      ["Channel Builder", "Tell us what you want to make — AI suggests a niche, names, description, avatar and banner, plus a posting plan for the first month.", ["Niche matched to your interests and time", "Channel name and description options", "Avatar and banner generation", "Content pillars and a 4-week plan"], "Screen: Channel Builder"],
+      ["AI Content Studio", "Enter a topic and get a scene-by-scene script with timecodes and shot notes, plus titles, description and search tags.", ["Scripts for long-form and Shorts", "Choose tone and video language", "Titles, descriptions and tags", "AI voiceover of the final text"], "Screen: AI Content Studio"],
+      ["Channel Analyzer", "Paste any channel link to see growth, outlier videos, posting rhythm and takeaways on what to copy.", ["Stats for your channel and competitors", "Outlier video detection", "Compare several channels", "AI takeaways and video ideas"], "Screen: Channel Analyzer"],
+      ["Photo & video from script", "Every scene of the script becomes an image or a video clip in the style you pick. Thumbnail variants included.", ["Storyboard from the script", "Images and video clips", "16:9, 9:16 and 1:1 formats", "Thumbnail variants"], "Screen: Photo & Video"]
+    ],
+    howTitle: "How it works",
+    how: [["Sign up", "Create an account in a minute — with email or Google."], ["Describe the channel", "Share the topic and audience, get a concept and a plan."], ["Create content", "Scripts, images, clips and thumbnails — in one project."], ["Analyze and grow", "Track competitors and make videos on topics that work."]],
+    priceTitle: "Pricing", priceSub: "Start free and upgrade when you need more generations.",
+    popular: "POPULAR", perMonth: "/ mo",
+    plans: [
+      ["Starter", "$0", "To try every module.", ["1 channel", "60 credits per month", "Scripts and analytics", "Watermarked images", "Subtitles with spoken-word highlighting"], "Start free"],
+      ["Creator", "$29", "For regular uploads.", ["Up to 3 channels", "1,000 credits per month", "Video clips and voiceover", "No watermark", "Subtitles: accents and 10 saved styles"], "Choose Creator"],
+      ["Studio", "$79", "For teams and agencies.", ["Unlimited channels", "3,500 credits per month", "Team access", "Priority generation", "Shared subtitle styles for the team"], "Choose Studio"]
+    ],
+    faqTitle: "FAQ",
+    faq: [
+      ["Do I need to connect my YouTube channel?", "No. You can build channels, scripts and visuals without connecting. Connecting is only needed to analyze your own stats."],
+      ["What are credits?", "Credits are spent on generations: a script, an image, a video clip or a channel analysis. The cost of each action is shown in the dashboard."],
+      ["Who owns the content I create?", "[Content ownership terms — confirm with a lawyer before launch.]"],
+      ["Which languages are supported?", "The interface is in English and Russian, and scripts can be generated in several languages."],
+      ["Can I cancel my subscription?", "Yes, any time in your account settings. Access stays until the end of the paid period."]
+    ],
+    ctaTitle: "Launch your first channel today", ctaSub: "Sign-up is free, no card required.",
+    footTag: "AI studio for creating and growing YouTube channels.", footProduct: "Product", footLegal: "Company",
+    terms1: "Terms of Use", offerL: "Public offer", privacy: "Privacy", contacts: "Contact",
+    footNote: "© 2026 AI YT Studio. YouTube is a trademark of Google LLC. Not affiliated with Google."
+  }
+};
+
+var ADM_KEY = 'aiytstudio.admin.v1';
+var ADM_KEYS = ['platOn', 'igScope', 'axProv', 'axEnabled', 'medEnabled', 'eridOn', 'payOn'];
+function admRead() { try { var v = window.localStorage.getItem(ADM_KEY); var o = v ? JSON.parse(v) : {}; return o && typeof o === 'object' ? o : {}; } catch (e) { return {}; } }
+function admWrite(o) { try { window.localStorage.setItem(ADM_KEY, JSON.stringify(o)); } catch (e) {} }
+function admPick(s) { var o = {}; ADM_KEYS.forEach(function (k) { if (s[k] !== undefined) o[k] = s[k]; }); return o; }
+function admWatch(comp, onChange) {
+  var last = JSON.stringify(admRead());
+  var chk = function () { var v = JSON.stringify(admRead()); if (v !== last) { last = v; onChange(); } };
+  var h = function (e) { if (!e || e.key === ADM_KEY || e.key === null) chk(); };
+  try { window.addEventListener('storage', h); } catch (e) {}
+  var id = setInterval(chk, 1000);
+  comp._admStop = function () { clearInterval(id); try { window.removeEventListener('storage', h); } catch (e) {} };
+}
+function admEff(props, lang) {
+  var a = admRead(), pl = a.platOn || {}, prov = a.axProv || {}, axEn = a.axEnabled || {}, med = a.medEnabled || {}, pay = a.payOn || {};
+  var AXIDS = ['opus', 'astra', 'sol', 'luna', 'haiku', 'deepseek', 'ygpt', 'ylite', 'gmax', 'glite'];
+  var PROVK = { opus: 'a', haiku: 'a', astra: 'o', sol: 'o', luna: 'o', deepseek: 'd', ygpt: 'y', ylite: 'y', gmax: 'g', glite: 'g' };
+  return {
+    platOk: function (k) { if (k === 'yt') return true; if (pl[k] === false) return false; if (k === 'ig') { if (props.instagram === 'off') return false; if (a.igScope === 'en' && lang === 'ru') return false; } return true; },
+    axOk: function (id) { var pk = PROVK[id]; if (pk === 'a' && props.claudeChats === 'off') return false; if (pk === 'o' && props.gptChats === 'off') return false; if (pk && prov[pk]) return false; var i = AXIDS.indexOf(id); if (i >= 0 && axEn[i] === false) return false; return true; },
+    medOk: function (id) { return med[id] !== false; },
+    payOk: function (k) { return pay[k] !== false; },
+    eridOn: a.eridOn !== false
+  };
+}
+var LRU = {
+  ruEyebrow: "ДЛЯ АВТОРОВ ИЗ РОССИИ", ruTitle: "Работает с площадками, оплатой и законами в России",
+  ruSub: "YouTube в России замедлен, поэтому AI YT Studio публикует и анализирует ролики там, где ваша аудитория сейчас, и помогает зарабатывать по российским правилам.",
+  ruCards: [
+    ["VK Видео, RUTUBE и Дзен", "Публикуйте ролик на все площадки одним нажатием, смотрите просмотры по каждой и следите за условиями монетизации VK Видео и RUTUBE.", "Публикация · аналитика · монетизация", "plat"],
+    ["Маркировка рекламы", "Получите токен erid через оператора рекламных данных и готовую пометку «Реклама» для описания и кадра — без ручной работы с ОРД.", "ERID за минуту", "erid"],
+    ["Оплата как привыкли", "Карта, СБП, SberPay или T-Pay. На каждую оплату приходит чек «Мой налог».", "Цены в рублях", "pay"],
+    ["Не зависит от одного провайдера", "YandexGPT, GigaChat, YandexART и Kandinsky — в выборе моделей и в резерве: если зарубежная модель недоступна, работа продолжится.", "Российские модели", "ai"]
+  ]
+};
+
+var EN_FIX = [[/Сбер · свой сервер/g, 'Sber · own server'], [/Свой сервер \(GPU\)/g, 'Own server (GPU)'], [/Яндекс/g, 'Yandex'], [/Сбер/g, 'Sber']];
+function enFix(v) {
+  if (typeof v === 'string') { var r = v; EN_FIX.forEach(function (p) { r = r.replace(p[0], p[1]); }); return r; }
+  if (Array.isArray(v)) return v.map(enFix);
+  if (v && typeof v === 'object') { var o = {}; Object.keys(v).forEach(function (k) { o[k] = typeof v[k] === 'function' ? v[k] : enFix(v[k]); }); return o; }
+  return v;
+}
+function csvHref(rows) {
+  var esc = function (x) { x = String(x == null ? '' : x); return /[",;\n]/.test(x) ? '"' + x.replace(/"/g, '""') + '"' : x; };
+  return 'data:text/csv;charset=utf-8,' + encodeURIComponent('﻿' + rows.map(function (r) { return r.map(esc).join(';'); }).join('\r\n'));
+}
+function demoBuild(self, s, msgs) {
+  var show = function (m) { if (self._tt) clearTimeout(self._tt); self.setState({ toast: m }); self._tt = setTimeout(function () { self.setState({ toast: '' }); }, 4000); };
+  var o = {};
+  Object.keys(msgs).forEach(function (k) {
+    o[k] = function (e) {
+      var m = msgs[k];
+      if (e && e.target && e.target.files) { var n = e.target.files.length; if (!n) return; m = m.replace('{n}', n).replace('{name}', e.target.files[0].name); }
+      if (k.indexOf('copy') === 0 && msgs['_' + k]) { try { navigator.clipboard.writeText(msgs['_' + k]); } catch (er) {} }
+      show(m);
+    };
+  });
+  return { demo: o, toastText: s.toast || '', toastSt: s.toast ? 'opacity:1;transform:translate(-50%,0)' : 'opacity:0;transform:translate(-50%,10px);pointer-events:none' };
+}
+var DEMO = { ru: {}, en: {} };
+class Component extends DCLogic {
+  componentDidMount() { var self = this; admWatch(this, function () { self.forceUpdate(); }); }
+  componentWillUnmount() { if (this._admStop) this._admStop(); }
+  constructor(props) {
+    super(props);
+    this.state = { lang: null, mode: 'signup', faqOpen: 0 };
+  }
+  renderVals() {
+    var s = this.state, lang = s.lang || this.props.startLang || 'ru';
+    var v = Object.assign({}, this._rv(), demoBuild(this, s, DEMO[lang] || DEMO.ru), { uiLang: lang }, this._extra ? this._extra(lang) : {});
+    return lang === 'en' ? enFix(v) : v;
+  }
+  _rv() {
+    var s = this.state, self = this;
+    var accent = this.props.accent ?? '#C93C14';
+    var lang = s.lang || this.props.startLang || 'ru';
+    var t = L[lang] || L.ru;
+    var signup = s.mode === 'signup';
+    var langOn = 'background:#F4F3EF;color:#16161A';
+    var langOff = 'background:transparent;color:#CFCBC2';
+    var tabOn = 'background:#fff;color:#16161A;border:1px solid #D9D6CE';
+    var tabOff = 'background:transparent;color:#5E5B54;border:1px solid transparent';
+    return {
+      t: t,
+      accent: accent,
+      isRu: lang === 'ru', isEn: lang === 'en',
+      ruShow: lang === 'ru', ruEyebrow: LRU.ruEyebrow, ruTitle: LRU.ruTitle, ruSub: LRU.ruSub,
+      ruCards: (function () { var adm = admEff(self.props || {}, lang); return LRU.ruCards.filter(function (c) { return c[3] !== 'erid' || adm.eridOn; }).map(function (c) { return { t: c[0], d: c[1], tag: c[2] }; }); })(),
+
+      ruSt: lang === 'ru' ? langOn : langOff, enSt: lang === 'en' ? langOn : langOff,
+      setRu: function () { self.setState({ lang: 'ru' }); },
+      setEn: function () { self.setState({ lang: 'en' }); },
+      chips: t.chips,
+      isSignup: signup, isLogin: !signup,
+      signupTabSt: signup ? tabOn : tabOff, loginTabSt: signup ? tabOff : tabOn,
+      toSignup: function () { self.setState({ mode: 'signup' }); },
+      toLogin: function () { self.setState({ mode: 'login' }); },
+      switchMode: function () { self.setState({ mode: signup ? 'login' : 'signup' }); },
+      formTitle: signup ? t.titleSignup : t.titleLogin,
+      submitLabel: signup ? t.submitSignup : t.submitLogin,
+      submitHref: signup ? 'Onboarding.dc.html' : 'Main.dc.html',
+      switchText: signup ? t.haveAcc : t.noAcc,
+      switchLink: signup ? t.tabLogin : t.tabSignup,
+      features: t.features.map(function (f, i) { return { num: '0' + (i + 1), title: f[0], desc: f[1], points: f[2], shot: f[3] }; }),
+      how: t.how.map(function (h, i) { return { n: '0' + (i + 1), t: h[0], d: h[1] }; }),
+      plans: t.plans.map(function (p, i) {
+        var hi = i === 1;
+        return {
+          name: p[0], price: p[1], desc: p[2], items: p[3], cta: p[4], popular: hi,
+          st: hi ? 'background:#16161A;color:#F4F3EF;border:1px solid #16161A' : 'background:#fff;color:#16161A;border:1px solid #E2DFD7',
+          btnSt: hi ? 'background:' + accent + ';color:#fff' : 'background:#F4F3EF;color:#16161A;border:1px solid #D9D6CE'
+        };
+      }),
+      faq: t.faq.map(function (q, i) {
+        var open = s.faqOpen === i;
+        return { q: q[0], a: q[1], open: open, sign: open ? '−' : '+', toggle: function () { self.setState({ faqOpen: open ? -1 : i }); } };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

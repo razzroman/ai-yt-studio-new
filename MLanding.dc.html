@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>AI YT Studio — Mobile home</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F3EF}
+a{color:#16161A}a:hover{color:#B8320F}
+button{font-family:inherit;cursor:pointer}
+input{font-family:inherit}
+.phd{background-color:#23232A;background-image:repeating-linear-gradient(135deg,rgba(255,255,255,0.06) 0 10px,transparent 10px 20px)}
+.fld{min-height:48px;padding:0 12px;border:1px solid #D9D6CE;border-radius:10px;font-size:16px;background:#fff;box-sizing:border-box;width:100%}
+.mono{font-family:'IBM Plex Mono',monospace}
+.h2{margin:0;font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:600;letter-spacing:-0.02em;line-height:1.1}
+footer a,header a{display:inline-flex;align-items:center;min-height:44px}
+:focus-visible{outline:3px solid #2F5BEA;outline-offset:2px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</helmet>
+<div lang="{{uiLang}}" style="width: 390px; height: 844px; position: relative; overflow: hidden; display: flex; flex-direction: column; background: #F4F3EF; color: #16161A; font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 16px">
+
+<header style="flex: none; background: #16161A; color: #F4F3EF; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; gap: 8px; z-index: 3">
+<a href="#mtop" style="display: flex; align-items: center; gap: 8px; color: #F4F3EF; text-decoration: none">
+<span style="width: 30px; height: 30px; border-radius: 7px; background: {{accent}}; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7.5-4.5z" fill="#fff"></path></svg></span>
+<span style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 18px">AI YT Studio</span>
+</a>
+<div style="display: flex; gap: 6px; align-items: center">
+<button type="button" onClick="{{toggleLang}}" aria-label="{{t.langSwitch}}" class="mono" style="min-width: 44px; height: 44px; border-radius: 8px; border: 1px solid #4A4A52; background: transparent; color: #F4F3EF; font-size: 13px">{{langLabel}}</button>
+<button type="button" onClick="{{toggleMenu}}" aria-label="{{menuAria}}" aria-expanded="{{menuOpen}}" style="width: 44px; height: 44px; border-radius: 8px; border: 1px solid #4A4A52; background: transparent; display: flex; align-items: center; justify-content: center">
+<sc-if value="{{menuClosed}}" hint-placeholder-val="{{ true }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F4F3EF" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></sc-if>
+<sc-if value="{{menuOpen}}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F4F3EF" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></sc-if>
+</button>
+</div>
+</header>
+
+<sc-if value="{{menuOpen}}" hint-placeholder-val="{{ false }}">
+<nav aria-label="Menu" style="position: absolute; top: 64px; left: 0; right: 0; bottom: 0; background: #16161A; color: #F4F3EF; z-index: 2; padding: 16px; display: flex; flex-direction: column; gap: 4px">
+<sc-for list="{{menu}}" as="mi" hint-placeholder-count="4">
+<a href="{{mi.href}}" onClick="{{closeMenu}}" style="min-height: 56px; display: flex; align-items: center; border-bottom: 1px solid #2E2E35; color: #F4F3EF; text-decoration: none; font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600">{{mi.label}}</a>
+</sc-for>
+<div style="margin-top: auto; display: flex; flex-direction: column; gap: 10px">
+<a href="#msignup" onClick="{{menuLogin}}" style="min-height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 10px; border: 1px solid #4A4A52; color: #F4F3EF; text-decoration: none">{{t.login}}</a>
+<a href="#msignup" onClick="{{menuSignup}}" style="min-height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 10px; background: {{accent}}; color: #fff; text-decoration: none; font-weight: 600">{{t.signup}}</a>
+</div>
+</nav>
+</sc-if>
+
+<div style="flex: 1; overflow-y: auto; overflow-x: hidden">
+
+<section id="mtop" style="background: #16161A; color: #F4F3EF; padding: 28px 16px 36px; display: flex; flex-direction: column; gap: 18px">
+<span class="mono" style="align-self: flex-start; padding: 5px 10px; border-radius: 999px; border: 1px solid #4A4A52; font-size: 11px; letter-spacing: 0.06em; color: #CFCBC2">{{t.badge}}</span>
+<h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 38px; line-height: 1.04; letter-spacing: -0.03em; font-weight: 600">{{t.heroTitle}}</h1>
+<p style="margin: 0; font-size: 16px; line-height: 1.55; color: #CFCBC2">{{t.heroSub}}</p>
+<a href="#msignup" onClick="{{toSignup}}" style="min-height: 52px; display: flex; align-items: center; justify-content: center; border-radius: 10px; background: {{accent}}; color: #fff; text-decoration: none; font-weight: 600; font-size: 16px">{{t.signup}}</a>
+</section>
+
+<section id="msignup" style="padding: 20px 16px; background: #16161A">
+<div style="background: #fff; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<div role="tablist" aria-label="{{t.authAria}}" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; background: #F4F3EF; padding: 4px; border-radius: 10px">
+<button type="button" role="tab" aria-selected="{{isSignup}}" onClick="{{toSignup}}" style="min-height: 44px; border-radius: 8px; font-size: 15px; font-weight: 500; {{signupTabSt}}">{{t.tabSignup}}</button>
+<button type="button" role="tab" aria-selected="{{isLogin}}" onClick="{{toLogin}}" style="min-height: 44px; border-radius: 8px; font-size: 15px; font-weight: 500; {{loginTabSt}}">{{t.tabLogin}}</button>
+</div>
+<a href="MApp.dc.html" style="min-height: 50px; border-radius: 10px; border: 1px solid #D9D6CE; color: #16161A; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 15px">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16161A" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 12h8"></path></svg>{{t.google}}</a>
+<div style="display: flex; align-items: center; gap: 12px; color: #5E5B54; font-size: 13px"><span style="flex: 1; height: 1px; background: #E2DFD7"></span>{{t.or}}<span style="flex: 1; height: 1px; background: #E2DFD7"></span></div>
+<form style="display: flex; flex-direction: column; gap: 12px">
+<sc-if value="{{isSignup}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="mname" style="font-size: 14px; font-weight: 500">{{t.name}}</label><input id="mname" type="text" autocomplete="name" class="fld"></div>
+</sc-if>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="memail" style="font-size: 14px; font-weight: 500">{{t.email}}</label><input id="memail" type="email" autocomplete="email" placeholder="you@example.com" class="fld"></div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; justify-content: space-between"><label for="mpass" style="font-size: 14px; font-weight: 500">{{t.password}}</label><sc-if value="{{isLogin}}" hint-placeholder-val="{{ false }}"><a href="Recover.dc.html" style="font-size: 13px">{{t.forgot}}</a></sc-if></div>
+<input id="mpass" type="password" class="fld">
+</div>
+<sc-if value="{{isSignup}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; gap: 10px; align-items: flex-start"><input id="mterms" type="checkbox" style="width: 22px; height: 22px; margin: 0; accent-color: #16161A; flex: none"><label for="mterms" style="font-size: 13px; color: #3A3833; line-height: 1.45">{{t.termsA}} <a href="MLegal.dc.html">{{t.termsL1}}</a> {{t.termsAnd}} <a href="MLegal.dc.html">{{t.termsL2}}</a></label></div>
+<div style="display: flex; gap: 10px; align-items: flex-start"><input id="mpdc" type="checkbox" style="width: 22px; height: 22px; margin: 0; accent-color: #16161A; flex: none"><label for="mpdc" style="font-size: 13px; color: #3A3833; line-height: 1.45">{{t.pdA}} <a href="MLegal.dc.html">{{t.pdL}}</a></label></div>
+</sc-if>
+<a href="{{submitHref}}" style="min-height: 52px; display: flex; align-items: center; justify-content: center; border-radius: 10px; background: {{accent}}; color: #fff; text-decoration: none; font-weight: 600">{{submitLabel}}</a>
+</form>
+</div>
+</section>
+
+<section id="mfeatures" style="padding: 36px 16px 8px; display: flex; flex-direction: column; gap: 16px">
+<span class="mono" style="font-size: 12px; letter-spacing: 0.08em; color: #B8320F">{{t.featEyebrow}}</span>
+<h2 class="h2">{{t.featTitle}}</h2>
+<div style="display: flex; flex-direction: column">
+<sc-for list="{{features}}" as="f" hint-placeholder-count="4">
+<div style="border-top: 1px solid #D9D6CE">
+<button type="button" onClick="{{f.toggle}}" aria-expanded="{{f.open}}" style="width: 100%; min-height: 64px; display: flex; align-items: center; gap: 12px; border: 0; background: none; padding: 12px 0; text-align: left; color: #16161A">
+<span class="mono" style="font-size: 13px; color: #B8320F; flex: none">{{f.num}}</span>
+<span style="flex: 1; font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 600">{{f.title}}</span>
+<span class="mono" aria-hidden="true" style="font-size: 20px">{{f.sign}}</span>
+</button>
+<sc-if value="{{f.open}}" hint-placeholder-val="{{ false }}">
+<div style="padding: 0 0 18px; display: flex; flex-direction: column; gap: 12px">
+<div class="phd" style="aspect-ratio: 16 / 10; border-radius: 12px"></div>
+<p style="margin: 0; line-height: 1.55; color: #3A3833; font-size: 15px">{{f.desc}}</p>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px">
+<sc-for list="{{f.points}}" as="pt" hint-placeholder-count="4"><li style="display: flex; gap: 10px; font-size: 15px; line-height: 1.45"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#B8320F" stroke-width="2" aria-hidden="true" style="flex: none; margin-top: 4px"><path d="M3 8.5l3 3 7-7"></path></svg><span>{{pt}}</span></li></sc-for>
+</ul>
+</div>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section id="mhow" style="padding: 28px 16px; display: flex; flex-direction: column; gap: 16px">
+<h2 class="h2">{{t.howTitle}}</h2>
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px">
+<sc-for list="{{how}}" as="h" hint-placeholder-count="4">
+<li style="display: flex; gap: 14px; background: #fff; border: 1px solid #E2DFD7; border-radius: 12px; padding: 14px">
+<span style="font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 600; color: #B8320F; line-height: 1">{{h.n}}</span>
+<span style="display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 600">{{h.t}}</span><span style="color: #5E5B54; font-size: 14px; line-height: 1.45">{{h.d}}</span></span>
+</li>
+</sc-for>
+</ol>
+</section>
+
+<sc-if value="{{ruShow}}" hint-placeholder-val="{{ true }}">
+<section id="mrussia" style="padding: 28px 16px 8px; display: flex; flex-direction: column; gap: 14px">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.1em; color: #B8320F">{{ruEyebrow}}</span><h2 class="h2">{{ruTitle}}</h2><p style="margin: 0; color: #5E5B54; font-size: 15px; line-height: 1.5">{{ruSub}}</p>
+<sc-for list="{{ruCards}}" as="rc" hint-placeholder-count="4"><div style="background: #fff; border: 1px solid #E2DFD7; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 6px"><span style="font-weight: 600; font-size: 17px">{{rc.t}}</span><span style="color: #5E5B54; font-size: 14px; line-height: 1.45">{{rc.d}}</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #8A2A0C">{{rc.tag}}</span></div></sc-for>
+</section>
+</sc-if>
+
+<section id="mpricing" style="padding: 20px 0 28px; display: flex; flex-direction: column; gap: 16px">
+<div style="padding: 0 16px; display: flex; flex-direction: column; gap: 6px"><h2 class="h2">{{t.priceTitle}}</h2><span style="color: #5E5B54; font-size: 15px">{{t.swipe}}</span></div>
+<div style="display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 16px 8px">
+<sc-for list="{{plans}}" as="p" hint-placeholder-count="3">
+<div style="flex: 0 0 300px; scroll-snap-align: center; border-radius: 14px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px; {{p.st}}">
+<div style="display: flex; justify-content: space-between; align-items: center"><span style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 600">{{p.name}}</span><sc-if value="{{p.popular}}" hint-placeholder-val="{{ false }}"><span class="mono" style="padding: 3px 8px; border-radius: 999px; background: {{accent}}; color: #fff; font-size: 11px">{{t.popular}}</span></sc-if></div>
+<div style="display: flex; align-items: baseline; gap: 6px"><span style="font-family: 'Space Grotesk', sans-serif; font-size: 34px; font-weight: 600">{{p.price}}</span><span style="font-size: 13px; opacity: 0.75">{{t.perMonth}}</span></div>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 14px"><sc-for list="{{p.items}}" as="it" hint-placeholder-count="4"><li>— {{it}}</li></sc-for></ul>
+<a href="#msignup" onClick="{{toSignup}}" style="margin-top: auto; min-height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 10px; text-decoration: none; font-weight: 600; {{p.btnSt}}">{{p.cta}}</a>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section id="mfaq" style="padding: 8px 16px 32px; display: flex; flex-direction: column; gap: 12px">
+<h2 class="h2">{{t.faqTitle}}</h2>
+<div>
+<sc-for list="{{faq}}" as="q" hint-placeholder-count="5">
+<div style="border-top: 1px solid #D9D6CE">
+<button type="button" onClick="{{q.toggle}}" aria-expanded="{{q.open}}" style="width: 100%; min-height: 60px; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 0; border: 0; background: none; text-align: left; font-size: 16px; font-weight: 500; color: #16161A"><span>{{q.q}}</span><span class="mono" aria-hidden="true">{{q.sign}}</span></button>
+<sc-if value="{{q.open}}" hint-placeholder-val="{{ false }}"><p style="margin: 0 0 16px; color: #3A3833; line-height: 1.55; font-size: 15px">{{q.a}}</p></sc-if>
+</div>
+</sc-for>
+</div>
+</section>
+
+<footer style="background: #16161A; color: #CFCBC2; padding: 28px 16px 36px; display: flex; flex-direction: column; gap: 14px; font-size: 14px">
+<span style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 18px; color: #F4F3EF">AI YT Studio</span>
+<div style="display: flex; flex-wrap: wrap; gap: 8px 18px"><a href="MLegal.dc.html" style="color: #CFCBC2">{{t.terms1}}</a><a href="MLegal.dc.html" style="color: #CFCBC2">{{t.privacy}}</a><a href="MLegal.dc.html" style="color: #CFCBC2">{{t.offerL}}</a><a href="#mtop" style="color: #CFCBC2">{{t.contacts}}</a></div>
+<span style="font-size: 12px; color: #9C998F; line-height: 1.5">{{t.footNote}}</span>
+</footer>
+</div>
+<div role="status" aria-live="polite" style="position: absolute; left: 50%; bottom: 92px; z-index: 60; width: 340px; box-sizing: border-box; background: #16161A; color: #fff; padding: 12px 18px; border-radius: 10px; font-size: 14px; line-height: 1.45; box-shadow: 0 8px 24px rgba(0,0,0,0.25); transition: opacity .2s, transform .2s; {{toastSt}}">{{toastText}}</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#C93C14","options":["#C93C14","#2F5BEA","#0F7B5F","#16161A"]},"startLang":{"editor":"enum","options":["ru","en"],"default":"ru"},"$preview":{"width":390,"height":844}}'>
+var L = {
+  ru: {
+    langSwitch: "Сменить язык на английский", menuOpen: "Открыть меню", menuClose: "Закрыть меню",
+    menu: ["Возможности", "Как это работает", "Тарифы", "Вопросы"],
+    login: "Войти", signup: "Начать бесплатно", badge: "AI-СТУДИЯ ДЛЯ YOUTUBE, VK, RUTUBE И ДЗЕНА",
+    heroTitle: "Канал, сценарий, анализ и видео — в одной студии.",
+    heroSub: "Подберите нишу, напишите сценарий с AI, соберите видео и опубликуйте его сразу на YouTube, VK Видео, RUTUBE и Дзен.",
+    authAria: "Регистрация или вход", tabSignup: "Регистрация", tabLogin: "Вход",
+    google: "Продолжить с Google", or: "или", name: "Имя", email: "Email", password: "Пароль", forgot: "Забыли пароль?",
+    terms: "Я принимаю Условия использования и Политику конфиденциальности", termsA: "Я принимаю", termsL1: "Пользовательское соглашение", termsAnd: "и", termsL2: "Политику конфиденциальности", pdA: "Даю", pdL: "согласие на обработку персональных данных",
+    submitSignup: "Создать аккаунт", submitLogin: "Войти в кабинет",
+    featEyebrow: "ВОЗМОЖНОСТИ", featTitle: "Четыре инструмента — от идеи до публикации",
+    features: [
+      ["Создание канала", "AI предложит нишу, названия, описание, аватар, баннер и план на первый месяц.", ["Подбор ниши", "Названия и описание", "Аватар и баннер", "План на 4 недели"]],
+      ["AI-контент", "Посценный сценарий, который можно править, а также озвучка, заголовки, теги и таймкоды.", ["Редактор сценария", "6 голосов для озвучки", "Заголовки и теги", "Таймкоды из сцен"]],
+      ["Анализ каналов", "Статистика любого канала, сравнение с конкурентами и незанятые темы.", ["Рост и аутлаеры", "Сравнение до 5 каналов", "Незанятые темы", "Выводы AI"]],
+      ["Фото и видео", "Раскадровка из сценария и сборка финального видео с музыкой и субтитрами.", ["Изображения и клипы", "16:9, 9:16, 1:1", "Таймлайн и субтитры", "Публикация на YouTube"]]
+    ],
+    howTitle: "Как это работает",
+    how: [["Зарегистрируйтесь", "За минуту — по email или через Google."], ["Опишите канал", "Получите концепцию и план."], ["Создавайте контент", "Сценарии, озвучка, визуал и сборка видео."], ["Анализируйте", "Снимайте на темы, которые работают."]],
+    priceTitle: "Тарифы", swipe: "Листайте вбок, чтобы сравнить", popular: "ПОПУЛЯРНЫЙ", perMonth: "/ мес",
+    plans: [["Старт", "0 ₽", ["1 канал", "60 кредитов", "Сценарии и анализ", "Водяной знак", "Субтитры с выделением слова"], "Начать бесплатно"], ["Автор", "2 490 ₽", ["До 3 каналов", "1 000 кредитов", "Клипы и озвучка", "Без водяного знака", "Акценты и 10 стилей субтитров"], "Выбрать «Автор»"], ["Студия", "6 490 ₽", ["Без лимита каналов", "3 500 кредитов", "Командный доступ", "Приоритет"], "Выбрать «Студия»"]],
+    faqTitle: "Вопросы",
+    faq: [["Нужно ли подключать канал?", "Нет. Подключение YouTube, VK Видео, RUTUBE или Дзена нужно для публикации и анализа вашей статистики."], ["Можно ли публиковать в VK Видео, RUTUBE и Дзен?", "Да. Готовый ролик публикуется сразу на YouTube, VK Видео, RUTUBE и Дзен, а Shorts — ещё в VK Клипы и RUTUBE Shorts. Просмотры по всем площадкам видны в одном месте."], ["Как оплатить и будет ли чек?", "Картой, через СБП, SberPay или T-Pay. На каждую оплату приходит чек «Мой налог» — его можно скачать в истории платежей."], ["Помогаете с маркировкой рекламы?", "Да. Сервис получает токен erid через оператора рекламных данных и готовит пометку «Реклама» для описания и кадра. Ответственность за маркировку остаётся на авторе."], ["Что такое кредиты?", "Кредиты расходуются на генерации: сценарий, озвучку, изображение, клип или анализ."], ["Можно ли отменить подписку?", "Да, в любой момент. Доступ сохранится до конца оплаченного периода."]],
+    terms1: "Условия", offerL: "Оферта", privacy: "Конфиденциальность", contacts: "Контакты",
+    footNote: "© 2026 AI YT Studio. YouTube — товарный знак Google LLC; VK Видео, RUTUBE и Дзен — товарные знаки их правообладателей. Сервис не связан с этими компаниями."
+  },
+  en: {
+    langSwitch: "Switch language to Russian", menuOpen: "Open menu", menuClose: "Close menu",
+    menu: ["Features", "How it works", "Pricing", "FAQ"],
+    login: "Log in", signup: "Start free", badge: "AI STUDIO FOR YOUTUBE",
+    heroTitle: "Channel, script, analytics and video — in one studio.",
+    heroSub: "Find a niche, write the script with AI, study competitors and turn the script into a finished video.",
+    authAria: "Sign up or log in", tabSignup: "Sign up", tabLogin: "Log in",
+    google: "Continue with Google", or: "or", name: "Name", email: "Email", password: "Password", forgot: "Forgot password?",
+    terms: "I accept the Terms of Use and Privacy Policy", termsA: "I accept the", termsL1: "Terms of Service", termsAnd: "and", termsL2: "Privacy Policy", pdA: "I give my", pdL: "consent to personal data processing",
+    submitSignup: "Create account", submitLogin: "Log in to dashboard",
+    featEyebrow: "FEATURES", featTitle: "Four tools — from idea to upload",
+    features: [
+      ["Channel Builder", "AI suggests a niche, names, description, avatar, banner and a first-month plan.", ["Niche finder", "Names and description", "Avatar and banner", "4-week plan"]],
+      ["AI Content Studio", "An editable scene-by-scene script plus voiceover, titles, tags and chapters.", ["Script editor", "6 voiceover voices", "Titles and tags", "Chapters from scenes"]],
+      ["Channel Analyzer", "Stats for any channel, comparison with competitors and content gaps.", ["Growth and outliers", "Compare up to 5 channels", "Content gaps", "AI takeaways"]],
+      ["Photo & Video", "Storyboard from the script and final video assembly with music and subtitles.", ["Images and clips", "16:9, 9:16, 1:1", "Timeline and subtitles", "Publish to YouTube"]]
+    ],
+    howTitle: "How it works",
+    how: [["Sign up", "In a minute — with email or Google."], ["Describe the channel", "Get a concept and a plan."], ["Create content", "Scripts, voiceover, visuals and video assembly."], ["Analyze", "Make videos on topics that work."]],
+    priceTitle: "Pricing", swipe: "Swipe sideways to compare", popular: "POPULAR", perMonth: "/ mo",
+    plans: [["Starter", "$0", ["1 channel", "60 credits", "Scripts and analytics", "Watermark", "Spoken-word subtitles"], "Start free"], ["Creator", "$29", ["Up to 3 channels", "1,000 credits", "Clips and voiceover", "No watermark", "Accents, 10 subtitle styles"], "Choose Creator"], ["Studio", "$79", ["Unlimited channels", "3,500 credits", "Team access", "Priority"], "Choose Studio"]],
+    faqTitle: "FAQ",
+    faq: [["Do I need to connect my YouTube channel?", "No. Connecting is only needed to analyze your own stats."], ["What are credits?", "Credits are spent on generations: a script, voiceover, image, clip or analysis."], ["Can I cancel my subscription?", "Yes, any time. Access stays until the end of the paid period."]],
+    terms1: "Terms", offerL: "Offer", privacy: "Privacy", contacts: "Contact",
+    footNote: "© 2026 AI YT Studio. YouTube is a trademark of Google LLC. Not affiliated with Google."
+  }
+};
+
+var ADM_KEY = 'aiytstudio.admin.v1';
+var ADM_KEYS = ['platOn', 'igScope', 'axProv', 'axEnabled', 'medEnabled', 'eridOn', 'payOn'];
+function admRead() { try { var v = window.localStorage.getItem(ADM_KEY); var o = v ? JSON.parse(v) : {}; return o && typeof o === 'object' ? o : {}; } catch (e) { return {}; } }
+function admWrite(o) { try { window.localStorage.setItem(ADM_KEY, JSON.stringify(o)); } catch (e) {} }
+function admPick(s) { var o = {}; ADM_KEYS.forEach(function (k) { if (s[k] !== undefined) o[k] = s[k]; }); return o; }
+function admWatch(comp, onChange) {
+  var last = JSON.stringify(admRead());
+  var chk = function () { var v = JSON.stringify(admRead()); if (v !== last) { last = v; onChange(); } };
+  var h = function (e) { if (!e || e.key === ADM_KEY || e.key === null) chk(); };
+  try { window.addEventListener('storage', h); } catch (e) {}
+  var id = setInterval(chk, 1000);
+  comp._admStop = function () { clearInterval(id); try { window.removeEventListener('storage', h); } catch (e) {} };
+}
+function admEff(props, lang) {
+  var a = admRead(), pl = a.platOn || {}, prov = a.axProv || {}, axEn = a.axEnabled || {}, med = a.medEnabled || {}, pay = a.payOn || {};
+  var AXIDS = ['opus', 'astra', 'sol', 'luna', 'haiku', 'deepseek', 'ygpt', 'ylite', 'gmax', 'glite'];
+  var PROVK = { opus: 'a', haiku: 'a', astra: 'o', sol: 'o', luna: 'o', deepseek: 'd', ygpt: 'y', ylite: 'y', gmax: 'g', glite: 'g' };
+  return {
+    platOk: function (k) { if (k === 'yt') return true; if (pl[k] === false) return false; if (k === 'ig') { if (props.instagram === 'off') return false; if (a.igScope === 'en' && lang === 'ru') return false; } return true; },
+    axOk: function (id) { var pk = PROVK[id]; if (pk === 'a' && props.claudeChats === 'off') return false; if (pk === 'o' && props.gptChats === 'off') return false; if (pk && prov[pk]) return false; var i = AXIDS.indexOf(id); if (i >= 0 && axEn[i] === false) return false; return true; },
+    medOk: function (id) { return med[id] !== false; },
+    payOk: function (k) { return pay[k] !== false; },
+    eridOn: a.eridOn !== false
+  };
+}
+var LRU = {
+  ruEyebrow: "ДЛЯ АВТОРОВ ИЗ РОССИИ", ruTitle: "Работает с площадками, оплатой и законами в России",
+  ruSub: "YouTube в России замедлен, поэтому AI YT Studio публикует и анализирует ролики там, где ваша аудитория сейчас, и помогает зарабатывать по российским правилам.",
+  ruCards: [
+    ["VK Видео, RUTUBE и Дзен", "Публикуйте ролик на все площадки одним нажатием, смотрите просмотры по каждой и следите за условиями монетизации VK Видео и RUTUBE.", "Публикация · аналитика · монетизация", "plat"],
+    ["Маркировка рекламы", "Получите токен erid через оператора рекламных данных и готовую пометку «Реклама» для описания и кадра — без ручной работы с ОРД.", "ERID за минуту", "erid"],
+    ["Оплата как привыкли", "Карта, СБП, SberPay или T-Pay. На каждую оплату приходит чек «Мой налог».", "Цены в рублях", "pay"],
+    ["Не зависит от одного провайдера", "YandexGPT, GigaChat, YandexART и Kandinsky — в выборе моделей и в резерве: если зарубежная модель недоступна, работа продолжится.", "Российские модели", "ai"]
+  ]
+};
+
+var EN_FIX = [[/Сбер · свой сервер/g, 'Sber · own server'], [/Свой сервер \(GPU\)/g, 'Own server (GPU)'], [/Яндекс/g, 'Yandex'], [/Сбер/g, 'Sber']];
+function enFix(v) {
+  if (typeof v === 'string') { var r = v; EN_FIX.forEach(function (p) { r = r.replace(p[0], p[1]); }); return r; }
+  if (Array.isArray(v)) return v.map(enFix);
+  if (v && typeof v === 'object') { var o = {}; Object.keys(v).forEach(function (k) { o[k] = typeof v[k] === 'function' ? v[k] : enFix(v[k]); }); return o; }
+  return v;
+}
+function csvHref(rows) {
+  var esc = function (x) { x = String(x == null ? '' : x); return /[",;\n]/.test(x) ? '"' + x.replace(/"/g, '""') + '"' : x; };
+  return 'data:text/csv;charset=utf-8,' + encodeURIComponent('﻿' + rows.map(function (r) { return r.map(esc).join(';'); }).join('\r\n'));
+}
+function demoBuild(self, s, msgs) {
+  var show = function (m) { if (self._tt) clearTimeout(self._tt); self.setState({ toast: m }); self._tt = setTimeout(function () { self.setState({ toast: '' }); }, 4000); };
+  var o = {};
+  Object.keys(msgs).forEach(function (k) {
+    o[k] = function (e) {
+      var m = msgs[k];
+      if (e && e.target && e.target.files) { var n = e.target.files.length; if (!n) return; m = m.replace('{n}', n).replace('{name}', e.target.files[0].name); }
+      if (k.indexOf('copy') === 0 && msgs['_' + k]) { try { navigator.clipboard.writeText(msgs['_' + k]); } catch (er) {} }
+      show(m);
+    };
+  });
+  return { demo: o, toastText: s.toast || '', toastSt: s.toast ? 'opacity:1;transform:translate(-50%,0)' : 'opacity:0;transform:translate(-50%,10px);pointer-events:none' };
+}
+var DEMO = { ru: {}, en: {} };
+class Component extends DCLogic {
+  componentDidMount() { var self = this; admWatch(this, function () { self.forceUpdate(); }); }
+  componentWillUnmount() { if (this._admStop) this._admStop(); }
+  constructor(props) {
+    super(props);
+    this.state = { lang: null, menu: false, mode: 'signup', feat: 0, faq: 0 };
+  }
+  renderVals() {
+    var s = this.state, lang = s.lang || this.props.startLang || 'ru';
+    var v = Object.assign({}, this._rv(), demoBuild(this, s, DEMO[lang] || DEMO.ru), { uiLang: lang }, this._extra ? this._extra(lang) : {});
+    return lang === 'en' ? enFix(v) : v;
+  }
+  _rv() {
+    var s = this.state, self = this;
+    var accent = this.props.accent ?? '#C93C14';
+    var lang = s.lang || this.props.startLang || 'ru';
+    var t = L[lang] || L.ru;
+    var signup = s.mode === 'signup';
+    var tabOn = 'background:#fff;color:#16161A;border:1px solid #D9D6CE', tabOff = 'background:transparent;color:#5E5B54;border:1px solid transparent';
+    var hrefs = ['#mfeatures', '#mhow', '#mpricing', '#mfaq'];
+    return {
+      ruShow: lang === 'ru', ruEyebrow: LRU.ruEyebrow, ruTitle: LRU.ruTitle, ruSub: LRU.ruSub,
+      ruCards: (function () { var adm = admEff(self.props || {}, lang); return LRU.ruCards.filter(function (c) { return c[3] !== 'erid' || adm.eridOn; }).map(function (c) { return { t: c[0], d: c[1], tag: c[2] }; }); })(),
+      t: t, accent: accent,
+      langLabel: lang === 'ru' ? 'EN' : 'RU',
+      toggleLang: function () { self.setState({ lang: lang === 'ru' ? 'en' : 'ru' }); },
+      menuOpen: s.menu, menuClosed: !s.menu, menuAria: s.menu ? t.menuClose : t.menuOpen,
+      toggleMenu: function () { self.setState({ menu: !s.menu }); },
+      closeMenu: function () { self.setState({ menu: false }); },
+      menuLogin: function () { self.setState({ menu: false, mode: 'login' }); },
+      menuSignup: function () { self.setState({ menu: false, mode: 'signup' }); },
+      menu: t.menu.map(function (m, i) { return { label: m, href: hrefs[i] }; }),
+      isSignup: signup, isLogin: !signup,
+      signupTabSt: signup ? tabOn : tabOff, loginTabSt: signup ? tabOff : tabOn,
+      toSignup: function () { self.setState({ mode: 'signup' }); },
+      toLogin: function () { self.setState({ mode: 'login' }); },
+      submitLabel: signup ? t.submitSignup : t.submitLogin,
+      submitHref: signup ? 'Onboarding.dc.html' : 'MApp.dc.html',
+      features: t.features.map(function (f, i) {
+        var open = s.feat === i;
+        return { num: '0' + (i + 1), title: f[0], desc: f[1], points: f[2], open: open, sign: open ? '−' : '+', toggle: function () { self.setState({ feat: open ? -1 : i }); } };
+      }),
+      how: t.how.map(function (h, i) { return { n: '0' + (i + 1), t: h[0], d: h[1] }; }),
+      plans: t.plans.map(function (p, i) {
+        var hi = i === 1;
+        return { name: p[0], price: p[1], items: p[2], cta: p[3], popular: hi,
+          st: hi ? 'background:#16161A;color:#F4F3EF;border:1px solid #16161A' : 'background:#fff;color:#16161A;border:1px solid #E2DFD7',
+          btnSt: hi ? 'background:' + accent + ';color:#fff' : 'background:#F4F3EF;color:#16161A;border:1px solid #D9D6CE' };
+      }),
+      faq: t.faq.map(function (q, i) {
+        var open = s.faq === i;
+        return { q: q[0], a: q[1], open: open, sign: open ? '−' : '+', toggle: function () { self.setState({ faq: open ? -1 : i }); } };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

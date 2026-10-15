@@ -1,0 +1,684 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>AI YT Studio — Mobile admin</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#EEEDE8}
+a{color:#16161A}
+button{font-family:inherit;cursor:pointer}
+input,select{font-family:inherit}
+.card{background:#fff;border:1px solid #E2DFD7;border-radius:14px}
+.fld{min-height:44px;padding:0 12px;border:1px solid #D9D6CE;border-radius:10px;font-size:16px;background:#fff;box-sizing:border-box;width:100%}
+.mono{font-family:'IBM Plex Mono',monospace}
+.muted{color:#5E5B54}
+.h2{margin:0;font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600}
+.pill{min-height:40px;padding:0 14px;border-radius:999px;font-size:14px;flex:none}
+.ico{width:44px;height:44px;border-radius:10px;border:1px solid #D9D6CE;background:#fff;display:flex;align-items:center;justify-content:center;padding:0}
+.btn2{min-height:44px;padding:0 14px;border-radius:10px;border:1px solid #D9D6CE;background:#fff;font-size:14px;color:#16161A}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.sw{width:52px;height:44px;border:0;background:none;padding:0;display:flex;align-items:center;justify-content:flex-end;flex:none}
+:focus-visible{outline:3px solid #2F5BEA;outline-offset:2px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</helmet>
+<div lang="{{uiLang}}" style="width: 390px; height: 844px; position: relative; overflow: hidden; display: flex; flex-direction: column; background: #EEEDE8; color: #16161A; font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 16px">
+
+<header style="flex: none; background: #0E0E11; color: #F4F3EF; padding: 10px 12px; display: flex; align-items: center; gap: 10px">
+<button type="button" onClick="{{toggleMenu}}" aria-label="{{t.menu}}" aria-expanded="{{menuOpen}}" style="width: 44px; height: 44px; border-radius: 10px; border: 1px solid #2E2E35; background: transparent; display: flex; align-items: center; justify-content: center; flex: none">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F4F3EF" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+</button>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<span class="mono" style="font-size: 10px; letter-spacing: 0.1em; color: #F0A58C">ADMIN</span>
+<h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{heading}}</h1>
+</div>
+<button type="button" onClick="{{toggleLang}}" aria-label="{{t.langSwitch}}" class="mono" style="min-width: 44px; height: 44px; border-radius: 10px; border: 1px solid #2E2E35; background: transparent; color: #F4F3EF; font-size: 13px">{{langLabel}}</button>
+</header>
+
+<sc-if value="{{menuOpen}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; inset: 0; z-index: 6; display: flex">
+<nav aria-label="Admin" style="width: 290px; background: #0E0E11; color: #F4F3EF; padding: 16px 12px; display: flex; flex-direction: column; gap: 4px; box-sizing: border-box">
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 0 6px 12px">
+<span style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 18px">AI YT Studio</span>
+<button type="button" onClick="{{toggleMenu}}" aria-label="{{t.close}}" style="width: 44px; height: 44px; border-radius: 10px; border: 1px solid #2E2E35; background: transparent; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F4F3EF" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</div>
+<sc-for list="{{nav}}" as="n" hint-placeholder-count="7">
+<button type="button" onClick="{{n.go}}" style="min-height: 50px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; border-radius: 10px; border: 0; text-align: left; font-size: 16px; {{n.st}}">
+<span>{{n.label}}</span>
+<sc-if value="{{n.hasBadge}}" hint-placeholder-val="{{ false }}"><span style="min-width: 22px; padding: 2px 7px; border-radius: 999px; background: {{accent}}; color: #fff; font-size: 12px; text-align: center; box-sizing: border-box">{{n.badge}}</span></sc-if>
+</button>
+</sc-for>
+<div style="margin-top: auto; border-top: 1px solid #2E2E35; padding-top: 10px; display: flex; flex-direction: column">
+<a href="Admin.dc.html" style="min-height: 48px; display: flex; flex-direction: column; justify-content: center; padding: 6px 12px; color: #F4F3EF; text-decoration: none"><span>{{fullAdm.h}} ↗</span><span style="font-size: 12px; color: #9C998F; line-height: 1.4">{{fullAdm.p}}</span></a>
+<a href="MLanding.dc.html" style="min-height: 48px; display: flex; align-items: center; padding: 0 12px; color: #CFCBC2; text-decoration: none">{{t.openSite}} ↗</a>
+<a href="MApp.dc.html" style="min-height: 48px; display: flex; align-items: center; padding: 0 12px; color: #CFCBC2; text-decoration: none">{{t.userView}} ↗</a>
+</div>
+</nav>
+<button type="button" onClick="{{toggleMenu}}" aria-label="{{t.close}}" style="flex: 1; border: 0; background: rgba(14,14,17,0.5); padding: 0"></button>
+</div>
+</sc-if>
+
+<sc-if value="{{sheetOpen}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; inset: 0; z-index: 5; background: rgba(14,14,17,0.45); display: flex; align-items: flex-end">
+<div role="dialog" aria-modal="true" aria-label="{{sel.name}}" style="width: 100%; max-height: 86%; overflow-y: auto; background: #fff; border-radius: 20px 20px 0 0; padding: 18px 16px 26px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; gap: 12px; align-items: center">
+<span style="width: 48px; height: 48px; border-radius: 50%; background: {{accent}}; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 600; flex: none">{{sel.ini}}</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column"><span style="font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 600">{{sel.name}}</span><span class="muted" style="font-size: 13px">{{sel.email}}</span></span>
+<button type="button" onClick="{{closeSheet}}" aria-label="{{t.close}}" class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16161A" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</div>
+<div style="font-weight: 500; font-size: 14px">{{t.thRole}}</div>
+<div style="display: flex; gap: 8px; overflow-x: auto"><sc-for list="{{rolePills}}" as="rp" hint-placeholder-count="3"><button type="button" onClick="{{rp.pick}}" class="pill" style="{{rp.st}}">{{rp.label}}</button></sc-for></div>
+<div style="font-weight: 500; font-size: 14px">{{t.thPlan}}</div>
+<div style="display: flex; gap: 8px; overflow-x: auto"><sc-for list="{{planPills}}" as="pp" hint-placeholder-count="3"><button type="button" onClick="{{pp.pick}}" class="pill" style="{{pp.st}}">{{pp.label}}</button></sc-for></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="maddcr" style="font-weight: 500; font-size: 14px">{{t.addCredits}}</label><div style="display: flex; gap: 8px"><input id="maddcr" type="number" placeholder="100" class="fld" style="flex: 1; width: auto"><button type="button" style="min-height: 44px; padding: 0 16px; border-radius: 10px; border: 0; background: #16161A; color: #fff; font-size: 14px">{{t.apply}}</button></div></div>
+<button type="button" onClick="{{sel.toggle}}" class="btn2">{{sel.toggleLabel}}</button>
+<button type="button" class="btn2">{{t.resetPass}}</button>
+<button type="button" class="btn2" style="border-color: #E8B4A3; color: #A3300C">{{t.deleteUser}}</button>
+</div>
+</div>
+</sc-if>
+
+<div style="flex: 1; overflow-y: auto; overflow-x: hidden; padding: 14px 14px 28px; display: flex; flex-direction: column; gap: 12px">
+
+<sc-if value="{{isDash}}" hint-placeholder-val="{{ true }}">
+<span class="mono" style="align-self: flex-start; padding: 4px 10px; border-radius: 999px; background: #FDE7DF; color: #8A2A0C; font-size: 11px">{{t.demo}}</span>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+<sc-for list="{{kpis}}" as="k" hint-placeholder-count="4"><div class="card" style="padding: 14px; display: flex; flex-direction: column; gap: 4px"><span class="muted" style="font-size: 12px">{{k.label}}</span><span style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600">{{k.value}}</span><span class="muted" style="font-size: 11px">{{k.note}}</span></div></sc-for>
+</div>
+<div class="card" style="padding: 16px; display: flex; flex-direction: column; gap: 12px">
+<h2 class="h2">{{t.genByModule}}</h2>
+<sc-for list="{{usage}}" as="u" hint-placeholder-count="4"><div style="display: flex; flex-direction: column; gap: 5px"><div style="display: flex; justify-content: space-between; font-size: 14px"><span>{{u.label}}</span><span class="mono muted" style="font-size: 12px">{{u.count}}</span></div><div style="height: 8px; border-radius: 4px; background: #EEEDE8"><div style="height: 8px; border-radius: 4px; {{u.st}}"></div></div></div></sc-for>
+</div>
+<div class="card" style="padding: 16px; display: flex; flex-direction: column; gap: 4px">
+<h2 class="h2" style="margin-bottom: 6px">{{t.sysStatus}}</h2>
+<sc-for list="{{providers}}" as="p" hint-placeholder-count="5"><div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 10px 0; border-top: 1px solid #EFECE5; font-size: 14px"><span>{{p.name}}</span><span style="padding: 3px 10px; border-radius: 999px; font-size: 12px; flex: none; {{p.pillSt}}">{{p.status}}</span></div></sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{isUsers}}" hint-placeholder-val="{{ false }}">
+<label class="sr" for="musearch">{{t.searchUsers}}</label>
+<input id="musearch" type="search" placeholder="{{t.searchUsers}}" class="fld">
+<div style="display: flex; gap: 8px; overflow-x: auto; margin: 0 -14px; padding: 0 14px"><sc-for list="{{filters}}" as="f" hint-placeholder-count="4"><button type="button" onClick="{{f.pick}}" class="pill" style="{{f.st}}">{{f.label}}</button></sc-for></div>
+<sc-for list="{{users}}" as="u" hint-placeholder-count="6">
+<div class="card" style="padding: 12px; display: flex; flex-direction: column; gap: 10px">
+<button type="button" onClick="{{u.open}}" style="border: 0; background: none; padding: 0; display: flex; gap: 12px; align-items: center; text-align: left; min-height: 44px">
+<span style="width: 40px; height: 40px; border-radius: 50%; background: #16161A; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; flex: none">{{u.ini}}</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column"><span style="font-weight: 600; font-size: 15px">{{u.name}}</span><span class="muted" style="font-size: 13px; overflow: hidden; text-overflow: ellipsis">{{u.email}}</span></span>
+<span style="padding: 3px 10px; border-radius: 999px; font-size: 12px; flex: none; {{u.statusSt}}">{{u.statusLabel}}</span>
+</button>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+<span class="muted" style="font-size: 13px">{{u.roleLabel}} · {{u.planLabel}}</span>
+<button type="button" onClick="{{u.toggle}}" style="min-height: 40px; padding: 0 12px; border-radius: 10px; border: 1px solid #D9D6CE; background: #fff; font-size: 13px">{{u.toggleLabel}}</button>
+</div>
+</div>
+</sc-for>
+</sc-if>
+
+<sc-if value="{{isModules}}" hint-placeholder-val="{{ false }}">
+<p class="muted" style="margin: 0; font-size: 14px; line-height: 1.5">{{t.modulesIntro}}</p>
+<sc-for list="{{modules}}" as="m" hint-placeholder-count="4">
+<div class="card" style="padding: 14px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px">
+<span style="display: flex; flex-direction: column"><span style="font-weight: 600">{{m.title}}</span><span class="muted" style="font-size: 13px">{{m.stateLabel}}</span></span>
+<button type="button" role="switch" aria-checked="{{m.on}}" aria-label="{{m.title}}" onClick="{{m.toggle}}" class="sw"><span style="width: 46px; height: 26px; border-radius: 13px; position: relative; {{m.trackSt}}"><span style="position: absolute; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; {{m.knobSt}}"></span></span></button>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<div style="display: flex; flex-direction: column; gap: 4px"><label for="{{m.costId}}" class="muted" style="font-size: 12px">{{t.costPerAction}}</label><input id="{{m.costId}}" type="number" placeholder="[0]" class="fld"></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><label for="{{m.limId}}" class="muted" style="font-size: 12px">{{t.dailyLimit}}</label><input id="{{m.limId}}" type="number" placeholder="[0]" class="fld"></div>
+</div>
+</div>
+</sc-for>
+</sc-if>
+
+<sc-if value="{{isPlans}}" hint-placeholder-val="{{ false }}">
+<sc-for list="{{plans}}" as="p" hint-placeholder-count="3">
+<div class="card" style="padding: 14px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: center"><span style="font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 600">{{p.name}}</span><span class="muted" style="font-size: 12px">{{t.subscribers}}: [0]</span></div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{p.fields}}" as="fd" hint-placeholder-count="4"><div style="display: flex; flex-direction: column; gap: 4px"><label for="{{fd.id}}" class="muted" style="font-size: 12px">{{fd.label}}</label><input id="{{fd.id}}" type="text" placeholder="{{fd.ph}}" class="fld"></div></sc-for>
+</div>
+<button type="button" class="btn2" onClick="{{demo.save}}">{{t.save}}</button>
+</div>
+</sc-for>
+<button type="button" style="min-height: 50px; border-radius: 12px; border: 0; background: #16161A; color: #fff; font-size: 15px" onClick="{{demo.addPlan}}">{{t.addPlan}}</button>
+<div style="background: #fff; border: 1px solid #E2DFD7; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 600">{{spx.h}}</h2><span style="font-size: 13px; color: #5E5B54; line-height: 1.45">{{spx.p}}</span>
+<div style="overflow-x: auto"><table style="border-collapse: collapse; min-width: 520px; width: 100%; font-size: 14px"><thead><tr><th scope="col" style="text-align: left; padding: 8px 6px; font-weight: 500; color: #5E5B54"></th><sc-for list="{{spPlans}}" as="pp" hint-placeholder-count="3"><th scope="col" style="padding: 8px 6px; font-weight: 600">{{pp.label}}</th></sc-for></tr></thead><tbody><sc-for list="{{spRows}}" as="rw" hint-placeholder-count="3"><tr style="border-top: 1px solid #EFECE5"><th scope="row" style="text-align: left; padding: 6px; font-weight: 500">{{rw.label}}</th><sc-for list="{{rw.cells}}" as="c" hint-placeholder-count="3"><td style="text-align: center; padding: 2px 6px"><button type="button" role="switch" aria-checked="{{c.on}}" aria-label="{{c.name}}" onClick="{{c.toggle}}" style="width: 52px; height: 44px; border: 0; background: none; padding: 0; display: inline-flex; align-items: center; justify-content: center"><span style="width: 46px; height: 26px; border-radius: 13px; position: relative; {{c.track}}"><span style="position: absolute; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; {{c.knob}}"></span></span></button></td></sc-for></tr></sc-for></tbody></table></div>
+<div style="display: flex; gap: 12px; flex-wrap: wrap"><sc-for list="{{spStyles}}" as="ss" hint-placeholder-count="3"><div style="flex: 1 1 150px; display: flex; flex-direction: column; gap: 4px"><label for="{{ss.fid}}" style="font-size: 12px; color: #5E5B54">{{ss.label}}</label><input id="{{ss.fid}}" type="number" min="0" value="{{ss.value}}" onChange="{{ss.onChange}}" style="min-height: 44px; padding: 0 10px; border: 1px solid #D9D6CE; border-radius: 8px; font-size: 14px"></div></sc-for></div>
+</div>
+</sc-if>
+
+<sc-if value="{{isApi}}" hint-placeholder-val="{{ false }}">
+<p class="muted" style="margin: 0; font-size: 14px; line-height: 1.5">{{t.apiIntro}}</p>
+<div class="card" style="padding: 14px; display: flex; flex-direction: column; gap: 8px">
+<span style="font-weight: 600; font-size: 15px">{{t.axProvH}}</span><span class="muted" style="font-size: 12px; line-height: 1.45">{{t.axProvP}}</span>
+<sc-for list="{{axProvTiles}}" as="pt" hint-placeholder-count="5"><div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid #EFECE5"><span style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-weight: 500; font-size: 15px">{{pt.label}}</span><span class="muted" style="font-size: 12px">{{pt.sub}}</span></span><button type="button" role="switch" aria-checked="{{pt.on}}" aria-label="{{pt.label}}" onClick="{{pt.toggle}}" class="sw"><span style="width: 46px; height: 26px; border-radius: 13px; position: relative; {{pt.track}}"><span style="position: absolute; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; {{pt.knob}}"></span></span></button></div></sc-for>
+<sc-if value="{{axProvDoneShow}}" hint-placeholder-val="{{ false }}"><span style="font-size: 12px; color: #0B5A45">{{t.axProvDone}}</span></sc-if>
+<sc-if value="{{axProvAllOffShow}}" hint-placeholder-val="{{ false }}"><span style="font-size: 12px; color: #8A2A0C; font-weight: 500">{{t.axProvAllOff}}</span></sc-if>
+</div>
+<div class="card" style="padding: 14px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px"><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 600; font-size: 15px">{{t.foH}}</span><span class="muted" style="font-size: 12px; line-height: 1.4">{{t.foSw}}</span></span><button type="button" role="switch" aria-checked="{{foOn}}" aria-label="{{t.foSw}}" onClick="{{toggleFo}}" class="sw"><span style="width: 46px; height: 26px; border-radius: 13px; position: relative; {{foTrack}}"><span style="position: absolute; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; {{foKnob}}"></span></span></button></div>
+<span class="muted" style="font-size: 12px; line-height: 1.45">{{t.foP}}</span>
+<sc-for list="{{foRows}}" as="fr" hint-placeholder-count="4"><div style="display: flex; flex-direction: column; gap: 4px; padding: 10px 0; border-top: 1px solid #EFECE5"><div style="display: flex; justify-content: space-between; gap: 8px; align-items: center"><span style="font-weight: 500; font-size: 14px">{{fr.task}}</span><span style="padding: 3px 8px; border-radius: 999px; font-size: 11px; flex: none; {{fr.pillSt}}">{{fr.status}}</span></div><span class="muted" style="font-size: 12px; line-height: 1.4">{{fr.main}} → {{fr.b1}} → {{fr.b2}}</span></div></sc-for>
+<span class="muted" style="font-size: 12px">{{t.foTestLbl}}</span>
+<div style="flex: none; display: flex; gap: 8px; overflow-x: auto; margin: 0 -14px; padding: 0 14px"><sc-for list="{{foTests}}" as="ft" hint-placeholder-count="3"><button type="button" onClick="{{ft.pick}}" style="flex: none; min-height: 40px; padding: 0 12px; border-radius: 999px; font-size: 13px; white-space: nowrap; {{ft.st}}">{{ft.label}}</button></sc-for></div>
+<sc-if value="{{foHasLog}}" hint-placeholder-val="{{ false }}"><div style="display: flex; flex-direction: column; gap: 6px; padding: 10px; border-radius: 8px; background: #F4F3EF"><sc-for list="{{foLog}}" as="fl" hint-placeholder-count="2"><span style="font-size: 12px; line-height: 1.45"><span class="mono">{{fl.time}}</span> · {{fl.text}}</span></sc-for></div></sc-if>
+</div>
+<div class="card" style="padding: 14px; display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; justify-content: space-between; gap: 8px; align-items: baseline"><span style="font-weight: 600; font-size: 15px">{{t.imgAdmH}}</span><span class="mono muted" style="font-size: 12px">{{imgOnTxt}}</span></div>
+<sc-for list="{{imgAdm}}" as="ia" hint-placeholder-count="6"><div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid #EFECE5; {{ia.rowSt}}"><span style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-weight: 500; font-size: 14px">{{ia.name}}</span><span class="muted" style="font-size: 12px">{{ia.prov}} · {{ia.cr}}</span></span><button type="button" role="switch" aria-checked="{{ia.on}}" aria-label="{{ia.name}}" onClick="{{ia.toggle}}" class="sw"><span style="width: 46px; height: 26px; border-radius: 13px; position: relative; {{ia.track}}"><span style="position: absolute; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; {{ia.knob}}"></span></span></button></div></sc-for>
+</div>
+<div class="card" style="padding: 14px; display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; justify-content: space-between; gap: 8px; align-items: baseline"><span style="font-weight: 600; font-size: 15px">{{t.vidAdmH}}</span><span class="mono muted" style="font-size: 12px">{{vidOnTxt}}</span></div>
+<sc-for list="{{vidAdm}}" as="va" hint-placeholder-count="6"><div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid #EFECE5; {{va.rowSt}}"><span style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-weight: 500; font-size: 14px">{{va.name}}</span><span class="muted" style="font-size: 12px">{{va.prov}} · {{va.cr}}</span></span><button type="button" role="switch" aria-checked="{{va.on}}" aria-label="{{va.name}}" onClick="{{va.toggle}}" class="sw"><span style="width: 46px; height: 26px; border-radius: 13px; position: relative; {{va.track}}"><span style="position: absolute; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; {{va.knob}}"></span></span></button></div></sc-for>
+</div>
+<h2 class="h2" style="margin-top: 4px">{{t.keysH}}</h2>
+<sc-for list="{{keySvcs}}" as="k" hint-placeholder-count="6">
+<div class="card" style="padding: 14px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 8px"><span style="font-weight: 600; font-size: 15px">{{k.name}}</span><span style="padding: 3px 10px; border-radius: 999px; font-size: 12px; flex: none; {{k.pillSt}}">{{k.status}}</span></div>
+<span class="muted" style="font-size: 12px; line-height: 1.4">{{t.keyFor}}{{k.uses}}</span>
+<label for="m{{k.fid}}" class="sr">{{k.fieldLbl}} — {{k.name}}</label>
+<input id="m{{k.fid}}" type="{{k.ftype}}" placeholder="{{k.ph}}" class="fld mono">
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px"><button type="button" class="btn2" onClick="{{demo.test}}">{{t.test}}</button><button type="button" style="min-height: 44px; border-radius: 10px; border: 0; background: #16161A; color: #fff; font-size: 14px" onClick="{{demo.save}}">{{t.save}}</button></div>
+<a href="{{k.link}}" target="_blank" rel="noopener noreferrer" style="font-size: 14px; color: #16161A; text-decoration: underline; text-underline-offset: 3px; min-height: 44px; display: flex; align-items: center">{{k.linkLabel}} ↗</a>
+</div>
+</sc-for>
+</sc-if>
+
+<sc-if value="{{isMod}}" hint-placeholder-val="{{ false }}">
+<p class="muted" style="margin: 0; font-size: 14px; line-height: 1.5">{{t.modIntro}}</p>
+<sc-for list="{{queue}}" as="q" hint-placeholder-count="4">
+<div class="card" style="overflow: hidden">
+<div style="aspect-ratio: 16 / 9; background-color: #23232A; background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.06) 0 10px, transparent 10px 20px); padding: 10px; box-sizing: border-box"><span class="mono" style="font-size: 11px; color: #fff; background: rgba(0,0,0,0.55); padding: 2px 6px; border-radius: 4px">{{q.type}}</span></div>
+<div style="padding: 14px; display: flex; flex-direction: column; gap: 6px; font-size: 14px">
+<span><span class="muted">{{t.user}}:</span> {{q.user}}</span>
+<span><span class="muted">{{t.reason}}:</span> {{q.reason}}</span>
+<sc-if value="{{q.pending}}" hint-placeholder-val="{{ true }}"><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 6px"><button type="button" onClick="{{q.approve}}" class="btn2">{{t.approve}}</button><button type="button" onClick="{{q.remove}}" style="min-height: 44px; border-radius: 10px; border: 0; background: #A3300C; color: #fff; font-size: 14px">{{t.remove}}</button></div></sc-if>
+<sc-if value="{{q.decided}}" hint-placeholder-val="{{ false }}"><div style="margin-top: 6px; padding: 10px; border-radius: 10px; font-weight: 500; {{q.resSt}}">{{q.resLabel}}</div></sc-if>
+</div>
+</div>
+</sc-for>
+</sc-if>
+
+<sc-if value="{{isSettings}}" hint-placeholder-val="{{ false }}">
+<div class="card" style="padding: 14px; display: flex; flex-direction: column; gap: 10px">
+<h2 class="h2">{{t.general}}</h2>
+<div style="display: flex; flex-direction: column; gap: 4px"><label for="msname" class="muted" style="font-size: 12px">{{t.siteName}}</label><input id="msname" type="text" placeholder="AI YT Studio" class="fld"></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><label for="mdlang" class="muted" style="font-size: 12px">{{t.defLang}}</label><select id="mdlang" class="fld"><option>Русский</option><option>English</option><option>{{t.byBrowser}}</option></select></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><label for="mfcr" class="muted" style="font-size: 12px">{{t.freeCredits}}</label><input id="mfcr" type="number" placeholder="[0]" class="fld"></div>
+</div>
+<div class="card" style="padding: 6px 14px">
+<sc-for list="{{switches}}" as="sw" hint-placeholder-count="5">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #EFECE5">
+<span style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 500; font-size: 15px">{{sw.label}}</span><span class="muted" style="font-size: 12px; line-height: 1.4">{{sw.hint}}</span></span>
+<button type="button" role="switch" aria-checked="{{sw.on}}" aria-label="{{sw.label}}" onClick="{{sw.toggle}}" class="sw"><span style="width: 46px; height: 26px; border-radius: 13px; position: relative; {{sw.trackSt}}"><span style="position: absolute; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; {{sw.knobSt}}"></span></span></button>
+</div>
+</sc-for>
+</div>
+<div class="card" style="padding: 6px 14px 12px">
+<h2 class="h2" style="margin-top: 8px">{{t.platH}}</h2>
+<sc-for list="{{platSw}}" as="ps" hint-placeholder-count="4">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #EFECE5">
+<span style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 500; font-size: 15px">{{ps.label}}</span><span style="font-size: 12px; line-height: 1.4; {{ps.hintSt}}">{{ps.hint}}</span></span>
+<sc-if value="{{ps.locked}}" hint-placeholder-val="{{ false }}"><span class="muted" style="font-size: 12px; flex: none">{{t.platAlways}}</span></sc-if>
+<sc-if value="{{ps.canToggle}}" hint-placeholder-val="{{ true }}"><button type="button" role="switch" aria-checked="{{ps.on}}" aria-label="{{ps.label}}" onClick="{{ps.toggle}}" class="sw"><span style="width: 46px; height: 26px; border-radius: 13px; position: relative; {{ps.track}}"><span style="position: absolute; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; {{ps.knob}}"></span></span></button></sc-if>
+</div>
+</sc-for>
+<sc-if value="{{igOnNow}}" hint-placeholder-val="{{ true }}"><span class="muted" style="display: block; font-size: 12px; margin-top: 10px">{{t.igScopeLbl}}</span><div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px"><sc-for list="{{igScopes}}" as="is" hint-placeholder-count="2"><button type="button" onClick="{{is.pick}}" style="min-height: 40px; padding: 0 12px; border-radius: 999px; font-size: 13px; {{is.st}}">{{is.label}}</button></sc-for></div></sc-if>
+<sc-if value="{{igOffShow}}" hint-placeholder-val="{{ false }}"><div style="margin-top: 10px; padding: 10px 12px; border-radius: 8px; background: #F3FBF7; border: 1px solid #B7E2D2; font-size: 12px; line-height: 1.5; color: #0B5A45">{{t.igOffDone}}</div></sc-if>
+<sc-if value="{{igEnShow}}" hint-placeholder-val="{{ false }}"><div style="margin-top: 10px; padding: 10px 12px; border-radius: 8px; background: #F3FBF7; border: 1px solid #B7E2D2; font-size: 12px; line-height: 1.5; color: #0B5A45">{{t.igEnDone}}</div></sc-if>
+</div>
+<div class="card" style="padding: 6px 14px 12px">
+<h2 class="h2" style="margin-top: 8px">{{t.ruFnH}}</h2>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0"><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 500; font-size: 15px">{{t.eridSwL}}</span><span class="muted" style="font-size: 12px; line-height: 1.4">{{t.eridSwH}}</span></span><button type="button" role="switch" aria-checked="{{eridSwOn}}" aria-label="{{t.eridSwL}}" onClick="{{toggleErid}}" class="sw"><span style="width: 46px; height: 26px; border-radius: 13px; position: relative; {{eridTrack}}"><span style="position: absolute; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; {{eridKnob}}"></span></span></button></div>
+<sc-if value="{{eridOffShow}}" hint-placeholder-val="{{ false }}"><div style="padding: 10px 12px; border-radius: 8px; background: #F3FBF7; border: 1px solid #B7E2D2; font-size: 12px; line-height: 1.5; color: #0B5A45">{{t.eridOffDone}}</div></sc-if>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0"><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 500; font-size: 15px">{{stx.l}}</span><span class="muted" style="font-size: 12px; line-height: 1.4">{{stx.h}}</span></span><button type="button" role="switch" aria-checked="{{sttOn}}" aria-label="{{stx.l}}" onClick="{{toggleStt}}" class="sw"><span style="width: 46px; height: 26px; border-radius: 13px; position: relative; {{sttTrack}}"><span style="position: absolute; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; {{sttKnob}}"></span></span></button></div>
+<sc-if value="{{sttOff}}" hint-placeholder-val="{{ false }}"><div style="padding: 10px 12px; border-radius: 8px; background: #FBEBC9; font-size: 12px; line-height: 1.5; color: #7A4B00">{{stx.off}}</div></sc-if>
+</div>
+<div class="card" style="padding: 6px 14px 12px">
+<h2 class="h2" style="margin-top: 8px">{{t.payH}}</h2>
+<sc-for list="{{paySw}}" as="py" hint-placeholder-count="4"><div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #EFECE5"><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 500; font-size: 15px">{{py.label}}</span><span class="muted" style="font-size: 12px">{{py.hint}}</span></span><sc-if value="{{py.locked}}" hint-placeholder-val="{{ false }}"><span class="muted" style="font-size: 11px; flex: none; max-width: 110px; text-align: right">{{t.payAlways}}</span></sc-if><sc-if value="{{py.canToggle}}" hint-placeholder-val="{{ true }}"><button type="button" role="switch" aria-checked="{{py.on}}" aria-label="{{py.label}}" onClick="{{py.toggle}}" class="sw"><span style="width: 46px; height: 26px; border-radius: 13px; position: relative; {{py.track}}"><span style="position: absolute; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; {{py.knob}}"></span></span></button></sc-if></div></sc-for>
+</div>
+<button type="button" style="min-height: 52px; border-radius: 12px; border: 0; background: {{accent}}; color: #fff; font-weight: 600; font-size: 16px" onClick="{{demo.saveChanges}}">{{t.saveChanges}}</button>
+</sc-if>
+
+</div>
+<div role="status" aria-live="polite" style="position: absolute; left: 50%; bottom: 92px; z-index: 60; width: 340px; box-sizing: border-box; background: #16161A; color: #fff; padding: 12px 18px; border-radius: 10px; font-size: 14px; line-height: 1.45; box-shadow: 0 8px 24px rgba(0,0,0,0.25); transition: opacity .2s, transform .2s; {{toastSt}}">{{toastText}}</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#C93C14","options":["#C93C14","#2F5BEA","#0F7B5F","#16161A"]},"startLang":{"editor":"enum","options":["ru","en"],"default":"ru"},"$preview":{"width":390,"height":844}}'>
+var L = {
+  ru: {
+    nav: ["Дашборд", "Пользователи", "Модули", "Тарифы", "AI и API", "Модерация", "Настройки"],
+    heads: ["Дашборд", "Пользователи", "Модули", "Тарифы и оплата", "AI и API", "Модерация", "Настройки"],
+    menu: "Открыть меню", close: "Закрыть", langSwitch: "Сменить язык на английский",
+    openSite: "Открыть сайт", userView: "Кабинет пользователя", demo: "ДЕМО-ДАННЫЕ",
+    kpis: [["Пользователи", "4 280", "+312 за неделю"], ["Подписки", "214", "5,0% конверсия"], ["Генерации", "3 960", "сегодня"], ["Выручка", "672 тыс. ₽", "81% лимита НПД"]],
+    genByModule: "Генерации по модулям", sysStatus: "Состояние сервисов",
+    modNames: ["Создание канала", "AI-контент", "Анализ каналов", "Фото и видео"],
+    provNames: ["Языковая модель", "Изображения", "Видео", "Озвучка", "YouTube Data API", "Запасная: YandexGPT", "Запасная: GigaChat", "Запасная озвучка: SpeechKit", "Запасная озвучка: SaluteSpeech"],
+    connected: "Подключено", notConfigured: "Не настроено",
+    filters: { all: "Все", active: "Активные", blocked: "Заблок.", admins: "Админы" }, searchUsers: "Поиск по имени или email",
+    roles: { user: "Пользователь", moderator: "Модератор", admin: "Администратор" }, plans: { start: "Старт", creator: "Автор", studio: "Студия" },
+    active: "Активен", blocked: "Заблокирован", block: "Заблокировать", unblock: "Разблокировать",
+    thRole: "Роль", thPlan: "Тариф", addCredits: "Начислить кредиты", apply: "Начислить", resetPass: "Сбросить пароль", deleteUser: "Удалить аккаунт",
+    modulesIntro: "Включение модулей, стоимость в кредитах и дневные лимиты.", costPerAction: "Кредитов за действие", dailyLimit: "Лимит в день", on: "Включён", off: "Выключен",
+    subscribers: "Подписчиков", planFields: [["Цена / мес", "2 490 ₽"], ["Кредитов", "1000"], ["Каналов", "3"], ["Водяной знак", "Да / Нет"]], save: "Сохранить", addPlan: "+ Новый тариф",
+    apiIntro: "Ключи хранятся зашифрованными, видны только последние символы.", apiKey: "API-ключ", test: "Проверить",
+    modIntro: "Контент, отмеченный автофильтром или жалобами.", user: "Пользователь", reason: "Причина",
+    qTypes: ["ИЗОБРАЖЕНИЕ", "ВИДЕОКЛИП", "СЦЕНАРИЙ", "ОБЛОЖКА"], qReasons: ["Автофильтр", "Жалоба пользователя", "Товарный знак", "Жалоба пользователя"],
+    approve: "Одобрить", remove: "Удалить", approved: "Одобрено", removed: "Удалено",
+    general: "Основное", siteName: "Название сайта", defLang: "Язык по умолчанию", byBrowser: "По языку браузера", freeCredits: "Бесплатные кредиты при регистрации", saveChanges: "Сохранить изменения",
+    switches: [["Открытая регистрация", "Новые пользователи могут создавать аккаунты"], ["Подтверждение email", "Вход после подтверждения почты"], ["Вход через Google", "Кнопка на странице регистрации"], ["2FA для админов", "Код при входе в панель"], ["Режим обслуживания", "Сайт закрыт для всех, кроме админов"]]
+  },
+  en: {
+    nav: ["Dashboard", "Users", "Modules", "Plans", "AI & API", "Moderation", "Settings"],
+    heads: ["Dashboard", "Users", "Modules", "Plans & billing", "AI & API", "Moderation", "Settings"],
+    menu: "Open menu", close: "Close", langSwitch: "Switch language to Russian",
+    openSite: "Open site", userView: "User dashboard", demo: "DEMO DATA",
+    kpis: [["Users", "4,280", "+312 this week"], ["Subscriptions", "214", "5.0% conversion"], ["Generations", "3,960", "today"], ["Revenue", "$8,406", "81% of NPD limit"]],
+    genByModule: "Generations by module", sysStatus: "Service status",
+    modNames: ["Channel Builder", "AI Content", "Channel Analyzer", "Photo & Video"],
+    provNames: ["Language model", "Images", "Video", "Voiceover", "YouTube Data API", "Backup: YandexGPT", "Backup: GigaChat", "Backup voice: SpeechKit", "Backup voice: SaluteSpeech"],
+    connected: "Connected", notConfigured: "Not configured",
+    filters: { all: "All", active: "Active", blocked: "Blocked", admins: "Admins" }, searchUsers: "Search by name or email",
+    roles: { user: "User", moderator: "Moderator", admin: "Admin" }, plans: { start: "Starter", creator: "Creator", studio: "Studio" },
+    active: "Active", blocked: "Blocked", block: "Block", unblock: "Unblock",
+    thRole: "Role", thPlan: "Plan", addCredits: "Add credits", apply: "Add", resetPass: "Reset password", deleteUser: "Delete account",
+    modulesIntro: "Turn modules on or off, set credit cost and daily limits.", costPerAction: "Credits per action", dailyLimit: "Daily limit", on: "On", off: "Off",
+    subscribers: "Subscribers", planFields: [["Price / mo", "$29"], ["Credits", "1000"], ["Channels", "3"], ["Watermark", "Yes / No"]], save: "Save", addPlan: "+ New plan",
+    apiIntro: "Keys are stored encrypted; only the last characters are shown.", apiKey: "API key", test: "Test",
+    modIntro: "Content flagged by the auto-filter or user reports.", user: "User", reason: "Reason",
+    qTypes: ["IMAGE", "VIDEO CLIP", "SCRIPT", "THUMBNAIL"], qReasons: ["Auto-filter", "User report", "Trademark", "User report"],
+    approve: "Approve", remove: "Remove", approved: "Approved", removed: "Removed",
+    general: "General", siteName: "Site name", defLang: "Default language", byBrowser: "Browser language", freeCredits: "Free credits on sign-up", saveChanges: "Save changes",
+    switches: [["Open registration", "New users can create accounts"], ["Email verification", "Login after the email is confirmed"], ["Google sign-in", "Button on the sign-up page"], ["2FA for admins", "Code on every admin login"], ["Maintenance mode", "Site closed to everyone except admins"]]
+  }
+};
+var FO = {
+  ru: {
+    foH: "Резервные модели", foP: "Если зарубежный провайдер не отвечает, задача автоматически продолжается на запасной модели — пользователь не видит ошибки.",
+    foSw: "Автоматическое переключение",
+    foRule: "Переключать после 3 ошибок подряд или 20 с без ответа. Каждые 2 мин проверять основную модель и возвращаться к ней автоматически.",
+    foCols: ["Задача", "Основная", "Запасная 1", "Запасная 2", "Сейчас работает"],
+    foRows: [["Сценарии и концепции", "Claude Opus 5.5", "YandexGPT 5.1 Pro", "GigaChat 2 Max", "a"], ["Ассистент: платные модели", "Выбранная пользователем", "YandexGPT 5.1 Pro", "GigaChat 2 Max", "ao"], ["Ассистент: бесплатные модели", "Haiku / Luna / DeepSeek", "YandexGPT Lite", "GigaChat 2 Lite", "ao"], ["Озвучка", "ElevenLabs", "Yandex SpeechKit", "SaluteSpeech", "e"], ["Изображения", "Выбранная (Nano Banana 2.1)", "YandexART 2.5", "Kandinsky", "go"], ["Видео", "Выбранная (Kling O3)", "Wan 2.6", "Kandinsky 5.0 Video Pro (свой сервер)", "gko"]],
+    foOk: "Основная", foStop: "Остановлено — у пользователей ошибка",
+    foTestLbl: "Проверка: смоделировать сбой провайдера",
+    foTests: [["a", "Anthropic недоступен", "Вернуть Anthropic"], ["o", "OpenAI недоступен", "Вернуть OpenAI"], ["e", "ElevenLabs недоступен", "Вернуть ElevenLabs"], ["g", "Google недоступен", "Вернуть Google"], ["k", "Kling недоступен", "Вернуть Kling"]],
+    foLogH: "Журнал переключений",
+    foLog: { a: ["14:32", "Anthropic: 3 ошибки подряд → сценарии и ассистент переведены на YandexGPT 5.1 Pro"], o: ["14:35", "OpenAI: нет ответа 20 с → ассистент переведён на YandexGPT 5.1 Pro и YandexGPT Lite"], e: ["14:41", "ElevenLabs: ошибка 503 → озвучка переведена на Yandex SpeechKit"], g: ["14:44", "Google: нет ответа 20 с → кадры Nano Banana собираются на YandexART 2.5, клипы Veo — на Wan 2.6"], k: ["14:47", "Kling: 3 ошибки подряд → клипы переведены на Wan 2.6"] },
+    foLogOff: " — автопереключение выключено, задачи остановлены",
+    foNote: "Кредиты списываются по цене основной модели — пользователь не доплачивает. Пользователь получает уведомление «Собрано на запасной модели». Российские модели обрабатывают данные в России.",
+    platH: "Площадки публикации", platP: "Какие площадки доступны пользователям в Shorts, нарезке и публикации.", platAlways: "Всегда включено",
+    platList: [["yt", "YouTube и YouTube Shorts", "Основная площадка сервиса"], ["vk", "VK Видео и VK Клипы", "Публикация роликов и клипов, аналитика, монетизация VK Видео"], ["rt", "RUTUBE", "Публикация видео и Shorts, аналитика, монетизация"], ["dz", "Дзен", "Публикация видео и роликов, аналитика"], ["tt", "TikTok", "Публикация через официальный API"], ["ig", "Instagram Reels", "Meta признана в России экстремистской организацией. Рекомендуем выключить или оставить только в английской версии."], ["tg", "Telegram", "Публикация в канал через бота"]],
+    igScopeLbl: "Показывать Instagram", igScopes: { all: "Всем", en: "Только в английской версии" },
+    igOffDone: "Instagram скрыт у всех пользователей: в Shorts, нарезке и публикации. Подключённые аккаунты отключены, запланированные публикации отменены, запись добавлена в журнал действий.",
+    igEnDone: "В русской версии Instagram скрыт, в английской — доступен.",
+    ruFnH: "Функции для России", eridSwL: "Помощник маркировки рекламы (ERID)", eridSwH: "Авторы получают токен erid через ОРД и готовую пометку «Реклама» для описания и кадра. Выключите, если маркировка ведётся вне сервиса.",
+    eridOffDone: "Помощник маркировки скрыт у всех пользователей: в центре монетизации и после сборки видео. Запись добавлена в журнал действий.",
+    syncNote: "Изменения сразу видны в кабинете пользователя — откройте доску кабинета рядом, чтобы проверить.",
+    payH: "Способы оплаты", payP: "Какие способы оплаты видят пользователи при покупке тарифа и пакетов. На каждую оплату формируется чек «Мой налог».",
+    payList: [["card", "Банковская карта", "Visa, Mastercard, МИР; нужна для автопродления"], ["sbp", "СБП", "Оплата по QR-коду или через приложение банка"], ["sber", "SberPay", "Подтверждение в СберБанк Онлайн"], ["tpay", "T-Pay", "Подтверждение в приложении Т-Банка"]], payAlways: "Нельзя выключить: нужна для автопродления"
+  },
+  en: {
+    foH: "Backup models", foP: "If a foreign provider stops responding, the task automatically continues on a backup model — users don’t see an error.",
+    foSw: "Automatic failover",
+    foRule: "Switch after 3 errors in a row or 20 s without a response. Check the primary model every 2 min and switch back automatically.",
+    foCols: ["Task", "Primary", "Backup 1", "Backup 2", "Running now"],
+    foRows: [["Scripts and concepts", "Claude Opus 5.5", "YandexGPT 5.1 Pro", "GigaChat 2 Max", "a"], ["Assistant: paid models", "User’s choice", "YandexGPT 5.1 Pro", "GigaChat 2 Max", "ao"], ["Assistant: free models", "Haiku / Luna / DeepSeek", "YandexGPT Lite", "GigaChat 2 Lite", "ao"], ["Voiceover", "ElevenLabs", "Yandex SpeechKit", "SaluteSpeech", "e"], ["Images", "Selected (Nano Banana 2.1)", "YandexART 2.5", "Kandinsky", "go"], ["Video", "Selected (Kling O3)", "Wan 2.6", "Kandinsky 5.0 Video Pro (own server)", "gko"]],
+    foOk: "Primary", foStop: "Stopped — users see an error",
+    foTestLbl: "Test: simulate a provider outage",
+    foTests: [["a", "Anthropic down", "Restore Anthropic"], ["o", "OpenAI down", "Restore OpenAI"], ["e", "ElevenLabs down", "Restore ElevenLabs"], ["g", "Google down", "Restore Google"], ["k", "Kling down", "Restore Kling"]],
+    foLogH: "Failover log",
+    foLog: { a: ["14:32", "Anthropic: 3 errors in a row → scripts and assistant moved to YandexGPT 5.1 Pro"], o: ["14:35", "OpenAI: no response for 20 s → assistant moved to YandexGPT 5.1 Pro and YandexGPT Lite"], e: ["14:41", "ElevenLabs: error 503 → voiceover moved to Yandex SpeechKit"], g: ["14:44", "Google: no response for 20 s → Nano Banana frames built on YandexART 2.5, Veo clips on Wan 2.6"], k: ["14:47", "Kling: 3 errors in a row → clips moved to Wan 2.6"] },
+    foLogOff: " — failover is off, tasks stopped",
+    foNote: "Credits are charged at the primary model’s price — users don’t pay extra. Users get a “Built on a backup model” notification. Russian models process data in Russia.",
+    platH: "Publishing platforms", platP: "Which platforms users can use in Shorts, the clipper and publishing.", platAlways: "Always on",
+    platList: [["yt", "YouTube and YouTube Shorts", "The service’s main platform"], ["vk", "VK Video and VK Clips", "Publishing videos and clips, analytics, VK Video monetization"], ["rt", "RUTUBE", "Publishing videos and Shorts, analytics, monetization"], ["dz", "Dzen", "Publishing videos and short videos, analytics"], ["tt", "TikTok", "Publishing via the official API"], ["ig", "Instagram Reels", "Meta is designated an extremist organization in Russia. We recommend turning it off or keeping it in the English version only."], ["tg", "Telegram", "Posting to a channel via a bot"]],
+    igScopeLbl: "Show Instagram", igScopes: { all: "To everyone", en: "English version only" },
+    igOffDone: "Instagram is hidden for all users: in Shorts, the clipper and publishing. Connected accounts are disconnected, scheduled posts cancelled, and an audit-log entry added.",
+    igEnDone: "Instagram is hidden in the Russian version and available in the English one.",
+    ruFnH: "Features for Russia", eridSwL: "Ad labeling assistant (ERID)", eridSwH: "Creators get an erid token via an ORD and a ready “Advertisement” label for the description and the frame. Turn it off if labeling is handled outside the service.",
+    eridOffDone: "The labeling assistant is hidden for all users: in the monetization center and after video assembly. An audit-log entry was added.",
+    syncNote: "Changes show up in the user dashboard right away — open the dashboard board next to this one to check.",
+    payH: "Payment methods", payP: "Which payment methods users see when buying a plan or credit packs. Every payment gets a “Moy Nalog” receipt.",
+    payList: [["card", "Bank card", "Visa, Mastercard, MIR; required for auto-renewal"], ["sbp", "SBP (Faster Payments)", "Pay by QR code or in the bank app"], ["sber", "SberPay", "Confirm in SberBank Online"], ["tpay", "T-Pay", "Confirm in the T-Bank app"]], payAlways: "Can’t be turned off: required for auto-renewal"
+  }
+};
+function foBuild(s, self, t) {
+  var swS = function (v) { return { track: v ? 'background:#0F7B5F' : 'background:#B9B6AE', knob: v ? 'left:23px' : 'left:3px' }; };
+  var okP = 'background:#DDF0E8;color:#0B5A45', warnP = 'background:#FBEBC9;color:#7A4B00', badP = 'background:#F7DDD5;color:#8A2A0C';
+  var down = s.foDown || {};
+  var log = ['a', 'o', 'e', 'g', 'k'].filter(function (k) { return down[k]; }).map(function (k) { return { time: t.foLog[k][0], text: t.foLog[k][1] + (s.foOn ? '' : t.foLogOff) }; });
+  var plOn = s.platOn || {};
+  return {
+    foOn: !!s.foOn, foTrack: swS(s.foOn).track, foKnob: swS(s.foOn).knob, toggleFo: function () { self.setState({ foOn: !s.foOn }); },
+    foRows: t.foRows.map(function (r) {
+      var hit = r[4].split('').some(function (c) { return down[c]; });
+      return { task: r[0], main: r[1], b1: r[2], b2: r[3], status: !hit ? t.foOk : s.foOn ? '→ ' + r[2] : t.foStop, pillSt: !hit ? okP : s.foOn ? warnP : badP };
+    }),
+    foTests: t.foTests.map(function (x) { var d = !!down[x[0]]; return { label: d ? x[2] : x[1], st: d ? 'background:#16161A;color:#fff;border:1px solid #16161A' : 'background:#fff;color:#16161A;border:1px solid #D9D6CE', pick: function () { var o = Object.assign({}, down); o[x[0]] = !d; self.setState({ foDown: o }); } }; }),
+    foLog: log, foHasLog: log.length > 0,
+    platSw: t.platList.map(function (p) {
+      var k = p[0], v = k === 'yt' ? true : plOn[k] !== false, st = swS(v);
+      return { label: p[1], hint: p[2], on: v, locked: k === 'yt', canToggle: k !== 'yt', track: st.track, knob: st.knob, isWarn: k === 'ig', hintSt: k === 'ig' ? 'color:#8A2A0C' : 'color:#5E5B54',
+        toggle: function () { var o = Object.assign({}, plOn); o[k] = !v; self.setState({ platOn: o }); } };
+    }),
+    igOnNow: plOn.ig !== false,
+    igScopes: Object.keys(t.igScopes).map(function (k) { var sel = (s.igScope || 'all') === k; return { label: t.igScopes[k], st: sel ? 'background:#16161A;color:#fff;border:1px solid #16161A' : 'background:#fff;color:#16161A;border:1px solid #D9D6CE', pick: function () { self.setState({ igScope: k }); } }; }),
+    igOffShow: plOn.ig === false, igEnShow: plOn.ig !== false && s.igScope === 'en',
+    eridSwOn: s.eridOn !== false, eridTrack: swS(s.eridOn !== false).track, eridKnob: swS(s.eridOn !== false).knob, toggleErid: function () { self.setState({ eridOn: s.eridOn === false }); }, eridOffShow: s.eridOn === false,
+    paySw: t.payList.map(function (p) { var po = s.payOn || {}; var v = p[0] === 'card' ? true : po[p[0]] !== false, st = swS(v); return { label: p[1], hint: p[2], on: v, locked: p[0] === 'card', canToggle: p[0] !== 'card', track: st.track, knob: st.knob, toggle: function () { var o = Object.assign({}, po); o[p[0]] = !v; self.setState({ payOn: o }); } }; })
+  };
+}
+var AXP = {
+  ru: { axProvH: "Чаты по провайдерам", axProvP: "Выключите провайдера — все его модели пропадут из ассистента у всех пользователей: в выборе модели, режиме «Авто» и сравнении. Начатые чаты продолжатся на YandexGPT 5.1 Pro.",
+    axProvList: [["a", "Чаты Claude", "Anthropic · Opus 5.5, Haiku 5.5"], ["o", "Чаты ChatGPT", "OpenAI · GPT-6 Astra, GPT-6.1 Sol, GPT-6 Luna"], ["y", "YandexGPT", "Яндекс · 5.1 Pro, Lite"], ["g", "GigaChat", "Сбер · 2 Max, 2 Lite"], ["d", "DeepSeek", "DeepSeek V4.1 Flash"]],
+    axProvOn: "Включены", axProvOffL: "Выключены", axProvOffRow: "выключен провайдер",
+    axProvDone: "Изменение применено сразу у всех пользователей. Запись добавлена в журнал действий.",
+    axProvAllOff: "Все провайдеры выключены — ассистент недоступен пользователям." },
+  en: { axProvH: "Chats by provider", axProvP: "Turn a provider off and all its models disappear from the assistant for every user: in the model picker, Auto mode and comparison. Ongoing chats continue on YandexGPT 5.1 Pro.",
+    axProvList: [["a", "Claude chats", "Anthropic · Opus 5.5, Haiku 5.5"], ["o", "ChatGPT chats", "OpenAI · GPT-6 Astra, GPT-6.1 Sol, GPT-6 Luna"], ["y", "YandexGPT", "Yandex · 5.1 Pro, Lite"], ["g", "GigaChat", "Sber · 2 Max, 2 Lite"], ["d", "DeepSeek", "DeepSeek V4.1 Flash"]],
+    axProvOn: "On", axProvOffL: "Off", axProvOffRow: "provider turned off",
+    axProvDone: "The change applies immediately for all users. An audit-log entry was added.",
+    axProvAllOff: "All providers are off — the assistant is unavailable to users." }
+};
+var AXA_PROV = ['a', 'o', 'o', 'o', 'a', 'd', 'y', 'y', 'g', 'g'];
+function axProvBuild(s, self, t) {
+  var off = s.axProv || {};
+  var anyOff = Object.keys(off).some(function (k) { return off[k]; });
+  var allOff = t.axProvList.every(function (p) { return off[p[0]]; });
+  return {
+    axProvTiles: t.axProvList.map(function (p) {
+      var on = !off[p[0]];
+      return { label: p[1], sub: p[2], on: on, state: on ? t.axProvOn : t.axProvOffL,
+        tileSt: on ? 'border:1px solid #E2DFD7;background:#fff' : 'border:1px solid #F0C9BC;background:#FDF4F1',
+        stateSt: on ? 'color:#0B5A45' : 'color:#8A2A0C',
+        track: on ? 'background:#0F7B5F' : 'background:#B9B6AE', knob: on ? 'left:23px' : 'left:3px',
+        toggle: function () { var o = Object.assign({}, off); o[p[0]] = on; self.setState({ axProv: o }); } };
+    }),
+    axProvDoneShow: anyOff && !allOff, axProvAllOffShow: allOff
+  };
+}
+var MEDIA = {
+  img: [
+    { id: 'nb21', name: 'Nano Banana 2.1', prov: 'Google', cr: 3, usd: 0.034, svc: 'google' },
+    { id: 'nbpro', name: 'Nano Banana Pro', prov: 'Google', cr: 12, usd: 0.134, svc: 'google' },
+    { id: 'gpti2', name: 'GPT Image 2', prov: 'OpenAI', cr: 5, usd: 0.053, svc: 'openai' },
+    { id: 'gpti25', name: 'GPT Image 2.5', prov: 'OpenAI', cr: 8, usd: 0.08, est: true, svc: 'openai' },
+    { id: 'flux3', name: 'FLUX 3', prov: 'Black Forest Labs', cr: 4, usd: 0.048, svc: 'bfl' },
+    { id: 'fluxk', name: 'FLUX.2 [klein]', prov: 'Black Forest Labs', cr: 2, usd: 0.014, svc: 'bfl', tag: 'open' },
+    { id: 'sd5', name: 'Seedream 5.0 Flash', prov: 'ByteDance', cr: 2, usd: 0.018, svc: 'byteplus' },
+    { id: 'muse', name: 'Muse Image', prov: 'Meta · fal.ai', cr: 1, usd: 0.01, svc: 'fal' },
+    { id: 'rcft', name: 'Recraft V4.1 Flash', prov: 'Recraft', cr: 1, usd: 0.007, svc: 'recraft' },
+    { id: 'mmx', name: 'MiniMax image-01', prov: 'MiniMax', cr: 1, usd: 0.0035, svc: 'minimax' },
+    { id: 'glm', name: 'GLM-Image', prov: 'Zhipu · Z.ai', cr: 2, usd: 0.015, svc: 'zai', tag: 'open' },
+    { id: 'qwen', name: 'Qwen-Image 3.0', prov: 'Alibaba', cr: 3, usd: 0.03, svc: 'alibaba' },
+    { id: 'yart', name: 'YandexART 2.5', prov: 'Яндекс', cr: 2, usd: 0.018, svc: 'yandex', tag: 'ru' },
+    { id: 'kand', name: 'Kandinsky', prov: 'Сбер · Fusion Brain', cr: 2, usd: 0, est: true, svc: 'fusion', tag: 'ru' }
+  ],
+  vid: [
+    { id: 'veo', name: 'Veo 3.1', prov: 'Google', cr: 58, usd: 0.09, svc: 'google' },
+    { id: 'klo3', name: 'Kling O3', prov: 'Kuaishou', cr: 55, usd: 0.085, svc: 'kling' },
+    { id: 'kl3', name: 'Kling 3.0', prov: 'Kuaishou', cr: 98, usd: 0.153, svc: 'kling' },
+    { id: 'sdf', name: 'Seedance 2.0 Fast', prov: 'ByteDance', cr: 58, usd: 0.09, svc: 'byteplus' },
+    { id: 'sdp', name: 'Seedance 2.0 Pro', prov: 'ByteDance', cr: 158, usd: 0.247, svc: 'byteplus' },
+    { id: 'sora', name: 'Sora 2', prov: 'OpenAI', cr: 64, usd: 0.10, svc: 'openai' },
+    { id: 'hail', name: 'Hailuo 2.3', prov: 'MiniMax', cr: 64, usd: 0.10, svc: 'minimax' },
+    { id: 'wan', name: 'Wan 2.6', prov: 'Alibaba', cr: 45, usd: 0.07, svc: 'alibaba' },
+    { id: 'vidu', name: 'Vidu Q3', prov: 'Shengshu', cr: 45, usd: 0.07, svc: 'vidu' },
+    { id: 'luma', name: 'Luma Ray 3', prov: 'Luma AI', cr: 64, usd: 0.10, est: true, svc: 'luma' },
+    { id: 'pix', name: 'PixVerse V4.5', prov: 'PixVerse', cr: 58, usd: 0.09, est: true, svc: 'pixverse' },
+    { id: 'k5p', name: 'Kandinsky 5.0 Video Pro', prov: 'Сбер · свой сервер', cr: 26, usd: 0.04, est: true, svc: 'self', tag: 'ru' },
+    { id: 'k5l', name: 'Kandinsky 5.0 Video Lite', prov: 'Сбер · свой сервер', cr: 13, usd: 0.02, est: true, svc: 'self', tag: 'ru' }
+  ]
+};
+var MEDIA_T = {
+  ru: { imgModelLbl: "Модель изображений", vidModelLbl: "Модель видео", crImg: " кр. за кадр", crClip: " кр. за клип 8 с", tagNames: { ru: "Россия", open: "открытая" },
+    medNote: "Модели, отключённые администратором, здесь не показываются. Стоимость пересчитывается под выбранную модель.", vidNote: "Модель видео используется для «AI-видео с нуля» и «Оживить кадр»." },
+  en: { imgModelLbl: "Image model", vidModelLbl: "Video model", crImg: " cr. per frame", crClip: " cr. per 8 s clip", tagNames: { ru: "Russia", open: "open" },
+    medNote: "Models turned off by the administrator aren’t shown here. The cost updates for the selected model.", vidNote: "The video model is used for “AI video from scratch” and “Bring frame to life”." }
+};
+function medPick(list, id) { return list.filter(function (m) { return m.id === id; })[0] || list[0]; }
+function medBuild(s, self, mt, on, off) {
+  var imgM = medPick(MEDIA.img, s.imgModel), vidM = medPick(MEDIA.vid, s.vidModel);
+  var row = function (m, cur, key, unit) {
+    var sel = m.id === cur;
+    return { name: m.name, sub: m.prov + (m.tag ? ' · ' + mt.tagNames[m.tag] : ''), cost: m.cr + unit, label: m.name + ' · ' + m.cr + ' ' + unit.trim().split(' ')[0], on: sel,
+      st: sel ? on : off, pick: function () { var o = {}; o[key] = m.id; self.setState(o); } };
+  };
+  return {
+    imgM: imgM, vidM: vidM,
+    imgModels: MEDIA.img.map(function (m) { return row(m, imgM.id, 'imgModel', mt.crImg); }),
+    vidModels: MEDIA.vid.map(function (m) { return row(m, vidM.id, 'vidModel', mt.crClip); }),
+    imgSel: imgM.name + ' · ' + imgM.cr + mt.crImg, vidSel: vidM.name + ' · ' + vidM.cr + mt.crClip,
+    mc: { kb: imgM.cr + 1, i2v: imgM.cr + Math.round(vidM.cr * 5 / 8), gen: vidM.cr, stock: 0 }
+  };
+}
+var KEYS = [
+  ['anthropic', 'Anthropic', 'Claude Opus 5.5, Claude Haiku 5.5', 'https://console.anthropic.com/settings/keys', 1],
+  ['openai', 'OpenAI', 'GPT-6 Astra, GPT-6.1 Sol, GPT-6 Luna, GPT Image 2 / 2.5, Sora 2', 'https://platform.openai.com/api-keys', 1],
+  ['google', 'Google Gemini API', 'Nano Banana 2.1, Nano Banana Pro, Veo 3.1', 'https://aistudio.google.com/apikey', 1],
+  ['deepseek', 'DeepSeek', 'DeepSeek V4.1 Flash', 'https://platform.deepseek.com/api_keys', 1],
+  ['yandex', 'Yandex AI Studio', 'YandexGPT 5.1 Pro / Lite, YandexART 2.5, SpeechKit', 'https://aistudio.yandex.ru', 1],
+  ['gigachat', 'Сбер · GigaChat API', 'GigaChat 2 Max / Lite', 'https://developers.sber.ru/studio/', 1],
+  ['salute', 'Сбер · SaluteSpeech', 'Запасная озвучка', 'https://developers.sber.ru/studio/', 0],
+  ['eleven', 'ElevenLabs', 'Озвучка', 'https://elevenlabs.io/app/settings/api-keys', 1],
+  ['bfl', 'Black Forest Labs', 'FLUX 3, FLUX.2 [klein]', 'https://docs.bfl.ai/quick_start/create_account', 1],
+  ['byteplus', 'BytePlus ModelArk (ByteDance)', 'Seedream 5.0 Flash, Seedance 2.0 Fast / Pro', 'https://docs.byteplus.com/docs/ModelArk/manage-api-keys', 1],
+  ['fal', 'fal.ai', 'Muse Image (Meta)', 'https://fal.ai/dashboard/keys', 1],
+  ['recraft', 'Recraft', 'Recraft V4.1 Flash', 'https://www.recraft.ai/docs/api-reference/getting-started', 1],
+  ['minimax', 'MiniMax', 'MiniMax image-01, Hailuo 2.3', 'https://platform.minimax.io/docs/guides', 1],
+  ['zai', 'Z.ai (Zhipu)', 'GLM-Image', 'https://z.ai/manage-apikey/apikey-list', 1],
+  ['alibaba', 'Alibaba Cloud Model Studio', 'Qwen-Image 3.0, Wan 2.6', 'https://www.alibabacloud.com/help/en/model-studio/get-api-key', 1],
+  ['kling', 'Kling AI', 'Kling O3, Kling 3.0', 'https://kling.ai/document-api/guides/get-started/quick-start', 1],
+  ['vidu', 'Vidu', 'Vidu Q3', 'https://platform.vidu.com/api-keys', 1],
+  ['luma', 'Luma AI', 'Luma Ray 3', 'https://lumalabs.ai/api', 1],
+  ['pixverse', 'PixVerse', 'PixVerse V4.5', 'https://docs.platform.pixverse.ai/how-to-get-api-key-882968m0', 1],
+  ['fusion', 'Сбер · Fusion Brain', 'Kandinsky (изображения)', 'https://fusionbrain.ai', 1],
+  ['youtube', 'YouTube Data API', 'Публикация и аналитика каналов', 'https://console.cloud.google.com/apis/library/youtube.googleapis.com', 0],
+  ['self', 'Свой сервер (GPU)', 'Kandinsky 5.0 Video Pro / Lite — открытые веса', 'https://huggingface.co/kandinskylab', 1]
+];
+var KEYS_T = {
+  ru: { keysH: "Ключи API", keysP: "Ключи хранятся в зашифрованном виде, показываются только последние символы. Под каждым сервисом — ссылка, где получить ключ.", keyFor: "Для: ", keyLbl: "API-ключ", srvLbl: "Адрес сервера", getKey: "Получить API-ключ", getWeights: "Скачать веса модели (Hugging Face)", usesSalute: "Запасная озвучка", usesEleven: "Озвучка", usesFusion: "Kandinsky (изображения)", usesYt: "Публикация и аналитика каналов", usesSelf: "Kandinsky 5.0 Video Pro / Lite — открытые веса",
+    imgAdmH: "Генерация изображений: модели", vidAdmH: "Генерация видео: модели", medAdmP: "Включите модели, из которых пользователи выбирают в раскадровке. Выключенная модель пропадает у всех пользователей; начатые генерации досчитываются.",
+    medCols: ["Модель", "Провайдер", "Цена API", "Цена для пользователя", "Себестоимость", "Маржа", "Включена"], medOnOf: " включено из ", perImg: " за кадр", perSec: " за секунду", perClip: " за клип 8 с", estMark: " (оценка)", priceNa: "тариф не опубликован",
+    medNote: "Себестоимость клипа — за 8 секунд. Маржа считается от выручки с кредита на тарифе «Автор» ($0.029). «Оценка» — цена со сторонних обзоров или расчёт по своему серверу; проверьте перед запуском." },
+  en: { keysH: "API keys", keysP: "Keys are stored encrypted and only the last characters are shown. Each service has a link to where you get its key.", keyFor: "For: ", keyLbl: "API key", srvLbl: "Server URL", getKey: "Get an API key", getWeights: "Download model weights (Hugging Face)", usesSalute: "Backup voiceover", usesEleven: "Voiceover", usesFusion: "Kandinsky (images)", usesYt: "Channel publishing and analytics", usesSelf: "Kandinsky 5.0 Video Pro / Lite — open weights",
+    imgAdmH: "Image generation: models", vidAdmH: "Video generation: models", medAdmP: "Turn on the models users can pick in the storyboard. A model turned off disappears for all users; generations already started finish.",
+    medCols: ["Model", "Provider", "API price", "User price", "Cost", "Margin", "Enabled"], medOnOf: " enabled of ", perImg: " per image", perSec: " per second", perClip: " per 8 s clip", estMark: " (estimate)", priceNa: "price not published",
+    medNote: "Clip cost is for 8 seconds. Margin is against revenue per credit on the Creator plan ($0.029). “Estimate” means a third-party review price or our own-server calculation; verify before launch." }
+};
+var CREDIT_REV = 0.029;
+function keysBuild(s, self, t, lang) {
+  var okP = 'background:#DDF0E8;color:#0B5A45', warnP = 'background:#FBEBC9;color:#7A4B00';
+  var usesMap = { salute: t.usesSalute, eleven: t.usesEleven, fusion: t.usesFusion, youtube: t.usesYt, self: t.usesSelf };
+  var swS = function (v) { return { track: v ? 'background:#0F7B5F' : 'background:#B9B6AE', knob: v ? 'left:23px' : 'left:3px' }; };
+  var en = s.medEnabled || {};
+  var fmt = function (v) { return v < 0.01 ? v.toFixed(4) : v < 0.1 ? v.toFixed(3) : v.toFixed(2); };
+  var mrow = function (m, isVid) {
+    var v = en[m.id] !== false, st = swS(v), cost = isVid ? m.usd * 8 : m.usd, rev = m.cr * CREDIT_REV;
+    var margin = m.usd ? Math.round((1 - cost / rev) * 100) + '%' : '—';
+    return { name: m.name, prov: m.prov, price: m.usd ? '$' + fmt(m.usd) + (isVid ? t.perSec : t.perImg) + (m.est ? t.estMark : '') : t.priceNa,
+      cr: m.cr + (lang === 'en' ? ' cr.' : ' кр.') + (isVid ? t.perClip : t.perImg), cost: m.usd ? '$' + fmt(cost) : '—', margin: margin,
+      on: v, track: st.track, knob: st.knob, rowSt: v ? '' : 'opacity:0.55',
+      toggle: function () { var o = Object.assign({}, en); o[m.id] = !v; self.setState({ medEnabled: o }); } };
+  };
+  var imgOn = MEDIA.img.filter(function (m) { return en[m.id] !== false; }).length, vidOn = MEDIA.vid.filter(function (m) { return en[m.id] !== false; }).length;
+  return {
+    keySvcs: KEYS.map(function (k, i) {
+      var self_ = k[0] === 'self';
+      return { name: k[1], uses: usesMap[k[0]] || k[2], link: k[3], linkLabel: self_ ? t.getWeights : t.getKey, fid: 'apikey_' + k[0], fieldLbl: self_ ? t.srvLbl : t.keyLbl,
+        ftype: self_ ? 'url' : 'password', ph: k[4] ? (self_ ? 'https://gpu.example.ru/v1' : '••••••••••••' + ['3f9a', 'b71c', '09de', 'a4e2'][i % 4]) : '—',
+        status: k[4] ? t.connected : t.notConfigured, pillSt: k[4] ? okP : warnP };
+    }),
+    imgAdm: MEDIA.img.map(function (m) { return mrow(m, false); }), vidAdm: MEDIA.vid.map(function (m) { return mrow(m, true); }),
+    imgOnTxt: imgOn + t.medOnOf + MEDIA.img.length, vidOnTxt: vidOn + t.medOnOf + MEDIA.vid.length
+  };
+}
+var ADM_KEY = 'aiytstudio.admin.v1';
+var ADM_KEYS = ['platOn', 'igScope', 'axProv', 'axEnabled', 'medEnabled', 'eridOn', 'payOn', 'sttRu', 'subPlan'];
+function admRead() { try { var v = window.localStorage.getItem(ADM_KEY); var o = v ? JSON.parse(v) : {}; return o && typeof o === 'object' ? o : {}; } catch (e) { return {}; } }
+function admWrite(o) { try { window.localStorage.setItem(ADM_KEY, JSON.stringify(o)); } catch (e) {} }
+function admPick(s) { var o = {}; ADM_KEYS.forEach(function (k) { if (s[k] !== undefined) o[k] = s[k]; }); return o; }
+function admWatch(comp, onChange) {
+  var last = JSON.stringify(admRead());
+  var chk = function () { var v = JSON.stringify(admRead()); if (v !== last) { last = v; onChange(); } };
+  var h = function (e) { if (!e || e.key === ADM_KEY || e.key === null) chk(); };
+  try { window.addEventListener('storage', h); } catch (e) {}
+  var id = setInterval(chk, 1000);
+  comp._admStop = function () { clearInterval(id); try { window.removeEventListener('storage', h); } catch (e) {} };
+}
+function admEff(props, lang) {
+  var a = admRead(), pl = a.platOn || {}, prov = a.axProv || {}, axEn = a.axEnabled || {}, med = a.medEnabled || {}, pay = a.payOn || {};
+  var AXIDS = ['opus', 'astra', 'sol', 'luna', 'haiku', 'deepseek', 'ygpt', 'ylite', 'gmax', 'glite'];
+  var PROVK = { opus: 'a', haiku: 'a', astra: 'o', sol: 'o', luna: 'o', deepseek: 'd', ygpt: 'y', ylite: 'y', gmax: 'g', glite: 'g' };
+  return {
+    platOk: function (k) { if (k === 'yt') return true; if (pl[k] === false) return false; if (k === 'ig') { if (props.instagram === 'off') return false; if (a.igScope === 'en' && lang === 'ru') return false; } return true; },
+    axOk: function (id) { var pk = PROVK[id]; if (pk === 'a' && props.claudeChats === 'off') return false; if (pk === 'o' && props.gptChats === 'off') return false; if (pk && prov[pk]) return false; var i = AXIDS.indexOf(id); if (i >= 0 && axEn[i] === false) return false; return true; },
+    medOk: function (id) { return med[id] !== false; },
+    payOk: function (k) { return pay[k] !== false; },
+    eridOn: a.eridOn !== false
+  };
+}
+var USERS = [
+  { id: 1, name: "Anna K.", email: "anna@example.com", role: "user", plan: "creator", status: "active" },
+  { id: 2, name: "Mark T.", email: "mark@example.com", role: "user", plan: "start", status: "active" },
+  { id: 3, name: "Olga S.", email: "olga@example.com", role: "moderator", plan: "studio", status: "active" },
+  { id: 4, name: "Ivan P.", email: "ivan@example.com", role: "user", plan: "start", status: "blocked" },
+  { id: 5, name: "Lena M.", email: "lena@example.com", role: "user", plan: "creator", status: "active" },
+  { id: 6, name: "Admin", email: "admin@example.com", role: "admin", plan: "studio", status: "active" }
+];
+
+var EN_FIX = [[/Сбер · свой сервер/g, 'Sber · own server'], [/Свой сервер \(GPU\)/g, 'Own server (GPU)'], [/Яндекс/g, 'Yandex'], [/Сбер/g, 'Sber']];
+function enFix(v) {
+  if (typeof v === 'string') { var r = v; EN_FIX.forEach(function (p) { r = r.replace(p[0], p[1]); }); return r; }
+  if (Array.isArray(v)) return v.map(enFix);
+  if (v && typeof v === 'object') { var o = {}; Object.keys(v).forEach(function (k) { o[k] = typeof v[k] === 'function' ? v[k] : enFix(v[k]); }); return o; }
+  return v;
+}
+function csvHref(rows) {
+  var esc = function (x) { x = String(x == null ? '' : x); return /[",;\n]/.test(x) ? '"' + x.replace(/"/g, '""') + '"' : x; };
+  return 'data:text/csv;charset=utf-8,' + encodeURIComponent('﻿' + rows.map(function (r) { return r.map(esc).join(';'); }).join('\r\n'));
+}
+function demoBuild(self, s, msgs) {
+  var show = function (m) { if (self._tt) clearTimeout(self._tt); self.setState({ toast: m }); self._tt = setTimeout(function () { self.setState({ toast: '' }); }, 4000); };
+  var o = {};
+  Object.keys(msgs).forEach(function (k) {
+    o[k] = function (e) {
+      var m = msgs[k];
+      if (e && e.target && e.target.files) { var n = e.target.files.length; if (!n) return; m = m.replace('{n}', n).replace('{name}', e.target.files[0].name); }
+      if (k.indexOf('copy') === 0 && msgs['_' + k]) { try { navigator.clipboard.writeText(msgs['_' + k]); } catch (er) {} }
+      show(m);
+    };
+  });
+  return { demo: o, toastText: s.toast || '', toastSt: s.toast ? 'opacity:1;transform:translate(-50%,0)' : 'opacity:0;transform:translate(-50%,10px);pointer-events:none' };
+}
+var KEYS_ESC = ['sheet', 'menu'];
+var STX = { ru: { l: "Распознавание русских записей только в России", h: "Записи на русском распознаются только в Yandex SpeechKit и SaluteSpeech, без передачи за рубеж. Выключать — только после уведомления Роскомнадзора о трансграничной передаче.", off: "Выключено: русские записи могут распознаваться в OpenAI whisper-1 за рубежом. Проверьте, что уведомление Роскомнадзора подано и в согласии пользователей это указано." },
+  en: { l: "Transcribe Russian recordings only in Russia", h: "Russian recordings are transcribed only by Yandex SpeechKit and SaluteSpeech, with no transfer abroad. Turn off only after notifying Roskomnadzor of cross-border transfer.", off: "Off: Russian recordings may be transcribed by OpenAI whisper-1 abroad. Make sure the Roskomnadzor notice is filed and user consent mentions it." } };
+var SUBPLAN_DEF = { hl: { start: true, creator: true, studio: true }, acc: { start: false, creator: true, studio: true }, styles: { start: 1, creator: 10, studio: 0 }, srt: { start: true, creator: true, studio: true } };
+var SPX = { ru: { h: "Субтитры по тарифам", p: "Какие функции субтитров доступны на каждом тарифе. Изменения сразу действуют в кабинете пользователей.", rows: [["hl", "Выделение произносимого слова"], ["acc", "Акценты на ключевых словах"], ["srt", "Файл субтитров .srt / .vtt"]], styles: "Сохранённых стилей (0 — без лимита)", plans: [["start", "Старт"], ["creator", "Автор"], ["studio", "Студия"]] },
+  en: { h: "Subtitles by plan", p: "Which subtitle features each plan includes. Changes apply to users’ dashboards right away.", rows: [["hl", "Spoken-word highlighting"], ["acc", "Key-word accents"], ["srt", "Subtitle file .srt / .vtt"]], styles: "Saved styles (0 — unlimited)", plans: [["start", "Starter"], ["creator", "Creator"], ["studio", "Studio"]] } };
+var DEMO = { ru: {"addPlan": "Создан черновик тарифа — укажите цену и лимиты, затем опубликуйте.", "save": "Сохранено.", "test": "Ключ работает: ответ получен за 0,8 с.", "saveChanges": "Изменения сохранены и уже действуют."}, en: {"addPlan": "A draft plan was created — set the price and limits, then publish it.", "save": "Saved.", "test": "The key works: response in 0.8 s.", "saveChanges": "Changes saved and already in effect."} };
+class Component extends DCLogic {
+  componentDidMount() {
+    var self = this;
+    this._esc = function (e) { if (e.key !== 'Escape') return; var st = self.state, o = {}; KEYS_ESC.forEach(function (k) { if (st[k]) o[k] = k === 'sheet' ? 0 : false; }); if (Object.keys(o).length) self.setState(o); };
+    try { document.addEventListener('keydown', this._esc); } catch (er) {}
+    var self = this; var st = admPick(admRead()); if (Object.keys(st).length) this.setState(st); admWatch(this, function () { var st2 = admPick(admRead()); if (JSON.stringify(st2) !== JSON.stringify(admPick(self.state))) self.setState(st2); }); }
+  componentDidUpdate() { var mine = admPick(this.state), cur = admRead(); if (JSON.stringify(mine) !== JSON.stringify(admPick(cur))) admWrite(Object.assign({}, cur, mine)); }
+  componentWillUnmount() {
+    try { document.removeEventListener('keydown', this._esc); } catch (er) {}
+ if (this._admStop) this._admStop(); }
+  constructor(props) {
+    super(props);
+    var users = {};
+    USERS.forEach(function (u) { users[u.id] = { role: u.role, plan: u.plan, status: u.status }; });
+    this.state = { eridOn: true, payOn: {}, medEnabled: {}, axProv: {}, foOn: true, foDown: {}, platOn: {}, igScope: 'all', lang: null, view: 0, menu: false, filter: 'all', users: users, sheet: 0, mods: [true, true, true, true], sw: [true, true, true, true, false], queue: ['', '', '', ''] };
+  }
+  setUser(id, patch) { var u = Object.assign({}, this.state.users); u[id] = Object.assign({}, u[id], patch); this.setState({ users: u }); }
+  swSt(on) { return { trackSt: on ? 'background:#0F7B5F' : 'background:#B9B6AE', knobSt: on ? 'left:23px' : 'left:3px' }; }
+  renderVals() {
+    var s = this.state, lang = s.lang || this.props.startLang || 'ru';
+    var v = Object.assign({}, this._rv(), demoBuild(this, s, DEMO[lang] || DEMO.ru), { uiLang: lang }, this._extra ? this._extra(lang) : {});
+    return lang === 'en' ? enFix(v) : v;
+  }
+  _extra(lang) { return Object.assign(this._extra0(lang), this._stt(lang), this._subPlan(lang)); }
+  _subPlan(lang) {
+    var self = this, s = this.state, x = SPX[lang] || SPX.ru, cur = {};
+    Object.keys(SUBPLAN_DEF).forEach(function (k) { cur[k] = Object.assign({}, SUBPLAN_DEF[k], (s.subPlan || {})[k] || {}); });
+    var set = function (k, p, v) { var o = JSON.parse(JSON.stringify(cur)); o[k][p] = v; self.setState({ subPlan: o }); };
+    return { spx: x,
+      spRows: x.rows.map(function (r) { return { label: r[1], cells: x.plans.map(function (pl) { var on = !!cur[r[0]][pl[0]]; return { name: r[1] + ' — ' + pl[1], on: on, track: on ? 'background:#0F7B5F' : 'background:#B9B6AE', knob: on ? 'left:23px' : 'left:3px', toggle: function () { set(r[0], pl[0], !on); } }; }) }; }),
+      spPlans: x.plans.map(function (pl) { return { label: pl[1] }; }),
+      spStyles: x.plans.map(function (pl) { return { label: x.styles + ' — ' + pl[1], fid: 'spst_' + pl[0], value: String(cur.styles[pl[0]]), onChange: function (e) { var n = parseInt(e.target.value, 10); set('styles', pl[0], isNaN(n) || n < 0 ? 0 : n); } }; }) };
+  }
+
+  _stt(lang) { var self = this, s = this.state, x = STX[lang] || STX.ru, on = s.sttRu !== false;
+    return { stx: x, sttOn: on, sttTrack: on ? 'background:#0F7B5F' : 'background:#B9B6AE', sttKnob: on ? 'left:23px' : 'left:3px', toggleStt: function () { self.setState({ sttRu: !on }); }, sttOff: !on }; }
+  _extra0(lang) { return { fullAdm: lang === 'en' ? { h: 'Full admin panel', p: 'On a computer: costs & margin, promo codes, support, email campaigns, audit log, site texts' } : { h: 'Полная админ-панель', p: 'На компьютере: себестоимость, промокоды, поддержка, рассылки, журнал действий, тексты сайта' } }; }
+  _rv() {
+    var s = this.state, self = this;
+    var accent = this.props.accent ?? '#C93C14';
+    var lang = s.lang || this.props.startLang || 'ru';
+    var t = Object.assign({}, L[lang] || L.ru, FO[lang] || FO.ru, AXP[lang] || AXP.ru, KEYS_T[lang] || KEYS_T.ru);
+    var foV = foBuild(s, self, t), apV = axProvBuild(s, self, t), kV = keysBuild(s, self, t, lang);
+    var on = 'background:#16161A;color:#fff;border:1px solid #16161A', off = 'background:#fff;color:#16161A;border:1px solid #D9D6CE';
+    var okPill = 'background:#DDF0E8;color:#0B5A45', warnPill = 'background:#FBEBC9;color:#7A4B00', badPill = 'background:#F7DDD5;color:#8A2A0C';
+    var ini = function (n) { return n.split(' ').map(function (p) { return p.charAt(0); }).join('').slice(0, 2).toUpperCase(); };
+    var pending = s.queue.filter(function (q) { return !q; }).length;
+    var provOk = [true, true, false, true, false, true, true, true, false];
+    var selBase = USERS.filter(function (u) { return u.id === s.sheet; })[0];
+    var selSt = selBase ? s.users[selBase.id] : null;
+    var mk = function (map, cur, key) { return Object.keys(map).map(function (k) { return { label: map[k], st: k === cur ? on : off, pick: function () { var p = {}; p[key] = k; self.setUser(selBase.id, p); } }; }); };
+    var usageW = [62, 88, 45, 70];
+    return {
+      t: t, accent: accent, ...foV, ...apV, ...kV,
+      heading: t.heads[s.view],
+      langLabel: lang === 'ru' ? 'EN' : 'RU',
+      toggleLang: function () { self.setState({ lang: lang === 'ru' ? 'en' : 'ru' }); },
+      menuOpen: s.menu, toggleMenu: function () { self.setState({ menu: !s.menu }); },
+      nav: t.nav.map(function (l, i) { return { label: l, go: function () { self.setState({ view: i, menu: false }); }, st: i === s.view ? 'background:#26262C;color:#fff;font-weight:600' : 'background:transparent;color:#CFCBC2', hasBadge: i === 5 && pending > 0, badge: String(pending) }; }),
+      isDash: s.view === 0, isUsers: s.view === 1, isModules: s.view === 2, isPlans: s.view === 3, isApi: s.view === 4, isMod: s.view === 5, isSettings: s.view === 6,
+      kpis: t.kpis.map(function (k) { return { label: k[0], value: k[1], note: k[2] }; }),
+      usage: t.modNames.map(function (n, i) { return { label: n, count: (lang === 'en' ? ['28,400', '40,300', '20,600', '32,100'] : ['28 400', '40 300', '20 600', '32 100'])[i], st: 'width:' + usageW[i] + '%;background:' + (i === 1 ? accent : '#16161A') }; }),
+      providers: t.provNames.map(function (n, i) { return { name: n, status: provOk[i] ? t.connected : t.notConfigured, pillSt: provOk[i] ? okPill : warnPill, keyId: 'mkey' + i, keyPh: provOk[i] ? '••••••••3f9a' : '—' }; }),
+      filters: Object.keys(t.filters).map(function (k) { return { label: t.filters[k], st: k === s.filter ? on : off, pick: function () { self.setState({ filter: k }); } }; }),
+      users: USERS.map(function (u) { return Object.assign({}, u, s.users[u.id]); }).filter(function (u) {
+        if (s.filter === 'active') return u.status === 'active';
+        if (s.filter === 'blocked') return u.status === 'blocked';
+        if (s.filter === 'admins') return u.role !== 'user';
+        return true;
+      }).map(function (u) {
+        var b = u.status === 'blocked';
+        return { name: u.name, email: u.email, ini: ini(u.name), roleLabel: t.roles[u.role], planLabel: t.plans[u.plan],
+          statusLabel: b ? t.blocked : t.active, statusSt: b ? badPill : okPill, toggleLabel: b ? t.unblock : t.block,
+          toggle: function () { self.setUser(u.id, { status: b ? 'active' : 'blocked' }); },
+          open: function () { self.setState({ sheet: u.id }); } };
+      }),
+      sheetOpen: !!selBase, closeSheet: function () { self.setState({ sheet: 0 }); },
+      sel: selBase ? { name: selBase.name, email: selBase.email, ini: ini(selBase.name), toggleLabel: selSt.status === 'blocked' ? t.unblock : t.block, toggle: function () { self.setUser(selBase.id, { status: selSt.status === 'blocked' ? 'active' : 'blocked' }); } } : { name: '', email: '', ini: '', toggleLabel: '', toggle: null },
+      rolePills: selBase ? mk(t.roles, selSt.role, 'role') : [],
+      planPills: selBase ? mk(t.plans, selSt.plan, 'plan') : [],
+      modules: t.modNames.map(function (n, i) { var en = s.mods[i], st = self.swSt(en); return { title: n, on: en, stateLabel: en ? t.on : t.off, trackSt: st.trackSt, knobSt: st.knobSt, costId: 'mc' + i, limId: 'ml' + i, toggle: function () { var m = s.mods.slice(); m[i] = !m[i]; self.setState({ mods: m }); } }; }),
+      plans: Object.keys(t.plans).map(function (k, pi) { return { name: t.plans[k], fields: t.planFields.map(function (f, fi) { return { label: f[0], ph: pi === 0 && fi === 0 ? '0' : f[1], id: 'mpf' + pi + fi }; }) }; }),
+      queue: t.qTypes.map(function (ty, i) {
+        var d = s.queue[i];
+        var set = function (v) { return function () { var q = s.queue.slice(); q[i] = v; self.setState({ queue: q }); }; };
+        return { type: ty, user: USERS[i].email, reason: t.qReasons[i], pending: !d, decided: !!d, resLabel: d === 'ok' ? t.approved : t.removed, resSt: d === 'ok' ? okPill : badPill, approve: set('ok'), remove: set('del') };
+      }),
+      switches: t.switches.map(function (w, i) { var en = s.sw[i], st = self.swSt(en); return { label: w[0], hint: w[1], on: en, trackSt: st.trackSt, knobSt: st.knobSt, toggle: function () { var a = s.sw.slice(); a[i] = !a[i]; self.setState({ sw: a }); } }; })
+    };
+  }
+}
+</script>
+</body>
+</html>
