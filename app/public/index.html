@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI YT Studio — кабинет</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23C93C14'/%3E%3Cpath d='M12 9v14l11-7z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/app/app.css">
+<style>
+.shell{min-height:100vh;display:grid;grid-template-columns:248px minmax(0,1fr)}
+.shell>div{min-width:0}
+aside{background:var(--ink);color:#F4F3EF;padding:20px 14px;display:flex;flex-direction:column;gap:18px;position:sticky;top:0;height:100vh}
+aside .logo{color:#F4F3EF;padding:0 6px}
+nav.side{display:flex;flex-direction:column;gap:2px}
+nav.side a{display:flex;align-items:center;gap:10px;min-height:44px;padding:0 12px;border-radius:9px;color:#CFCBC2;text-decoration:none;font-size:15px}
+nav.side a:hover{background:#25252B;color:#fff}
+nav.side a[aria-current="page"]{background:#F4F3EF;color:var(--ink);font-weight:500}
+.grp{font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#8E8A82;padding:10px 12px 4px}
+.side-foot{margin-top:auto;display:flex;flex-direction:column;gap:8px;font-size:13px;color:#CFCBC2;padding:0 6px}
+.side-foot a{color:#CFCBC2}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px clamp(16px,3vw,32px);border-bottom:1px solid var(--line);background:var(--bg);position:sticky;top:0;z-index:20}
+.top h1{font-size:22px}
+.content:focus{outline:none}
+.content{padding:24px clamp(16px,3vw,32px) 80px;display:flex;flex-direction:column;gap:20px;max-width:1100px}
+.ibtn{position:relative;width:44px;height:44px;border-radius:10px;border:1px solid var(--line2);background:#fff;display:grid;place-items:center}
+.badge{position:absolute;top:-6px;right:-6px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;background:var(--accent);color:#fff;font-size:12px;display:grid;place-items:center}
+.panel{position:absolute;right:16px;top:64px;width:min(92vw,360px);background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.12);padding:8px;z-index:30}
+.panel li{list-style:none;padding:10px;border-bottom:1px solid #EFECE5;font-size:14px}
+.panel ul{margin:0;padding:0;max-height:60vh;overflow:auto}
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px}
+.stat b{display:block;font:600 28px 'Space Grotesk',sans-serif;margin-top:4px}
+.prods{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.prod{display:flex;flex-direction:column;gap:10px}
+.prod.cur{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.price{font:600 30px 'Space Grotesk',sans-serif}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{min-height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--line2);background:#fff;font-size:14px}
+.seg button[aria-pressed="true"],.seg button[aria-selected="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.mods{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.mod{display:flex;flex-direction:column;gap:6px;text-decoration:none}
+.switch{width:52px;height:44px;border:0;background:none;padding:0;display:flex;align-items:center;justify-content:flex-end;flex:none}
+.switch span{width:46px;height:26px;border-radius:13px;position:relative;background:#B9B6AE;transition:background .15s}
+.switch span::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .15s}
+.switch[aria-checked="true"] span{background:#0F7B5F}.switch[aria-checked="true"] span::after{left:23px}
+.setrow{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:10px 0;border-top:1px solid #EFECE5}
+.drawer{position:fixed;inset:0;background:rgba(22,22,26,.4);z-index:50;display:flex;justify-content:flex-end}
+.drawer>div{width:min(100%,560px);height:100%;overflow:auto;background:var(--bg);padding:20px;display:flex;flex-direction:column;gap:16px}
+.mtop{display:none}
+@media (max-width:860px){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  aside{position:fixed;inset:0 auto 0 0;width:min(84vw,300px);z-index:60;transform:translateX(-100%);transition:transform .2s;height:100%}
+  aside.open{transform:none;box-shadow:0 0 0 100vmax rgba(22,22,26,.4)}
+  .mtop{display:grid}
+  .top h1{font-size:19px}
+  .hide-m{display:none}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside id="aside" aria-label="Меню">
+    <a class="logo" href="/app/"><i><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7.5-4.5z" fill="#fff"/></svg></i>AI YT Studio</a>
+    <nav class="side" id="nav"></nav>
+    <div class="side-foot" id="sideFoot"></div>
+  </aside>
+  <div>
+    <div class="top">
+      <div class="row" style="gap:10px;flex-wrap:nowrap">
+        <button type="button" class="ibtn mtop" id="menuBtn" aria-controls="aside" aria-expanded="false"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="#16161A" stroke-width="1.8"/></svg><span class="vh" id="menuL"></span></button>
+        <h1 id="title"></h1>
+      </div>
+      <div class="row" style="gap:8px;flex-wrap:nowrap">
+        <span class="pill hide-m" id="balPill"></span>
+        <button type="button" class="ibtn" id="ntBtn" aria-haspopup="true" aria-expanded="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16161A" stroke-width="1.8" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span class="vh" id="ntL"></span><span class="badge" id="ntBadge" hidden></span></button>
+        <button type="button" class="lang mono" id="langBtn"></button>
+      </div>
+    </div>
+    <div class="panel" id="ntPanel" hidden></div>
+    <main class="content" id="view" tabindex="-1"><span class="spinner" aria-hidden="true"></span></main>
+  </div>
+</div>
+<script src="/app/common.js"></script>
+<script src="/app/i18n.js"></script>
+<script src="/app/views.js"></script>
+</body>
+</html>

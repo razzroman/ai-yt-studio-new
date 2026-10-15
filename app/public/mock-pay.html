@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Тестовая оплата — AI YT Studio</title>
+<link rel="stylesheet" href="/app/app.css">
+<style>main{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px 16px}.box{max-width:420px;width:100%;background:#fff;border:1px solid var(--line);border-radius:16px;padding:28px 24px;display:flex;flex-direction:column;gap:14px}</style>
+</head>
+<body>
+<main><div class="box" id="box"><span class="spinner"></span></div></main>
+<script src="/app/common.js"></script>
+<script>
+(function () {
+  var A = window.AIYT, E = A.esc, id = new URLSearchParams(location.search).get('id');
+  var T = A.lang === 'en'
+    ? { h: 'Test bank', p: 'This page stands in for the bank in test mode. No money is charged.', ok: 'Pay successfully', no: 'Bank declines', done: 'Returning to the service…', gone: 'Payment not found or already processed.' }
+    : { h: 'Тестовый банк', p: 'Эта страница заменяет банк в тестовом режиме. Деньги не списываются.', ok: 'Оплатить успешно', no: 'Банк отказал', done: 'Возвращаемся в сервис…', gone: 'Платёж не найден или уже обработан.' };
+  var box = document.getElementById('box');
+  A.api('GET', '/api/me').catch(function () {}).then(function () { return A.api('GET', '/api/mock/payment?id=' + encodeURIComponent(id)); }).then(function (p) {
+    if (p.status !== 'pending') { box.innerHTML = '<p>' + T.gone + '</p><a class="btn s" href="' + E(p.returnUrl || '/app/') + '">OK</a>'; return; }
+    box.innerHTML = '<span class="pill warn" style="align-self:flex-start">TEST</span><h1>' + T.h + '</h1><p class="muted">' + T.p + '</p><div class="card" style="background:var(--bg)"><b>' + E(p.description) + '</b><div class="price" style="font:600 28px \'Space Grotesk\',sans-serif;margin-top:6px">' + E(p.amount) + ' ₽</div></div><button class="btn p w" id="ok">' + T.ok + '</button><button class="btn s w" id="no">' + T.no + '</button>';
+    var go = function (ok) { box.innerHTML = '<p>' + T.done + '</p>'; A.api('POST', '/api/mock/decide', { id: id, ok: ok }).then(function () { location.href = p.returnUrl; }, function (e) { box.innerHTML = '<div class="alert err">' + E(A.errText(e)) + '</div>'; }); };
+    document.getElementById('ok').onclick = function () { go(true); };
+    document.getElementById('no').onclick = function () { go(false); };
+  }, function () { box.innerHTML = '<p>' + T.gone + '</p><a class="btn s" href="/app/">OK</a>'; });
+})();
+</script>
+</body>
+</html>

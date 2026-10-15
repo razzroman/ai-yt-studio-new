@@ -1,0 +1,13 @@
+{
+  "name": "aiyt-studio-app",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AI YT Studio — этап 1: вход, кредиты, оплата, админка. Node.js 22 без внешних зависимостей.",
+  "type": "commonjs",
+  "engines": { "node": ">=22.5" },
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning src/server.js",
+    "test": "node --disable-warning=ExperimentalWarning --test test/*.test.js",
+    "admin": "node --disable-warning=ExperimentalWarning src/cli.js"
+  }
+}

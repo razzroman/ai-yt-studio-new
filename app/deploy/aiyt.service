@@ -1,0 +1,23 @@
+[Unit]
+Description=AI YT Studio
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=aiyt
+Group=aiyt
+WorkingDirectory=/opt/aiyt/site/app
+EnvironmentFile=/etc/aiyt/app.env
+ExecStart=/usr/bin/node --disable-warning=ExperimentalWarning src/server.js
+Restart=always
+RestartSec=3
+# Защита: служба видит только свои данные.
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/var/lib/aiyt
+ReadOnlyPaths=/opt/aiyt/site /etc/aiyt
+
+[Install]
+WantedBy=multi-user.target
