@@ -28,6 +28,8 @@ const config = {
     // mock — платежи без шлюза (локально и в автотестах); live — настоящий API ЮKassa (тестовый магазин тоже live).
     mode: env('YOOKASSA_MODE', 'mock')
   },
+  // AI-провайдеры: Timeweb AI Gateway (OpenAI-совместимый, рубли) и AI-шлюз в Казахстане (этап 2).
+  ai: { timewebKey: env('TIMEWEB_AI_KEY', ''), gatewayUrl: env('AI_GATEWAY_URL', '') },
   // Кредиты при подтверждении почты (тариф «Старт»).
   startCredits: Number(env('START_CREDITS', 60)),
   // Первый администратор: при подтверждении этой почты пользователь получает роль admin.

@@ -13,11 +13,13 @@ const DEFAULTS = {
   registrationOpen: true
 };
 const KEYS = Object.keys(DEFAULTS);
+// Служебные настройки с отдельной проверкой (каталог моделей и себестоимость кредита) — меняются только своими методами.
+const RAW = { catalog: {}, creditCost: 0.85 };
 
 module.exports = function makeSettings(db) {
   const get1 = db.prepare('SELECT value FROM settings WHERE key = ?');
   const put1 = db.prepare('INSERT INTO settings (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value');
-  function get(key) { const r = get1.get(key); return r ? JSON.parse(r.value) : JSON.parse(JSON.stringify(DEFAULTS[key])); }
+  function get(key) { const r = get1.get(key); const d = key in RAW ? RAW[key] : DEFAULTS[key]; return r ? JSON.parse(r.value) : (d === undefined ? undefined : JSON.parse(JSON.stringify(d))); }
   function all() { const o = {}; KEYS.forEach(k => { o[k] = get(k); }); return o; }
 
   function validate(key, v) {
@@ -38,6 +40,7 @@ module.exports = function makeSettings(db) {
 
   return {
     get, all, KEYS, validate,
+    setRaw(key, value) { if (!(key in RAW)) throw new Error('not a raw key'); put1.run(key, JSON.stringify(value)); },
     set(key, value) {
       const err = validate(key, value);
       if (err) return err;

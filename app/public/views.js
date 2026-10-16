@@ -12,8 +12,8 @@
   function busy(btn, on) { if (!btn) return; btn.disabled = on; if (on) { btn.dataset.l = btn.innerHTML; btn.innerHTML = '<span class="spinner" aria-hidden="true"></span>'; } else if (btn.dataset.l) btn.innerHTML = btn.dataset.l; }
 
   // ---------- оболочка
-  var NAV = [['home', 'home', 'M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z'], ['history', 'history', 'M12 8v4l3 2M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5'], ['billing', 'billing', 'M2 7h20v12H2zM2 11h20'], ['account', 'account', 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0']];
-  var ADM = [['admin', 'aDash'], ['admin/users', 'aUsers'], ['admin/audit', 'aAudit'], ['admin/settings', 'aSettings']];
+  var NAV = [['home', 'home', 'M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z'], ['history', 'history', 'M12 8v4l3 2M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5'], ['billing', 'billing', 'M2 7h20v12H2zM2 11h20'], ['models', 'models', 'M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z'], ['account', 'account', 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0']];
+  var ADM = [['admin', 'aDash'], ['admin/users', 'aUsers'], ['admin/models', 'aModels'], ['admin/audit', 'aAudit'], ['admin/settings', 'aSettings']];
   function shell() {
     var r = route().path;
     var ico = function (d) { return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="' + d + '"/></svg>'; };
@@ -26,7 +26,7 @@
     $('langBtn').textContent = t().lang; $('langBtn').setAttribute('aria-label', t().langL);
     $('menuL').textContent = t().menu; $('ntL').textContent = t().notif;
     $('balPill').textContent = A.num(me.balance) + ' ' + t().credits;
-    var titles = { home: t().home, history: t().history, billing: t().billing, account: t().account, admin: t().aDash, 'admin/users': t().aUsers, 'admin/audit': t().aAudit, 'admin/settings': t().aSettings };
+    var titles = { home: t().home, history: t().history, billing: t().billing, account: t().account, models: t().models, 'admin/models': t().aModels, admin: t().aDash, 'admin/users': t().aUsers, 'admin/audit': t().aAudit, 'admin/settings': t().aSettings };
     $('title').textContent = titles[r] || t().home;
     document.title = 'AI YT Studio — ' + (titles[r] || t().home);
   }
@@ -265,8 +265,64 @@
     }, fail);
   }
 
+
+  // ---------- модели и цены (пользователь)
+  function vModels() {
+    view.innerHTML = '<p class="muted" style="max-width:720px">' + t().modelsP + '</p><div class="grid" id="mSec" style="grid-template-columns:repeat(auto-fill,minmax(300px,1fr))"><span class="spinner"></span></div><p class="hint">' + t().modelsNote + '</p>';
+    A.api('GET', '/api/public/models?lang=' + A.lang).then(function (r) {
+      $('mSec').innerHTML = Object.keys(r.sections).map(function (k) {
+        var sec = r.sections[k];
+        return '<section class="card grid" style="gap:8px" aria-label="' + E(sec.title) + '"><h3>' + E(sec.title) + '</h3>' + (sec.items.length ? sec.items.map(function (m) {
+          return '<div class="setrow"><div><b style="font-weight:500">' + E(m.name) + '</b>' + (m.ru ? ' <span class="pill">' + t().ruModel + '</span>' : '') + '<div class="hint">' + E(m.vendor) + '</div></div><span class="mono" style="white-space:nowrap">' + m.credits + ' ' + t().cr + ' <span class="hint">' + E(m.unit) + '</span></span></div>';
+        }).join('') : '<p class="hint">' + t().noModels + '</p>') + '</section>';
+      }).join('');
+    }, fail);
+  }
+
+  // ---------- модели и цены (админка)
+  function vAdminModels() {
+    A.api('GET', '/api/admin/catalog').then(function (c) {
+      var ro = !isAdmin(), L = A.lang === 'en' ? 'en' : 'ru';
+      var types = ['text', 'image', 'tts', 'stt', 'video'];
+      var prov = c.providers.map(function (p) { return '<div class="setrow"><div><b style="font-weight:500">' + E(p.name) + '</b><div class="hint">' + E(p.note) + (p.base ? ' · <span class="mono">' + E(p.base) + '</span>' : '') + '</div></div><span class="pill ' + (p.ready ? 'ok' : 'warn') + '">' + (p.ready ? t().mcKeyOk : t().mcKeyNo) + '</span></div>'; }).join('');
+      var rows = function (type) {
+        return c.items.filter(function (m) { return m.type === type; }).map(function (m) {
+          var price = m.type === 'text'
+            ? '<div class="row" style="gap:6px;flex-wrap:nowrap"><label class="vh" for="pi_' + m.id + '">' + t().mcIn + '</label><input class="in" style="width:96px;min-height:40px" id="pi_' + m.id + '" type="number" step="0.01" min="0" value="' + m.in + '"' + (ro ? ' disabled' : '') + ' title="' + t().mcIn + '"><label class="vh" for="po_' + m.id + '">' + t().mcOut + '</label><input class="in" style="width:96px;min-height:40px" id="po_' + m.id + '" type="number" step="0.01" min="0" value="' + m.out + '"' + (ro ? ' disabled' : '') + ' title="' + t().mcOut + '"></div><div class="hint">' + t().mcIn + ' / ' + t().mcOut + '</div>'
+            : '<div class="row" style="gap:6px;flex-wrap:nowrap"><label class="vh" for="pp_' + m.id + '">' + t().mcPrice + '</label><input class="in" style="width:96px;min-height:40px" id="pp_' + m.id + '" type="number" step="0.01" min="0.01" value="' + m.price + '"' + (ro ? ' disabled' : '') + '><span class="hint">' + t().mcRub + ' ' + E(m.unit[L]) + '</span></div>';
+          var secs = m.sections.map(function (sc) {
+            var p = m.per[sc];
+            return '<div class="row" style="gap:6px;flex-wrap:nowrap;font-size:13px"><span style="min-width:150px">' + E(c.sections[sc][L]) + '</span><span class="hint" style="white-space:nowrap">' + p.costRub.toLocaleString(L === 'en' ? 'en-US' : 'ru-RU') + ' ₽ →</span><label class="vh" for="cr_' + m.id + '_' + sc + '">' + E(c.sections[sc][L]) + ', ' + t().cr + '</label><input class="in" style="width:70px;min-height:36px" id="cr_' + m.id + '_' + sc + '" type="number" min="1" step="1" placeholder="' + p.autoCredits + '" value="' + (p.override ? p.credits : '') + '"' + (ro ? ' disabled' : '') + '><span class="hint">' + t().cr + (p.override ? '' : ' (' + t().mcAuto + ')') + '</span></div>';
+          }).join('');
+          return '<tr><td><button type="button" class="switch" role="switch" aria-checked="' + m.enabled + '" aria-label="' + t().mcOn + ': ' + E(m.name) + '" data-tg="' + m.id + '"' + (ro ? ' disabled' : '') + '><span></span></button></td>' +
+            '<td style="min-width:200px"><b style="font-weight:500">' + E(m.name) + '</b>' + (m.est ? ' <span class="pill warn" title="' + E(t().mcEstH) + '">' + t().mcEst + '</span>' : '') + '<div class="hint">' + E(m.vendor) + ' · ' + E(m.providerName) + '</div><div class="hint mono" style="font-size:11px;word-break:break-all">' + E(m.model) + '</div>' + (m.note ? '<div class="hint" style="max-width:260px">' + E(m.note) + '</div>' : '') + '</td>' +
+            '<td>' + price + '</td><td>' + secs + '</td><td>' + (ro ? '' : '<button type="button" class="btn d sm" data-sv="' + m.id + '">' + t().mcSave + '</button>') + '</td></tr>';
+        }).join('');
+      };
+      view.innerHTML = (ro ? '<div class="alert warn">' + t().readOnly + '</div>' : '') +
+        '<section class="card grid"><div class="row" style="align-items:flex-end"><div class="fld" style="width:180px"><label for="ccost">' + t().mcCost + ', ₽</label><input class="in" id="ccost" type="number" step="0.01" min="0.1" value="' + c.creditCost + '"' + (ro ? ' disabled' : '') + '></div>' + (ro ? '' : '<button type="button" class="btn d sm" id="ccSave">' + t().mcSave + '</button>') + '</div><p class="hint">' + t().mcCostH + '</p></section>' +
+        '<section class="card"><h3>' + t().mcProviders + '</h3>' + prov + (ro ? '' : '<div style="margin-top:10px"><button type="button" class="btn s sm" id="ckBtn">' + t().mcCheck + '</button> <span class="hint" id="ckRes"></span></div>') + '</section>' +
+        types.map(function (ty) { return '<section class="grid" style="gap:8px"><h3>' + t().mcTypes[ty] + '</h3><div class="tbl"><table><thead><tr><th>' + t().mcOn + '</th><th>' + t().mcModel + '</th><th>' + t().mcPrice + '</th><th>' + t().mcSections + '</th><th><span class="vh">' + t().mcSave + '</span></th></tr></thead><tbody>' + rows(ty) + '</tbody></table></div></section>'; }).join('');
+      var post = function (path, body, btn) { busy(btn, true); return A.api('POST', path, body).then(function () { A.toast(t().saved); vAdminModels(); }, function (e) { busy(btn, false); fail(e); }); };
+      view.querySelectorAll('[data-tg]').forEach(function (b) { b.onclick = function () { post('/api/admin/catalog/' + b.dataset.tg, { enabled: b.getAttribute('aria-checked') !== 'true' }, null); }; });
+      view.querySelectorAll('[data-sv]').forEach(function (b) {
+        b.onclick = function () {
+          var id = b.dataset.sv, m = c.items.filter(function (x) { return x.id === id; })[0], body = { credits: {} };
+          if (m.type === 'text') { body.in = Number($('pi_' + id).value); body.out = Number($('po_' + id).value); } else body.price = Number($('pp_' + id).value);
+          m.sections.forEach(function (sc) { var v = $('cr_' + id + '_' + sc).value; body.credits[sc] = v ? Number(v) : null; });
+          post('/api/admin/catalog/' + id, body, b);
+        };
+      });
+      if ($('ccSave')) $('ccSave').onclick = function () { post('/api/admin/catalog/credit-cost', { value: Number($('ccost').value) }, this); };
+      if ($('ckBtn')) $('ckBtn').onclick = function () {
+        var b = this; busy(b, true);
+        A.api('POST', '/api/admin/catalog-check', {}).then(function (r) { busy(b, false); $('ckRes').textContent = t().mcCheckRes.replace('{n}', r.total).replace('{m}', r.missingInProvider.length ? r.missingInProvider.join(', ') : '—'); }, function (e) { busy(b, false); $('ckRes').textContent = A.errText(e); });
+      };
+    }, fail);
+  }
+
   // ---------- запуск
-  var VIEWS = { home: vHome, history: vHistory, billing: vBilling, account: vAccount, admin: vAdminDash, 'admin/users': vAdminUsers, 'admin/audit': vAdminAudit, 'admin/settings': vAdminSettings };
+  var VIEWS = { home: vHome, history: vHistory, billing: vBilling, account: vAccount, models: vModels, 'admin/models': vAdminModels, admin: vAdminDash, 'admin/users': vAdminUsers, 'admin/audit': vAdminAudit, 'admin/settings': vAdminSettings };
   function render() {
     var r = route().path;
     if (r.indexOf('admin') === 0 && !isStaff()) { location.hash = '#/'; return; }
