@@ -16,6 +16,7 @@
 body{margin:0;background:#F4F3EF}
 a{color:#16161A}a:hover{color:#B8320F}
 .ph{background-color:#E7E4DC;background-image:repeating-linear-gradient(135deg,rgba(22,22,26,0.06) 0 10px,transparent 10px 20px)}
+.fimg{background-color:#fff;background-size:cover;background-position:left top;background-repeat:no-repeat}.fimg-channel{background-image:url(img/f-channel.webp)}.fimg-script{background-image:url(img/f-script.webp)}.fimg-video{background-image:url(img/f-video.webp)}.fimg-publish{background-image:url(img/f-publish.webp)}.fimg-analyze{background-image:url(img/f-analyze.webp)}.fimg-assistant{background-image:url(img/f-assistant.webp)}
 .phd{background-color:#23232A;background-image:repeating-linear-gradient(135deg,rgba(255,255,255,0.06) 0 10px,transparent 10px 20px)}
 button{font-family:inherit;cursor:pointer}
 input{font-family:inherit}
@@ -116,9 +117,10 @@ header nav a,footer a{display:inline-flex;align-items:center;min-height:32px}
 <div style="display: flex; flex-direction: column; gap: 12px; max-width: 720px">
 <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 0.08em; color: #B8320F">{{t.featEyebrow}}</span>
 <h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: clamp(30px, 3.6vw, 44px); letter-spacing: -0.02em; font-weight: 600; line-height: 1.08">{{t.featTitle}}</h2>
+<p style="margin: 0; color: #5E5B54; font-size: 17px; line-height: 1.55">{{t.featSub}}</p>
 </div>
-<sc-for list="{{features}}" as="f" hint-placeholder-count="4">
-<article style="display: flex; flex-wrap: wrap; gap: 40px; align-items: center; padding: 40px 0; border-top: 1px solid #D9D6CE">
+<sc-for list="{{features}}" as="f" hint-placeholder-count="6">
+<article style="display: flex; flex-wrap: wrap; flex-direction: {{f.dir}}; gap: 40px; align-items: center; padding: 40px 0; border-top: 1px solid #D9D6CE">
 <div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
 <span style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #B8320F">{{f.num}}</span>
 <h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 30px; font-weight: 600; letter-spacing: -0.02em">{{f.title}}</h3>
@@ -129,11 +131,24 @@ header nav a,footer a{display:inline-flex;align-items:center;min-height:32px}
 </sc-for>
 </ul>
 </div>
-<div class="phd" style="flex: 1 1 420px; min-width: 0; aspect-ratio: 16 / 10; border-radius: 14px; display: flex; align-items: flex-end; padding: 18px; box-sizing: border-box">
-<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #fff; background: rgba(0,0,0,0.55); padding: 4px 8px; border-radius: 4px">{{f.shot}}</span>
-</div>
+<div style="flex: 1 1 420px; min-width: 0"><div role="img" aria-label="{{f.alt}}" class="fimg fimg-{{f.key}}" style="width: 100%; aspect-ratio: 16 / 10; border-radius: 14px; border: 1px solid #E2DFD7; box-shadow: 0 16px 40px rgba(22,22,26,0.10)"></div></div>
 </article>
 </sc-for>
+<div style="display: flex; flex-direction: column; gap: 24px; padding-top: 40px; border-top: 1px solid #D9D6CE">
+<h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 30px; font-weight: 600; letter-spacing: -0.02em">{{t.moreTitle}}</h3>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 16px">
+<sc-for list="{{featMore}}" as="g" hint-placeholder-count="6">
+<div style="background: #fff; border: 1px solid #E2DFD7; border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 12px; min-width: 0">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #B8320F">{{g.num}}</span>
+<span style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600; line-height: 1.2">{{g.title}}</span>
+<span style="color: #5E5B54; font-size: 15px; line-height: 1.55">{{g.desc}}</span>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px">
+<sc-for list="{{g.points}}" as="pt" hint-placeholder-count="4"><li style="display: flex; gap: 10px; align-items: baseline; font-size: 15px; line-height: 1.45"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#B8320F" stroke-width="2" aria-hidden="true" style="flex: none"><path d="M3 8.5l3 3 7-7"></path></svg><span>{{pt}}</span></li></sc-for>
+</ul>
+</div>
+</sc-for>
+</div>
+</div>
 </div>
 </section>
 
@@ -246,7 +261,7 @@ var L = {
     badge: "AI-СТУДИЯ ДЛЯ YOUTUBE, VK ВИДЕО, RUTUBE И ДЗЕНА",
     heroTitle: "Канал, сценарий, анализ и видео — в одной студии.",
     heroSub: "AI YT Studio помогает запустить и вести канал на YouTube, VK Видео, RUTUBE и Дзене: подобрать нишу, написать сценарий с AI, изучить конкурентов, собрать видео и опубликовать его сразу на все площадки.",
-    chips: ["Создание канала", "AI-сценарии", "Анализ каналов", "Фото и видео", "VK · RUTUBE · Дзен"],
+    chips: ["Создание канала", "AI-сценарии и озвучка", "Фото и видео", "Субтитры под голос", "Анализ и монетизация", "AI-ассистент", "VK · RUTUBE · Дзен"],
     seeFeatures: "Посмотреть все возможности ↓",
     authAria: "Регистрация или вход", tabSignup: "Регистрация", tabLogin: "Вход",
     titleSignup: "Создайте аккаунт", titleLogin: "С возвращением",
@@ -256,12 +271,20 @@ var L = {
     terms: "Я принимаю Условия использования и Политику конфиденциальности", termsA: "Я принимаю", termsL1: "Пользовательское соглашение", termsAnd: "и", termsL2: "Политику конфиденциальности", pdA: "Даю", pdL: "согласие на обработку персональных данных",
     submitSignup: "Создать аккаунт", submitLogin: "Войти в кабинет",
     haveAcc: "Уже есть аккаунт?", noAcc: "Ещё нет аккаунта?",
-    featEyebrow: "ВОЗМОЖНОСТИ", featTitle: "Четыре инструмента, которые закрывают весь путь от идеи до публикации",
+    featEyebrow: "ВОЗМОЖНОСТИ", featTitle: "Всё для канала — от идеи до дохода", featSub: "12 разделов в одном кабинете. Ниже — главные экраны и полный перечень возможностей.", moreTitle: "И ещё шесть разделов",
     features: [
-      ["Создание канала", "Расскажите, о чём хотите снимать, — AI предложит нишу, названия, описание, аватар и баннер, а также план публикаций на первый месяц.", ["Подбор ниши под ваши интересы и время", "Варианты названия и описания канала", "Генерация аватара и баннера", "Рубрики и план на 4 недели"], "Экран: Создание канала"],
-      ["AI-контент", "Введите тему — получите посценный сценарий с таймкодами и описанием кадров, а также заголовки, описание и теги для поиска.", ["Сценарии для длинных видео и Shorts", "Выбор тона и языка видео", "Заголовки, описания и теги", "AI-озвучка готового текста"], "Экран: AI-контент"],
-      ["Анализ каналов", "Вставьте ссылку на любой канал — увидите рост, видео-аутлаеры, ритм публикаций и выводы о том, что стоит перенять.", ["Статистика своего канала и конкурентов", "Поиск видео-аутлаеров", "Сравнение нескольких каналов", "AI-выводы и идеи для видео"], "Экран: Анализ каналов"],
-      ["Фото и видео по сценарию", "Каждая сцена сценария превращается в изображение или видеоклип выбранного стиля. Отдельно — варианты обложек.", ["Раскадровка из сценария", "Изображения и видеоклипы", "Форматы 16:9, 9:16 и 1:1", "Варианты обложек"], "Экран: Фото и видео"]
+      ["Создание канала", "Расскажите, о чём хотите снимать, — AI предложит нишу, формат, название, оформление и план на первый месяц.", ["Ниша под ваши интересы и время", "Формат: без лица, в кадре или анимированный ведущий", "Варианты названия, описание и рубрики", "Аватар, баннер и план на 4 недели"], "img/f-channel.webp"],
+      ["Сценарии с AI", "Введите тему — получите посценный сценарий с таймкодами и описанием кадров. Каждую сцену можно сократить, усилить или переписать.", ["Claude, ChatGPT, YandexGPT, GigaChat или «Авто» с запасной моделью", "Тон, структура, сценарий по видео-аутлаеру", "Прогноз удержания, проверка фактов и версии", "Shorts из сценария, заголовки, теги и таймкоды"], "img/f-script.webp"],
+      ["Фото и видео по сценарию", "Каждая сцена превращается в кадр или видеоклип в выбранном стиле — модель подбирается автоматически или вручную.", ["14 моделей изображений и 13 моделей видео", "Анимация, оживление кадра, AI-видео или сток", "Свой стиль и персонажи, одинаковые во всех кадрах", "Редактор кадра и варианты обложек"], "img/f-video.webp"],
+      ["Сборка, субтитры и публикация", "Соберите ролик на таймлайне и опубликуйте его сразу на всех площадках.", ["Музыка под голос, переходы, качество до 4K", "Субтитры под голос с подсветкой звучащего слова, файлы .srt и .vtt", "Публикация на YouTube, VK Видео, RUTUBE и Дзен одним нажатием", "Отметка AI-контента и маркировка рекламы erid"], "img/f-publish.webp"],
+      ["Анализ каналов", "Вставьте ссылку на любой канал — увидите просмотры, видео-аутлаеры, выводы AI и монетизирован ли канал.", ["Статистика своего канала и конкурентов", "Монетизация канала: по признакам бесплатно или точно за 2 кредита", "Сравнение каналов и незанятые темы", "Мои ролики: прогноз против факта по всем площадкам"], "img/f-analyze.webp"],
+      ["AI-ассистент", "Claude, ChatGPT, YandexGPT, GigaChat и бесплатные модели в одном чате — с контекстом вашего канала и сценариев.", ["10 моделей, включая бесплатные", "Сравнение ответов двух моделей", "Контекст: канал, сценарий, аналитика", "История чатов"], "img/f-assistant.webp"],
+      ["Озвучка и перевод", "Озвучьте сценарий AI-голосом или своим и выпустите ролик на других языках.", ["Голоса ElevenLabs, Yandex SpeechKit и SaluteSpeech", "Свой голос — только с согласием владельца", "Скорость и подача голоса", "Перевод, дубляж и субтитры на каждом языке"], ""],
+      ["Инструменты роста", "Всё, что помогает выпускать ролики регулярно и расти.", ["Контент-календарь со своими датами для каждой площадки", "Нарезка Shorts из длинного видео", "A/B-тест заголовков и обложек, радар трендов", "Перенос в TikTok, Reels, VK Клипы и Telegram", "Брендбук, комментарии с ответами AI, команда и роли"], ""],
+      ["Монетизация", "Понятный путь к доходу на YouTube и российских площадках.", ["Прогресс к партнёрской программе YouTube", "Риск «шаблонного» канала и проверка по правилам", "Условия VK Видео, RUTUBE и Дзена", "Маркировка рекламы с токеном erid"], ""],
+      ["Проекты и задачи", "Каждый ролик — проект со статусом, а генерации идут в очереди.", ["Черновик → озвучено → собрано → опубликовано", "Очередь задач со статусом каждой генерации", "Возврат кредитов, если генерация не удалась", "Понятные ошибки и что сделать дальше"], ""],
+      ["Тарифы и оплата", "Платите в рублях за тариф или пакет кредитов — как привыкли.", ["«Старт», «Автор», «Студия» и пакеты кредитов", "Карта, СБП, SberPay или T-Pay через ЮKassa", "Чек «Мой налог» на каждую оплату, автопродление", "История операций с выгрузкой в CSV, бонусы за друзей"], ""],
+      ["На любом устройстве", "Работайте там, где удобно. Данные хранятся в России и защищены.", ["Сайт для компьютера и мобильная версия", "Программа для Windows", "Русский и английский язык", "Вход по email или Google, двухфакторная защита, список сеансов"], ""]
     ],
     howTitle: "Как это работает",
     how: [["Зарегистрируйтесь", "Создайте аккаунт за минуту — по email или через Google."], ["Опишите канал", "Расскажите о теме и аудитории, получите концепцию и план."], ["Создавайте контент", "Сценарии, изображения, клипы и обложки — в одном проекте."], ["Анализируйте и растите", "Следите за конкурентами и снимайте на темы, которые работают."]],
@@ -291,7 +314,7 @@ var L = {
     badge: "AI STUDIO FOR YOUTUBE",
     heroTitle: "Channel, script, analytics and video — in one studio.",
     heroSub: "AI YT Studio helps you launch a YouTube channel from scratch: find a niche, write scripts with AI, study competitors and turn the script into images and video scenes.",
-    chips: ["Channel builder", "AI scripts", "Channel analytics", "Photo & video"],
+    chips: ["Channel Builder", "AI scripts & voiceover", "Photo & video", "Voice-synced subtitles", "Analytics & monetization", "AI assistant", "VK · RUTUBE · Dzen"],
     seeFeatures: "See all features ↓",
     authAria: "Sign up or log in", tabSignup: "Sign up", tabLogin: "Log in",
     titleSignup: "Create your account", titleLogin: "Welcome back",
@@ -301,12 +324,20 @@ var L = {
     terms: "I accept the Terms of Use and Privacy Policy", termsA: "I accept the", termsL1: "Terms of Service", termsAnd: "and", termsL2: "Privacy Policy", pdA: "I give my", pdL: "consent to personal data processing",
     submitSignup: "Create account", submitLogin: "Log in to dashboard",
     haveAcc: "Already have an account?", noAcc: "No account yet?",
-    featEyebrow: "FEATURES", featTitle: "Four tools that cover the whole path from idea to upload",
+    featEyebrow: "FEATURES", featTitle: "Everything for your channel — from idea to income", featSub: "12 sections in one dashboard. Below are the key screens and the full list of features.", moreTitle: "Six more sections",
     features: [
-      ["Channel Builder", "Tell us what you want to make — AI suggests a niche, names, description, avatar and banner, plus a posting plan for the first month.", ["Niche matched to your interests and time", "Channel name and description options", "Avatar and banner generation", "Content pillars and a 4-week plan"], "Screen: Channel Builder"],
-      ["AI Content Studio", "Enter a topic and get a scene-by-scene script with timecodes and shot notes, plus titles, description and search tags.", ["Scripts for long-form and Shorts", "Choose tone and video language", "Titles, descriptions and tags", "AI voiceover of the final text"], "Screen: AI Content Studio"],
-      ["Channel Analyzer", "Paste any channel link to see growth, outlier videos, posting rhythm and takeaways on what to copy.", ["Stats for your channel and competitors", "Outlier video detection", "Compare several channels", "AI takeaways and video ideas"], "Screen: Channel Analyzer"],
-      ["Photo & video from script", "Every scene of the script becomes an image or a video clip in the style you pick. Thumbnail variants included.", ["Storyboard from the script", "Images and video clips", "16:9, 9:16 and 1:1 formats", "Thumbnail variants"], "Screen: Photo & Video"]
+      ["Channel Builder", "Tell us what you want to make — AI suggests a niche, format, name, branding and a first-month plan.", ["A niche that fits your interests and time", "Format: faceless, on camera or animated host", "Name options, description and content pillars", "Avatar, banner and a 4-week plan"], "img/f-channel.webp"],
+      ["AI scripts", "Enter a topic and get a scene-by-scene script with timecodes and shot notes. Shorten, punch up or rewrite any scene.", ["Claude, ChatGPT, YandexGPT, GigaChat or Auto with a fallback model", "Tone, structure, script based on an outlier video", "Retention forecast, fact check and versions", "Shorts from the script, titles, tags and chapters"], "img/f-script.webp"],
+      ["Photo & video from the script", "Every scene becomes a frame or a video clip in your style — the model is picked automatically or by you.", ["14 image models and 13 video models", "Animation, live frame, AI video or stock", "Your own style and characters that stay the same in every frame", "Frame editor and thumbnail variants"], "img/f-video.webp"],
+      ["Assembly, subtitles & publishing", "Assemble the video on a timeline and publish it to every platform at once.", ["Music ducked under the voice, transitions, up to 4K", "Voice-synced subtitles with spoken-word highlight, .srt and .vtt", "One click to YouTube, VK Video, RUTUBE and Dzen", "AI-content label and ad marking with erid"], "img/f-publish.webp"],
+      ["Channel Analyzer", "Paste any channel link to see views, outlier videos, AI takeaways and whether the channel is monetized.", ["Stats for your channel and competitors", "Monetization check: free by signals or exact for 2 credits", "Compare channels and find content gaps", "My videos: forecast vs actual across platforms"], "img/f-analyze.webp"],
+      ["AI assistant", "Claude, ChatGPT, YandexGPT, GigaChat and free models in one chat — with your channel and scripts as context.", ["10 models, including free ones", "Compare answers from two models", "Context: channel, script, analytics", "Chat history"], "img/f-assistant.webp"],
+      ["Voiceover & translation", "Voice the script with an AI voice or your own and release the video in other languages.", ["ElevenLabs, Yandex SpeechKit and SaluteSpeech voices", "Your own voice — only with the owner's consent", "Voice speed and delivery", "Translation, dubbing and subtitles in each language"], ""],
+      ["Growth tools", "Everything that helps you upload regularly and grow.", ["Content calendar with separate dates per platform", "Cut Shorts from a long video", "A/B tests for titles and thumbnails, trend radar", "Repurpose to TikTok, Reels, VK Clips and Telegram", "Brand kit, comments with AI replies, team and roles"], ""],
+      ["Monetization", "A clear path to income on YouTube and Russian platforms.", ["Progress to the YouTube Partner Program", "“Repetitive content” risk and a policy check", "VK Video, RUTUBE and Dzen requirements", "Ad marking with an erid token"], ""],
+      ["Projects & tasks", "Every video is a project with a status, and generations run in a queue.", ["Draft → voiced → assembled → published", "Task queue with the status of each generation", "Credits back if a generation fails", "Clear errors and what to do next"], ""],
+      ["Plans & payments", "Pay for a plan or a credit pack the way you're used to.", ["Starter, Creator, Studio and credit packs", "Card, SBP, SberPay or T-Pay via YooKassa", "A receipt for every payment, auto-renewal", "Transaction history with CSV export, referral bonuses"], ""],
+      ["On any device", "Work wherever it's convenient. Your data is stored securely.", ["Desktop site and mobile version", "Windows app", "Russian and English", "Email or Google sign-in, two-factor auth, session list"], ""]
     ],
     howTitle: "How it works",
     how: [["Sign up", "Create an account in a minute — with email or Google."], ["Describe the channel", "Share the topic and audience, get a concept and a plan."], ["Create content", "Scripts, images, clips and thumbnails — in one project."], ["Analyze and grow", "Track competitors and make videos on topics that work."]],
@@ -436,7 +467,8 @@ class Component extends DCLogic {
       submitHref: signup ? 'Onboarding.dc.html' : 'Main.dc.html',
       switchText: signup ? t.haveAcc : t.noAcc,
       switchLink: signup ? t.tabLogin : t.tabSignup,
-      features: t.features.map(function (f, i) { return { num: '0' + (i + 1), title: f[0], desc: f[1], points: f[2], shot: f[3] }; }),
+      features: t.features.filter(function (f) { return f[3]; }).map(function (f, i) { return { num: (i < 9 ? '0' : '') + (i + 1), title: f[0], desc: f[1], points: f[2], img: f[3], key: f[3].replace(/^img\/f-|\.webp$/g, ''), alt: f[0], dir: i % 2 ? 'row-reverse' : 'row' }; }),
+      featMore: t.features.filter(function (f) { return !f[3]; }).map(function (f, i, a) { var n = t.features.length - a.length + i + 1; return { num: (n < 10 ? '0' : '') + n, title: f[0], desc: f[1], points: f[2] }; }),
       how: t.how.map(function (h, i) { return { n: '0' + (i + 1), t: h[0], d: h[1] }; }),
       plans: t.plans.map(function (p, i) {
         var hi = i === 1;

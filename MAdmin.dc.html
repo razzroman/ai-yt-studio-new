@@ -131,8 +131,8 @@ input,select{font-family:inherit}
 <button type="button" role="switch" aria-checked="{{m.on}}" aria-label="{{m.title}}" onClick="{{m.toggle}}" class="sw"><span style="width: 46px; height: 26px; border-radius: 13px; position: relative; {{m.trackSt}}"><span style="position: absolute; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; {{m.knobSt}}"></span></span></button>
 </div>
 <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
-<div style="display: flex; flex-direction: column; gap: 4px"><label for="{{m.costId}}" class="muted" style="font-size: 12px">{{t.costPerAction}}</label><input id="{{m.costId}}" type="number" placeholder="[0]" class="fld"></div>
-<div style="display: flex; flex-direction: column; gap: 4px"><label for="{{m.limId}}" class="muted" style="font-size: 12px">{{t.dailyLimit}}</label><input id="{{m.limId}}" type="number" placeholder="[0]" class="fld"></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><label for="{{m.costId}}" class="muted" style="font-size: 12px">{{t.costPerAction}}</label><input id="{{m.costId}}" type="number" placeholder="{{m.costPh}}" class="fld"></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><label for="{{m.limId}}" class="muted" style="font-size: 12px">{{t.dailyLimit}}</label><input id="{{m.limId}}" type="number" placeholder="{{m.limPh}}" class="fld"></div>
 </div>
 </div>
 </sc-for>
@@ -141,7 +141,7 @@ input,select{font-family:inherit}
 <sc-if value="{{isPlans}}" hint-placeholder-val="{{ false }}">
 <sc-for list="{{plans}}" as="p" hint-placeholder-count="3">
 <div class="card" style="padding: 14px; display: flex; flex-direction: column; gap: 10px">
-<div style="display: flex; justify-content: space-between; align-items: center"><span style="font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 600">{{p.name}}</span><span class="muted" style="font-size: 12px">{{t.subscribers}}: [0]</span></div>
+<div style="display: flex; justify-content: space-between; align-items: center"><span style="font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 600">{{p.name}}</span><span class="muted" style="font-size: 12px">{{t.subscribers}}: {{p.subs}}</span></div>
 <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
 <sc-for list="{{p.fields}}" as="fd" hint-placeholder-count="4"><div style="display: flex; flex-direction: column; gap: 4px"><label for="{{fd.id}}" class="muted" style="font-size: 12px">{{fd.label}}</label><input id="{{fd.id}}" type="text" placeholder="{{fd.ph}}" class="fld"></div></sc-for>
 </div>
@@ -213,7 +213,7 @@ input,select{font-family:inherit}
 <h2 class="h2">{{t.general}}</h2>
 <div style="display: flex; flex-direction: column; gap: 4px"><label for="msname" class="muted" style="font-size: 12px">{{t.siteName}}</label><input id="msname" type="text" placeholder="AI YT Studio" class="fld"></div>
 <div style="display: flex; flex-direction: column; gap: 4px"><label for="mdlang" class="muted" style="font-size: 12px">{{t.defLang}}</label><select id="mdlang" class="fld"><option>Русский</option><option>English</option><option>{{t.byBrowser}}</option></select></div>
-<div style="display: flex; flex-direction: column; gap: 4px"><label for="mfcr" class="muted" style="font-size: 12px">{{t.freeCredits}}</label><input id="mfcr" type="number" placeholder="[0]" class="fld"></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><label for="mfcr" class="muted" style="font-size: 12px">{{t.freeCredits}}</label><input id="mfcr" type="number" placeholder="60" class="fld"></div>
 </div>
 <div class="card" style="padding: 6px 14px">
 <sc-for list="{{switches}}" as="sw" hint-placeholder-count="5">
@@ -669,8 +669,8 @@ class Component extends DCLogic {
       sel: selBase ? { name: selBase.name, email: selBase.email, ini: ini(selBase.name), toggleLabel: selSt.status === 'blocked' ? t.unblock : t.block, toggle: function () { self.setUser(selBase.id, { status: selSt.status === 'blocked' ? 'active' : 'blocked' }); } } : { name: '', email: '', ini: '', toggleLabel: '', toggle: null },
       rolePills: selBase ? mk(t.roles, selSt.role, 'role') : [],
       planPills: selBase ? mk(t.plans, selSt.plan, 'plan') : [],
-      modules: t.modNames.map(function (n, i) { var en = s.mods[i], st = self.swSt(en); return { title: n, on: en, stateLabel: en ? t.on : t.off, trackSt: st.trackSt, knobSt: st.knobSt, costId: 'mc' + i, limId: 'ml' + i, toggle: function () { var m = s.mods.slice(); m[i] = !m[i]; self.setState({ mods: m }); } }; }),
-      plans: Object.keys(t.plans).map(function (k, pi) { return { name: t.plans[k], fields: t.planFields.map(function (f, fi) { return { label: f[0], ph: pi === 0 && fi === 0 ? '0' : f[1], id: 'mpf' + pi + fi }; }) }; }),
+      modules: t.modNames.map(function (n, i) { var en = s.mods[i], st = self.swSt(en); return { title: n, on: en, stateLabel: en ? t.on : t.off, trackSt: st.trackSt, knobSt: st.knobSt, costId: 'mc' + i, limId: 'ml' + i, costPh: String([2, 6, 5, 4][i] || 3), limPh: String([20, 50, 30, 100][i] || 50), toggle: function () { var m = s.mods.slice(); m[i] = !m[i]; self.setState({ mods: m }); } }; }),
+      plans: Object.keys(t.plans).map(function (k, pi) { return { name: t.plans[k], subs: ['3 120', '1 012', '148'][pi], fields: t.planFields.map(function (f, fi) { return { label: f[0], ph: pi === 0 && fi === 0 ? '0' : f[1], id: 'mpf' + pi + fi }; }) }; }),
       queue: t.qTypes.map(function (ty, i) {
         var d = s.queue[i];
         var set = function (v) { return function () { var q = s.queue.slice(); q[i] = v; self.setState({ queue: q }); }; };

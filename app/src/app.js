@@ -188,7 +188,7 @@ function createApp(opts = {}) {
   function sitePath(p) {
     let d; try { d = decodeURIComponent(p || '/'); } catch (e) { return null; }
     if (d === '/') return '/index.html';
-    return /^\/[A-Za-z0-9][\w-]*(\.dc)?\.(html|js|mp4|ico)$/.test(d) ? d : null;
+    return /^\/[A-Za-z0-9][\w-]*(\.dc)?\.(html|js|mp4|ico)$/.test(d) || /^\/img\/[\w-]+\.webp$/.test(d) ? d : null;
   }
   const NO_CSRF = new Set(['/api/auth/register', '/api/auth/login', '/api/auth/verify', '/api/auth/forgot', '/api/auth/reset', '/api/payments/webhook']);
 

@@ -156,8 +156,8 @@ input,select{font-family:inherit}
 <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; font-size: 13px">
 <div style="background: #F6F5F1; border-radius: 8px; padding: 10px"><div style="color: #5E5B54">{{t.registered}}</div><div style="font-weight: 500">{{t.date}}</div></div>
 <div style="background: #F6F5F1; border-radius: 8px; padding: 10px"><div style="color: #5E5B54">{{t.lastSeen}}</div><div style="font-weight: 500">{{t.date}}</div></div>
-<div style="background: #F6F5F1; border-radius: 8px; padding: 10px"><div style="color: #5E5B54">{{t.channels}}</div><div style="font-weight: 500">[0]</div></div>
-<div style="background: #F6F5F1; border-radius: 8px; padding: 10px"><div style="color: #5E5B54">{{t.projectsCnt}}</div><div style="font-weight: 500">[0]</div></div>
+<div style="background: #F6F5F1; border-radius: 8px; padding: 10px"><div style="color: #5E5B54">{{t.channels}}</div><div style="font-weight: 500">1</div></div>
+<div style="background: #F6F5F1; border-radius: 8px; padding: 10px"><div style="color: #5E5B54">{{t.projectsCnt}}</div><div style="font-weight: 500">6</div></div>
 </div>
 <fieldset style="border: 0; padding: 0; margin: 0">
 <legend style="font-weight: 500; font-size: 14px; margin-bottom: 8px">{{t.thRole}}</legend>
@@ -202,15 +202,15 @@ input,select{font-family:inherit}
 </div>
 <div style="flex: 1 1 140px; display: flex; flex-direction: column; gap: 4px">
 <label for="{{m.costId}}" style="font-size: 13px; color: #5E5B54">{{t.costPerAction}}</label>
-<input id="{{m.costId}}" type="number" placeholder="[0]" style="min-height: 40px; padding: 0 10px; border: 1px solid #D9D6CE; border-radius: 8px; font-size: 14px">
+<input id="{{m.costId}}" type="number" placeholder="{{m.costPh}}" style="min-height: 40px; padding: 0 10px; border: 1px solid #D9D6CE; border-radius: 8px; font-size: 14px">
 </div>
 <div style="flex: 1 1 140px; display: flex; flex-direction: column; gap: 4px">
 <label for="{{m.limId}}" style="font-size: 13px; color: #5E5B54">{{t.dailyLimit}}</label>
-<input id="{{m.limId}}" type="number" placeholder="[0]" style="min-height: 40px; padding: 0 10px; border: 1px solid #D9D6CE; border-radius: 8px; font-size: 14px">
+<input id="{{m.limId}}" type="number" placeholder="{{m.limPh}}" style="min-height: 40px; padding: 0 10px; border: 1px solid #D9D6CE; border-radius: 8px; font-size: 14px">
 </div>
 <div style="flex: 1 1 160px; display: flex; flex-direction: column; gap: 4px">
 <label for="{{m.provId}}" style="font-size: 13px; color: #5E5B54">{{t.provider}}</label>
-<select id="{{m.provId}}" style="min-height: 40px; padding: 0 8px; border: 1px solid #D9D6CE; border-radius: 8px; font-size: 14px; background: #fff"><option>[{{t.provider}} A]</option><option>[{{t.provider}} B]</option></select>
+<select id="{{m.provId}}" style="min-height: 40px; padding: 0 8px; border: 1px solid #D9D6CE; border-radius: 8px; font-size: 14px; background: #fff"><option>{{t.provAuto}}</option><option>{{t.provMain}}</option></select>
 </div>
 <button type="button" role="switch" aria-checked="{{m.on}}" aria-label="{{m.title}}" onClick="{{m.toggle}}" style="display: flex; align-items: center; gap: 10px; min-height: 44px; border: 0; background: none; padding: 0; font-size: 14px; color: #16161A">
 <span style="width: 46px; height: 26px; border-radius: 13px; position: relative; flex: none; {{m.trackSt}}"><span style="position: absolute; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; {{m.knobSt}}"></span></span>
@@ -231,7 +231,7 @@ input,select{font-family:inherit}
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px">
 <sc-for list="{{plans}}" as="p" hint-placeholder-count="3">
 <div style="background: #fff; border: 1px solid #E2DFD7; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 12px">
-<div style="display: flex; justify-content: space-between; align-items: center"><span style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 600">{{p.name}}</span><span style="font-size: 12px; color: #5E5B54">{{t.subscribers}}: [0]</span></div>
+<div style="display: flex; justify-content: space-between; align-items: center"><span style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 600">{{p.name}}</span><span style="font-size: 12px; color: #5E5B54">{{t.subscribers}}: {{p.subs}}</span></div>
 <sc-for list="{{p.fields}}" as="fd" hint-placeholder-count="4">
 <div style="display: flex; flex-direction: column; gap: 4px"><label for="{{fd.id}}" style="font-size: 13px; color: #5E5B54">{{fd.label}}</label><input id="{{fd.id}}" type="text" placeholder="{{fd.ph}}" style="min-height: 40px; padding: 0 10px; border: 1px solid #D9D6CE; border-radius: 8px; font-size: 14px"></div>
 </sc-for>
@@ -247,7 +247,7 @@ input,select{font-family:inherit}
 <div style="background: #fff; border: 1px solid #E2DFD7; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 10px">
 <h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 600">{{t.payments}}</h2>
 <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end">
-<div style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 4px"><label for="pgw" style="font-size: 13px; color: #5E5B54">{{t.gateway}}</label><select id="pgw" style="min-height: 40px; padding: 0 8px; border: 1px solid #D9D6CE; border-radius: 8px; font-size: 14px; background: #fff"><option>[{{t.gateway}}]</option></select></div>
+<div style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 4px"><label for="pgw" style="font-size: 13px; color: #5E5B54">{{t.gateway}}</label><select id="pgw" style="min-height: 40px; padding: 0 8px; border: 1px solid #D9D6CE; border-radius: 8px; font-size: 14px; background: #fff"><option>{{t.gwName}}</option></select></div>
 <div style="flex: 1 1 160px; display: flex; flex-direction: column; gap: 4px"><label for="cur" style="font-size: 13px; color: #5E5B54">{{t.currency}}</label><select id="cur" style="min-height: 40px; padding: 0 8px; border: 1px solid #D9D6CE; border-radius: 8px; font-size: 14px; background: #fff"><option>RUB ₽</option><option>USD $</option><option>EUR €</option></select></div>
 <button type="button" style="min-height: 40px; padding: 0 16px; border-radius: 8px; border: 0; background: {{accent}}; color: #fff; font-size: 14px" onClick="{{demo.save}}">{{t.save}}</button>
 </div>
@@ -356,7 +356,7 @@ input,select{font-family:inherit}
 <div style="display: flex; flex-direction: column; gap: 4px"><label for="sname" style="font-size: 13px; color: #5E5B54">{{t.siteName}}</label><input id="sname" type="text" placeholder="AI YT Studio" style="min-height: 42px; padding: 0 10px; border: 1px solid #D9D6CE; border-radius: 8px; font-size: 14px"></div>
 <div style="display: flex; flex-direction: column; gap: 4px"><label for="semail" style="font-size: 13px; color: #5E5B54">{{t.supportEmail}}</label><input id="semail" type="email" placeholder="support@example.com" style="min-height: 42px; padding: 0 10px; border: 1px solid #D9D6CE; border-radius: 8px; font-size: 14px"></div>
 <div style="display: flex; flex-direction: column; gap: 4px"><label for="dlang" style="font-size: 13px; color: #5E5B54">{{t.defLang}}</label><select id="dlang" style="min-height: 42px; padding: 0 8px; border: 1px solid #D9D6CE; border-radius: 8px; font-size: 14px; background: #fff"><option>Русский</option><option>English</option><option>{{t.byBrowser}}</option></select></div>
-<div style="display: flex; flex-direction: column; gap: 4px"><label for="fcr" style="font-size: 13px; color: #5E5B54">{{t.freeCredits}}</label><input id="fcr" type="number" placeholder="[0]" style="min-height: 42px; padding: 0 10px; border: 1px solid #D9D6CE; border-radius: 8px; font-size: 14px"></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><label for="fcr" style="font-size: 13px; color: #5E5B54">{{t.freeCredits}}</label><input id="fcr" type="number" placeholder="60" style="min-height: 42px; padding: 0 10px; border: 1px solid #D9D6CE; border-radius: 8px; font-size: 14px"></div>
 <button type="button" style="min-height: 44px; border-radius: 8px; border: 0; background: {{accent}}; color: #fff; font-weight: 600; font-size: 14px" onClick="{{demo.saveChanges}}">{{t.saveChanges}}</button>
 </div>
 <div style="flex: 1 1 340px; min-width: 0; background: #fff; border: 1px solid #E2DFD7; border-radius: 12px; padding: 22px; display: flex; flex-direction: column; gap: 4px">
@@ -472,7 +472,7 @@ input,select{font-family:inherit}
 <div style="display: flex; flex-direction: column; gap: 4px"><label for="rcond" style="font-size: 13px; color: #5E5B54">{{t.refCond}}</label><select id="rcond" style="min-height: 40px; padding: 0 8px; border: 1px solid #D9D6CE; border-radius: 8px; font-size: 14px; background: #fff"><sc-for list="{{t.refConds}}" as="op" hint-placeholder-count="2"><option>{{op}}</option></sc-for></select></div>
 </div>
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px">
-<sc-for list="{{t.refStats}}" as="rs" hint-placeholder-count="3"><div style="background: #F6F5F1; border-radius: 10px; padding: 12px"><div style="font-size: 12px; color: #5E5B54">{{rs}}</div><div style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600">[0]</div></div></sc-for>
+<sc-for list="{{refStatsV}}" as="rs" hint-placeholder-count="3"><div style="background: #F6F5F1; border-radius: 10px; padding: 12px"><div style="font-size: 12px; color: #5E5B54">{{rs.l}}</div><div style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600">{{rs.v}}</div></div></sc-for>
 </div>
 </div>
 </section>
@@ -514,7 +514,7 @@ input,select{font-family:inherit}
 <form style="flex: 2 1 460px; min-width: 0; background: #fff; border: 1px solid #E2DFD7; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 12px">
 <h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 600">{{t.newCampaign}}</h2>
 <fieldset style="border: 0; padding: 0; margin: 0"><legend style="font-size: 13px; color: #5E5B54; margin-bottom: 6px">{{t.segment}}</legend><div style="display: flex; gap: 6px; flex-wrap: wrap"><sc-for list="{{segments}}" as="sg" hint-placeholder-count="5"><button type="button" onClick="{{sg.pick}}" style="min-height: 38px; padding: 0 12px; border-radius: 999px; font-size: 13px; {{sg.st}}">{{sg.label}}</button></sc-for></div></fieldset>
-<span style="font-size: 13px; color: #5E5B54">{{t.recipients}}: [0]</span>
+<span style="font-size: 13px; color: #5E5B54">{{t.recipients}}: {{recipN}}</span>
 <div style="display: flex; flex-direction: column; gap: 4px"><label for="msubj" style="font-size: 13px; color: #5E5B54">{{t.subject}}</label><input id="msubj" type="text" value="{{mailSubj}}" onChange="{{onMailSubj}}" style="min-height: 42px; padding: 0 10px; border: 1px solid #D9D6CE; border-radius: 8px; font-size: 15px"></div>
 <div style="display: flex; flex-direction: column; gap: 4px"><label for="mbody" style="font-size: 13px; color: #5E5B54">{{t.body}}</label><textarea id="mbody" rows="7" value="{{mailBody}}" onChange="{{onMailBody}}" style="padding: 10px 12px; border: 1px solid #D9D6CE; border-radius: 8px; font-size: 14px; line-height: 1.5; resize: vertical"></textarea><span style="font-size: 12px; color: #5E5B54">{{t.vars}}</span></div>
 <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-end">
@@ -659,7 +659,7 @@ var L = {
     registered: "Регистрация", lastSeen: "Последний вход", channels: "Каналы", projectsCnt: "Проекты",
     addCredits: "Начислить кредиты", apply: "Начислить", resetPass: "Сбросить пароль", loginAs: "Войти как пользователь", deleteUser: "Удалить аккаунт",
     modulesIntro: "Включайте и отключайте модули для всех пользователей, задавайте стоимость действия в кредитах, дневные лимиты и AI-провайдера.",
-    costPerAction: "Кредитов за действие", dailyLimit: "Лимит в день на пользователя", provider: "Провайдер", on: "Включён", off: "Выключен",
+    costPerAction: "Кредитов за действие", dailyLimit: "Лимит в день на пользователя", provider: "Провайдер", provAuto: "Авто: основной + резервный", provMain: "Только основной", gwName: "ЮKassa", on: "Включён", off: "Выключен",
     plansIntro: "Цены, лимиты кредитов и количество каналов для каждого тарифа. Изменения применяются к новым подпискам.",
     addPlan: "+ Новый тариф", subscribers: "Подписчиков",
     planFields: [["Цена в месяц", "2 490 ₽"], ["Кредитов в месяц", "1000"], ["Макс. каналов", "3"], ["Водяной знак", "Да / Нет"]],
@@ -698,7 +698,7 @@ var L = {
     registered: "Signed up", lastSeen: "Last login", channels: "Channels", projectsCnt: "Projects",
     addCredits: "Add credits", apply: "Add", resetPass: "Reset password", loginAs: "Log in as user", deleteUser: "Delete account",
     modulesIntro: "Turn modules on or off for all users, set the credit cost per action, daily limits and the AI provider.",
-    costPerAction: "Credits per action", dailyLimit: "Daily limit per user", provider: "Provider", on: "On", off: "Off",
+    costPerAction: "Credits per action", dailyLimit: "Daily limit per user", provider: "Provider", provAuto: "Auto: primary + fallback", provMain: "Primary only", gwName: "YooKassa", on: "On", off: "Off",
     plansIntro: "Prices, credit limits and channel count for each plan. Changes apply to new subscriptions.",
     addPlan: "+ New plan", subscribers: "Subscribers",
     planFields: [["Monthly price", "$29"], ["Credits per month", "1000"], ["Max channels", "3"], ["Watermark", "Yes / No"]],
@@ -1273,12 +1273,14 @@ class Component extends DCLogic {
         return {
           num: 'MODULE 0' + (i + 1), title: n, desc: t.modDescs[i], on: en, stateLabel: en ? t.on : t.off,
           trackSt: sw.trackSt, knobSt: sw.knobSt,
-          costId: 'cost' + i, limId: 'lim' + i, provId: 'prov' + i,
+          costId: 'cost' + i, limId: 'lim' + i, provId: 'prov' + i, costPh: String([2, 6, 5, 4][i] || 3), limPh: String([20, 50, 30, 100][i] || 50),
           toggle: function () { var m = s.mods.slice(); m[i] = !m[i]; self.setState({ mods: m }); }
         };
       }),
+      refStatsV: t.refStats.map(function (l, i) { return { l: l, v: ['412', '57', '22 800'][i] }; }),
+      recipN: '4 280',
       plans: Object.keys(t.plans).map(function (k, pi) {
-        return { name: t.plans[k], fields: t.planFields.map(function (f, fi) { return { label: f[0], ph: pi === 0 && fi === 0 ? '0' : f[1], id: 'pf' + pi + fi }; }) };
+        return { name: t.plans[k], subs: ['3 120', '1 012', '148'][pi], fields: t.planFields.map(function (f, fi) { return { label: f[0], ph: pi === 0 && fi === 0 ? '0' : f[1], id: 'pf' + pi + fi }; }) };
       }),
       queue: t.qTypes.map(function (ty, i) {
         var d = s.queue[i];

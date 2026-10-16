@@ -289,7 +289,7 @@ label:focus-within{outline:3px solid #2F5BEA;outline-offset:2px}
 <div class="phd" style="width: 96px; flex: none; aspect-ratio: 9 / 16; border-radius: 6px"></div>
 <div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
 <label for="{{rc.fid}}" class="muted" style="font-size: 12px">{{t.caption}}</label>
-<textarea id="{{rc.fid}}" rows="5" style="padding: 8px; border: 1px solid #E2DFD7; border-radius: 8px; font-size: 13px; line-height: 1.4; resize: vertical">{{rc.caption}}</textarea>
+<textarea id="{{rc.fid}}" rows="5" style="padding: 8px; border: 1px solid #E2DFD7; border-radius: 8px; font-size: 13px; line-height: 1.4; resize: vertical" value="{{rc.caption}}"></textarea>
 </div>
 </div>
 <span style="font-size: 13px; color: #2F5BEA; line-height: 1.4">{{rc.tags}}</span>
@@ -360,7 +360,7 @@ label:focus-within{outline:3px solid #2F5BEA;outline-offset:2px}
 <p style="margin: 0; line-height: 1.5">{{cm.text}}</p>
 <sc-if value="{{cm.pending}}" hint-placeholder-val="{{ true }}">
 <label for="{{cm.fid}}" class="muted" style="font-size: 12px">{{t.aiDraft}}</label>
-<textarea id="{{cm.fid}}" rows="2" style="padding: 10px; border: 1px solid #E2DFD7; border-radius: 8px; font-size: 14px; line-height: 1.45; resize: vertical; background: #FCFBF8">{{cm.draft}}</textarea>
+<textarea id="{{cm.fid}}" rows="2" style="padding: 10px; border: 1px solid #E2DFD7; border-radius: 8px; font-size: 14px; line-height: 1.45; resize: vertical; background: #FCFBF8" value="{{cm.draft}}"></textarea>
 <div style="display: flex; gap: 8px; flex-wrap: wrap"><button type="button" onClick="{{cm.send}}" class="btnd">{{t.send}}</button><button type="button" class="btn2" onClick="{{demo.regen}}">{{t.regen}}</button><button type="button" onClick="{{cm.skip}}" class="btn2">{{t.skip}}</button></div>
 </sc-if>
 <sc-if value="{{cm.done}}" hint-placeholder-val="{{ false }}"><div style="padding: 8px 12px; border-radius: 8px; font-size: 13px; {{cm.doneSt}}">{{cm.doneLabel}}</div></sc-if>

@@ -88,7 +88,7 @@ input,textarea{font-family:inherit}
 <span style="font-size: 15px; line-height: 1.45">{{cm.text}}</span>
 <sc-if value="{{cm.pending}}" hint-placeholder-val="{{ true }}">
 <label for="{{cm.fid}}" class="muted" style="font-size: 12px">{{t.aiDraft}}</label>
-<textarea id="{{cm.fid}}" rows="3" style="padding: 10px; border: 1px solid #E2DFD7; border-radius: 10px; font-size: 15px; line-height: 1.45; resize: none; background: #FCFBF8">{{cm.draft}}</textarea>
+<textarea id="{{cm.fid}}" rows="3" style="padding: 10px; border: 1px solid #E2DFD7; border-radius: 10px; font-size: 15px; line-height: 1.45; resize: none; background: #FCFBF8" value="{{cm.draft}}"></textarea>
 <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px"><button type="button" onClick="{{cm.send}}" style="min-height: 44px; border-radius: 10px; border: 0; background: #16161A; color: #fff; font-size: 14px">{{t.send}}</button><button type="button" onClick="{{cm.skip}}" class="btn2" style="min-height: 44px">{{t.skip}}</button></div>
 </sc-if>
 <sc-if value="{{cm.done}}" hint-placeholder-val="{{ false }}"><span style="padding: 8px 10px; border-radius: 8px; font-size: 13px; {{cm.doneSt}}">{{cm.doneLabel}}</span></sc-if>
