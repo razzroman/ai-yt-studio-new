@@ -668,6 +668,26 @@ label:focus-within{outline:3px solid #2F5BEA;outline-offset:2px}
 <button type="button" onClick="{{takeStructure}}" style="min-height: 44px; border-radius: 8px; border: 1px solid #4A4A52; background: transparent; color: #F4F3EF; font-size: 14px">{{t.takeStructure}}</button>
 </div>
 </div>
+<section class="card" aria-labelledby="monH" style="padding: 22px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap"><h2 class="h2" id="monH">{{mon.h}}</h2><span style="padding: 4px 12px; border-radius: 999px; font-size: 13px; font-weight: 600; {{monStSt}}">{{monStatus}}</span></div>
+<div role="tablist" aria-label="{{mon.exLbl}}" style="display: flex; gap: 6px; flex-wrap: wrap"><sc-for list="{{monEx}}" as="me" hint-placeholder-count="2"><button type="button" role="tab" aria-selected="{{me.on}}" onClick="{{me.pick}}" class="mono" style="min-height: 36px; padding: 0 12px; border-radius: 999px; font-size: 12px; {{me.st}}">{{me.label}}</button></sc-for></div>
+<div style="display: flex; flex-direction: column; gap: 8px; background: #F4F3EF; border-radius: 10px; padding: 12px 14px"><div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap"><span id="monMethL" style="font-size: 13px; font-weight: 600">{{mon.meth.lbl}}</span><div role="radiogroup" aria-labelledby="monMethL" style="display: flex; gap: 6px; flex-wrap: wrap"><sc-for list="{{monMeth}}" as="mm" hint-placeholder-count="2"><button type="button" role="radio" aria-checked="{{mm.on}}" onClick="{{mm.pick}}" style="min-height: 40px; padding: 0 14px; border-radius: 999px; font-size: 13px; {{mm.st}}">{{mm.label}}</button></sc-for></div><span style="padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 500; {{monTagSt}}">{{monTag}}</span></div><sc-if value="{{monNeedRun}}" hint-placeholder-val="{{ false }}"><div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap"><button type="button" onClick="{{monRun}}" style="min-height: 40px; padding: 0 16px; border-radius: 8px; border: 0; background: #16161A; color: #fff; font-size: 14px; font-weight: 600">{{mon.meth.run}}</button><span class="muted" style="font-size: 12px; line-height: 1.45; flex: 1 1 220px">{{mon.meth.runHint}}</span></div></sc-if></div>
+<p style="margin: 0; font-size: 15px; line-height: 1.5">{{monCase.verdict}}</p>
+<div style="display: flex; flex-wrap: wrap; gap: 16px">
+<div style="flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 8px"><h3 style="margin: 0; font-size: 14px; font-weight: 600">{{mon.sigH}}</h3>
+<sc-for list="{{monSig}}" as="sg" hint-placeholder-count="4"><div style="display: flex; gap: 10px; align-items: flex-start; font-size: 14px"><span aria-hidden="true" style="flex: none; width: 22px; height: 22px; border-radius: 6px; display: grid; place-items: center; font-size: 12px; font-weight: 700; {{sg.st}}">{{sg.mark}}</span><span><b style="font-weight: 500">{{sg.label}}</b> <span class="muted">— {{sg.note}}</span></span></div></sc-for>
+</div>
+<div style="flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 10px"><h3 style="margin: 0; font-size: 14px; font-weight: 600">{{mon.thrH}}</h3>
+<sc-for list="{{monThr}}" as="th" hint-placeholder-count="2"><div style="display: flex; flex-direction: column; gap: 4px"><div style="display: flex; justify-content: space-between; gap: 8px; font-size: 13px"><span><sc-if value="{{th.orRow}}" hint-placeholder-val="{{ false }}"><span class="muted">{{mon.or}} </span></sc-if>{{th.label}}</span><span class="mono" style="font-size: 12px; white-space: nowrap">{{th.val}}</span></div><div role="progressbar" aria-label="{{th.label}}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{th.pct}}" style="height: 8px; border-radius: 4px; background: #EFECE5; overflow: hidden"><div style="height: 100%; border-radius: 4px; {{th.bar}}"></div></div></div></sc-for>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 12px">
+<sc-if value="{{monYes}}" hint-placeholder-val="{{ true }}"><div style="flex: 1 1 260px; background: #F4F3EF; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px"><span class="muted" style="font-size: 13px">{{mon.incomeH}}</span><span style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600">{{monCase.money}}</span><span class="muted" style="font-size: 12px">{{monCase.moneyNote}}</span></div></sc-if>
+<sc-if value="{{monNo}}" hint-placeholder-val="{{ false }}"><div style="flex: 1 1 260px; background: #F4F3EF; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px"><span class="muted" style="font-size: 13px">{{mon.gapH}}</span><span style="font-size: 14px; line-height: 1.5">{{monCase.gap}}</span></div></sc-if>
+<div style="flex: 1 1 260px; background: #F4F3EF; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px"><span style="display: flex; gap: 8px; align-items: center"><span class="muted" style="font-size: 13px">{{mon.riskH}}</span><span style="padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; {{monRisk.st}}">{{monRisk.label}}</span></span><span style="font-size: 14px; line-height: 1.5">{{monRisk.text}}</span></div>
+</div>
+<p class="muted" style="margin: 0; font-size: 12px; line-height: 1.5">{{monNote}}</p>
+</section>
 </sc-if>
 </sc-if>
 
@@ -1289,7 +1309,7 @@ var L = {
     compareBtn: "Compare", addChannel: "+ Add channel",
     cmpEmpty: "Add up to 5 channels to compare growth, views, posting rhythm and topics side by side.",
     cmpTableH: "Side by side", metric: "Metric",
-    cmpMetrics: ["Subscribers", "Avg. views / video", "Uploads / week", "Avg. length", "Engagement rate", "Est. RPM"],
+    cmpMetrics: ["Subscribers", "Avg. views / video", "Uploads / week", "Avg. length", "Engagement rate", "Est. RPM", "Monetization"],
     cmpChartH: "Avg. views by format", cmpChartAria: "Grouped bar chart comparing three channels by format, demo data",
     cmpGroups: ["Long", "Shorts", "Lists", "Live"],
     gapsH: "Content gaps", gapsNote: "Topics your competitors cover that get views — and you haven’t made yet.",
@@ -1382,7 +1402,7 @@ var L = {
     compareBtn: "Сравнить", addChannel: "+ Добавить канал",
     cmpEmpty: "Добавьте до 5 каналов, чтобы сравнить рост, просмотры, ритм публикаций и темы.",
     cmpTableH: "Сравнение", metric: "Показатель",
-    cmpMetrics: ["Подписчики", "Ср. просмотры / видео", "Видео в неделю", "Ср. длина", "Вовлечённость", "Оценка RPM"],
+    cmpMetrics: ["Подписчики", "Ср. просмотры / видео", "Видео в неделю", "Ср. длина", "Вовлечённость", "Оценка RPM", "Монетизация"],
     cmpChartH: "Ср. просмотры по форматам", cmpChartAria: "Сгруппированная диаграмма сравнения трёх каналов по форматам, демо-данные",
     cmpGroups: ["Длинные", "Shorts", "Топы", "Эфиры"],
     gapsH: "Незанятые темы", gapsNote: "Темы, которые набирают просмотры у конкурентов, но которых ещё нет у вас.",
@@ -1867,8 +1887,58 @@ var NX = {
   }
 };
 var PR_ORDER = ['draft', 'voiced', 'built', 'pub'];
-var CMP_RU = [["128 тыс.", "54 тыс.", "310 тыс."], ["46 тыс.", "21 тыс.", "92 тыс."], ["1,5", "3", "0,8"], ["11:40", "8:20", "18:05"], ["6,1%", "4,8%", "7,3%"], ["$6,8", "$5,9", "$7,4"]];
-var CMP_EN = [["128K", "54K", "310K"], ["46K", "21K", "92K"], ["1.5", "3", "0.8"], ["11:40", "8:20", "18:05"], ["6.1%", "4.8%", "7.3%"], ["$6.8", "$5.9", "$7.4"]];
+var MONX = {
+  ru: { h: "Монетизация канала", exLbl: "Пример канала", ex: [["big", "@deep-ocean · 128 тыс."], ["small", "@ocean-facts · 640"]],
+    st: { yes: "Монетизирован", no: "Не монетизирован" }, sigH: "Признаки на канале", thrH: "Пороги программы партнёров YouTube", incomeH: "Оценка дохода с рекламы", gapH: "До монетизации", riskH: "Риск отказа",
+    met: "выполнено", or: "или", meth: { lbl: "Способ проверки", sig: "По признакам · бесплатно", exact: "Точная проверка · 2 кр.", tagSig: "Оценка по признакам", tagExact: "Проверено через NexLev · сегодня", run: "Проверить точно · 2 кредита", runHint: "Статус возьмём из сервиса аналитики NexLev. Повторная проверка этого канала в течение суток — бесплатно.", paid: "Списано 2 кредита. Статус подтверждён сервисом NexLev.", noteExact: "Статус получен из сервиса аналитики NexLev; признаки и пороги ниже — для пояснения. Пороги — правила YouTube на 2026 год. Демо-данные." },
+    note: "YouTube не показывает статус монетизации чужих каналов. Вывод — по публичным признакам: реклама в роликах, кнопка «Стать спонсором», «Суперспасибо», магазин. Пороги — правила YouTube на 2026 год. Демо-данные; реальные — после подключения YouTube Data API.",
+    cases: {
+      big: { status: "yes", verdict: "Канал зарабатывает на рекламе: реклама есть почти во всех свежих роликах, включены спонсорство и «Суперспасибо».",
+        sig: [[1, "Реклама в роликах", "в 9 из 10 последних видео"], [1, "Спонсорство канала", "кнопка «Стать спонсором» есть"], [1, "Суперспасибо", "включено под видео"], [0, "Магазин YouTube", "не подключён"]],
+        thr: [["Подписчики", 128000, 1000, "128 тыс. из 1 000"], ["Часы просмотра за 12 мес. (оценка)", 61000, 4000, "≈ 61 тыс. из 4 000"]],
+        money: "$1 600–2 300 в месяц", moneyNote: "≈ 280 тыс. просмотров в месяц × RPM $6,8 (оценка по нише)",
+        risk: [0, "Низкий", "Свой голос и монтаж в каждом ролике — правило YouTube о неоригинальном контенте не задевает."] },
+      small: { status: "no", verdict: "Канал пока не в программе партнёров: рекламы в роликах нет, спонсорство и «Суперспасибо» недоступны.",
+        sig: [[-1, "Реклама в роликах", "нет ни в одном из 10 последних видео"], [-1, "Спонсорство канала", "нет"], [-1, "Суперспасибо", "нет"], [0, "Магазин YouTube", "не подключён"]],
+        thr: [["Подписчики", 640, 1000, "640 из 1 000"], ["Часы просмотра за 12 мес. (оценка)", 1900, 4000, "≈ 1 900 из 4 000"], ["Просмотры Shorts за 90 дней", 1.2, 10, "1,2 млн из 10 млн"]],
+        gap: "Нужно ещё +360 подписчиков и ≈ 2 100 часов просмотра. При текущем росте — примерно 4 месяца. Порог в 500 подписчиков уже пройден: можно подать заявку на спонсорство и «Суперспасибо».",
+        risk: [1, "Средний", "Ролики похожи друг на друга и озвучены синтезом без комментария автора. По правилу о неоригинальном контенте YouTube может отказать — добавьте свой разбор и монтаж."] } } },
+  en: { h: "Channel monetization", exLbl: "Example channel", ex: [["big", "@deep-ocean · 128K"], ["small", "@ocean-facts · 640"]],
+    st: { yes: "Monetized", no: "Not monetized" }, sigH: "Signals on the channel", thrH: "YouTube Partner Program thresholds", incomeH: "Estimated ad revenue", gapH: "To monetization", riskH: "Rejection risk",
+    met: "met", or: "or", meth: { lbl: "Check method", sig: "By signals · free", exact: "Exact check · 2 cr.", tagSig: "Estimate from signals", tagExact: "Verified via NexLev · today", run: "Check exactly · 2 credits", runHint: "We’ll take the status from the NexLev analytics service. Re-checking this channel within 24 hours is free.", paid: "2 credits charged. Status confirmed by NexLev.", noteExact: "Status comes from the NexLev analytics service; the signals and thresholds below explain it. Thresholds follow YouTube’s 2026 rules. Demo data." },
+    note: "YouTube doesn’t show other channels’ monetization status. The verdict is based on public signals: ads in videos, the Join button, Super Thanks, a store. Thresholds follow YouTube’s 2026 rules. Demo data; real data after connecting the YouTube Data API.",
+    cases: {
+      big: { status: "yes", verdict: "The channel earns from ads: almost every recent video has ads, and memberships and Super Thanks are on.",
+        sig: [[1, "Ads in videos", "in 9 of the last 10 videos"], [1, "Channel memberships", "Join button present"], [1, "Super Thanks", "enabled on videos"], [0, "YouTube Shopping", "not connected"]],
+        thr: [["Subscribers", 128000, 1000, "128K of 1,000"], ["Watch hours, 12 months (estimate)", 61000, 4000, "≈ 61K of 4,000"]],
+        money: "$1,600–2,300 per month", moneyNote: "≈ 280K views a month × $6.8 RPM (niche estimate)",
+        risk: [0, "Low", "Own voice and editing in every video — YouTube’s inauthentic content rule doesn’t apply."] },
+      small: { status: "no", verdict: "The channel isn’t in the Partner Program yet: no ads in videos, no memberships or Super Thanks.",
+        sig: [[-1, "Ads in videos", "none in the last 10 videos"], [-1, "Channel memberships", "no"], [-1, "Super Thanks", "no"], [0, "YouTube Shopping", "not connected"]],
+        thr: [["Subscribers", 640, 1000, "640 of 1,000"], ["Watch hours, 12 months (estimate)", 1900, 4000, "≈ 1,900 of 4,000"], ["Shorts views, 90 days", 1.2, 10, "1.2M of 10M"]],
+        gap: "Needs +360 subscribers and ≈ 2,100 watch hours. At the current growth — about 4 months. The 500-subscriber tier is already met: it can apply for memberships and Super Thanks.",
+        risk: [1, "Medium", "Videos look alike and use a synthetic voice with no creator commentary. Under the inauthentic content rule YouTube may reject — add your own take and editing."] } } }
+};
+function monBuild(self, s, lang) {
+  var x = MONX[lang] || MONX.ru, k = s.monEx || 'big', c = x.cases[k];
+  var meth = s.monMeth || 'sig', exactDone = meth === 'exact' && !!(s.monPaid || {})[k];
+  var mark = function (v) { return v > 0 ? { m: '✓', st: 'background:#DDF0E8;color:#0B5A45' } : v < 0 ? { m: '✕', st: 'background:#F7DDD5;color:#8A2A0C' } : { m: '–', st: 'background:#EFECE5;color:#5E5B54' }; };
+  return {
+    mon: x, monCase: c, monYes: c.status === 'yes', monNo: c.status === 'no',
+    monStatus: x.st[c.status], monStSt: c.status === 'yes' ? 'background:#DDF0E8;color:#0B5A45' : 'background:#FBEBC9;color:#5A3800',
+    monEx: x.ex.map(function (e) { var on = e[0] === k; return { label: e[1], on: on, st: on ? 'background:#16161A;color:#fff;border:1px solid #16161A' : 'background:#fff;color:#16161A;border:1px solid #D9D6CE', pick: function () { self.setState({ monEx: e[0] }); } }; }),
+    monSig: c.sig.map(function (g) { var mk = mark(g[0]); return { mark: mk.m, st: mk.st, label: g[1], note: g[2] }; }),
+    monThr: c.thr.map(function (r, i) { var pct = Math.min(100, Math.round(r[1] / r[2] * 100)), ok = r[1] >= r[2]; return { label: r[0], val: r[3], pct: pct, bar: 'width:' + pct + '%;background:' + (ok ? '#0F7B5F' : '#C93C14'), ok: ok, met: ok ? x.met : '', orRow: i === 2 }; }),
+    monRisk: { label: c.risk[1], text: c.risk[2], st: c.risk[0] ? 'background:#FBEBC9;color:#5A3800' : 'background:#DDF0E8;color:#0B5A45' },
+    monMeth: [['sig', x.meth.sig], ['exact', x.meth.exact]].map(function (o) { var on = o[0] === meth; return { label: o[1], on: on, st: on ? 'background:#16161A;color:#fff;border:1px solid #16161A' : 'background:#fff;color:#16161A;border:1px solid #D9D6CE', pick: function () { self.setState({ monMeth: o[0] }); } }; }),
+    monTag: exactDone ? x.meth.tagExact : x.meth.tagSig, monTagSt: exactDone ? 'background:#DDF0E8;color:#0B5A45' : 'background:#EFECE5;color:#5E5B54',
+    monNeedRun: meth === 'exact' && !exactDone,
+    monRun: function () { var p = Object.assign({}, s.monPaid || {}); p[k] = true; if (self._tt) clearTimeout(self._tt); self.setState({ monPaid: p, toast: x.meth.paid }); self._tt = setTimeout(function () { self.setState({ toast: '' }); }, 4000); },
+    monNote: exactDone ? x.meth.noteExact : x.note
+  };
+}
+var CMP_RU = [["128 тыс.", "54 тыс.", "310 тыс."], ["46 тыс.", "21 тыс.", "92 тыс."], ["1,5", "3", "0,8"], ["11:40", "8:20", "18:05"], ["6,1%", "4,8%", "7,3%"], ["$6,8", "$5,9", "$7,4"], ["Да", "Нет — рекламы нет", "Да"]];
+var CMP_EN = [["128K", "54K", "310K"], ["46K", "21K", "92K"], ["1.5", "3", "0.8"], ["11:40", "8:20", "18:05"], ["6.1%", "4.8%", "7.3%"], ["$6.8", "$5.9", "$7.4"], ["Yes", "No — no ads", "Yes"]];
 var MEDIA = {
   img: [
     { id: 'nb21', name: 'Nano Banana 2.1', prov: 'Google', cr: 3, usd: 0.034, svc: 'google' },
@@ -2354,7 +2424,7 @@ class Component extends DCLogic {
     var v = Object.assign({}, this._rv(), demoBuild(this, s, DEMO[lang] || DEMO.ru), { uiLang: lang }, this._extra ? this._extra(lang) : {});
     return lang === 'en' ? enFix(v) : v;
   }
-  _extra(lang) { return Object.assign(this._extraA(lang), this._gate(lang)); }
+  _extra(lang) { return Object.assign(this._extraA(lang), this._gate(lang), monBuild(this, this.state, lang)); }
   _gate(lang) {
     var self = this, s = this.state, x = GATE[lang] || GATE.ru, sp = subPlanGet(), p = userPlan(), r = {};
     var show = function (m) { if (self._tt) clearTimeout(self._tt); self.setState({ toast: m }); self._tt = setTimeout(function () { self.setState({ toast: '' }); }, 4500); };
