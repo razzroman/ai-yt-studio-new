@@ -40,6 +40,9 @@ const SECURITY_HEADERS = {
   'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self'; frame-ancestors 'self'; form-action 'self' https://yoomoney.ru https://*.yookassa.ru https://accounts.google.com"
 };
 
+// Кабинет и API: скрипты только со своего сайта, никаких встроенных и eval.
+const STRICT_CSP = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; object-src 'none'; form-action 'self' https://yoomoney.ru https://*.yookassa.ru https://accounts.google.com";
+
 function send(res, status, body, headers = {}) {
   const isJson = typeof body !== 'string' && !Buffer.isBuffer(body);
   const data = isJson ? JSON.stringify(body) : body;
@@ -49,7 +52,7 @@ function send(res, status, body, headers = {}) {
 
 const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.mp4': 'video/mp4', '.ico': 'image/x-icon', '.txt': 'text/plain; charset=utf-8' };
 
-function serveStatic(roots, urlPath, res) {
+function serveStatic(roots, urlPath, res, extra = {}) {
   let p;
   try { p = decodeURIComponent(urlPath.split('?')[0]); } catch (e) { return false; }
   if (p.endsWith('/')) p += 'index.html';
@@ -59,7 +62,7 @@ function serveStatic(roots, urlPath, res) {
     let st; try { st = fs.statSync(file); } catch (e) { continue; }
     if (!st.isFile()) continue;
     const ext = path.extname(file).toLowerCase();
-    send(res, 200, fs.readFileSync(file), { 'Content-Type': MIME[ext] || 'application/octet-stream', 'Cache-Control': ext === '.html' ? 'no-cache' : 'public, max-age=3600' });
+    send(res, 200, fs.readFileSync(file), Object.assign({ 'Content-Type': MIME[ext] || 'application/octet-stream', 'Cache-Control': ext === '.html' ? 'no-cache' : 'public, max-age=3600' }, extra));
     return true;
   }
   return false;
@@ -89,4 +92,4 @@ function clientIp(req) {
   return String(req.headers['x-real-ip'] || req.socket.remoteAddress || '');
 }
 
-module.exports = { HttpError, parseCookies, cookie, readBody, send, serveStatic, Router, clientIp };
+module.exports = { HttpError, parseCookies, cookie, readBody, send, serveStatic, Router, clientIp, STRICT_CSP };

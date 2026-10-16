@@ -35,4 +35,6 @@ VER=$(python3 -c "import json;print(json.load(open('$HERE/../app/package.json'))
 RES="$OUT/AI_YT_Studio_Windows_$VER.zip"
 rm -f "$RES"
 (cd "$WORK" && zip -qr -9 "$RES" "$NAME")
+(cd "$OUT" && sha256sum "$(basename "$RES")" > "$(basename "$RES").sha256")
 echo "Готово: $RES ($(du -h "$RES" | cut -f1))"
+echo "SHA-256 (опубликуйте рядом со ссылкой на скачивание): $(cut -d' ' -f1 "$RES.sha256")"

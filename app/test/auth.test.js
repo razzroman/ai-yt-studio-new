@@ -160,3 +160,19 @@ test('Google: новый пользователь без согласий не �
   assert.match(bad.headers.get('location'), /error=state_invalid/);
   await t.close();
 });
+
+test('защита: строгая политика скриптов для кабинета, лимит запросов к API', async () => {
+  const t = await start();
+  const page = await fetch(t.base + '/app/login');
+  const csp = page.headers.get('content-security-policy');
+  assert.match(csp, /script-src 'self';/);
+  assert.doesNotMatch(csp, /unsafe-eval/);
+  assert.equal(page.headers.get('x-frame-options'), 'SAMEORIGIN');
+  let last;
+  for (let i = 0; i < 305; i++) last = await fetch(t.base + '/api/health');
+  assert.equal(last.status, 429, 'после 300 запросов в минуту с одного адреса — отказ');
+  // Уведомления ЮKassa под лимит не попадают.
+  const wh = await fetch(t.base + '/api/payments/webhook', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
+  assert.equal(wh.status, 200);
+  await t.close();
+});

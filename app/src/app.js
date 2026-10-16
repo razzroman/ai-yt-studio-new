@@ -1,6 +1,6 @@
 'use strict';
 const path = require('node:path');
-const { HttpError, parseCookies, cookie, readBody, send, serveStatic, Router, clientIp } = require('./http');
+const { HttpError, parseCookies, cookie, readBody, send: rawSend, serveStatic: rawServe, Router, clientIp, STRICT_CSP } = require('./http');
 const dbm = require('./db');
 
 const LANDING_BRIDGE = `<script>
@@ -187,13 +187,29 @@ function createApp(opts = {}) {
   const siteRoot = opts.siteRoot || path.join(__dirname, '..', '..');
   const NO_CSRF = new Set(['/api/auth/register', '/api/auth/login', '/api/auth/verify', '/api/auth/forgot', '/api/auth/reset', '/api/payments/webhook']);
 
+  // Ограничение частоты запросов к API с одного адреса (вторая линия после nginx).
+  const apiHits = new Map();
+  function apiAllowed(ip) {
+    const t = now(), w = 60e3, max = 300;
+    let e = apiHits.get(ip);
+    if (!e || t - e.start > w) { e = { start: t, n: 0 }; apiHits.set(ip, e); }
+    if (apiHits.size > 50000) apiHits.clear();
+    return ++e.n <= max;
+  }
+
   async function handle(req, res) {
     const url = new URL(req.url, 'http://x');
     const pathname = url.pathname;
+    // Строгая политика скриптов для кабинета и API; прототипу (холст) нужна мягкая. HSTS — когда сайт на HTTPS.
+    const strict = pathname.startsWith('/api/') || pathname.startsWith('/app');
+    const sec = Object.assign(strict ? { 'Content-Security-Policy': STRICT_CSP } : {}, config.secureCookies ? { 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains' } : {});
+    const send = (r, st, body, h = {}) => rawSend(r, st, body, Object.assign({}, sec, h));
+    const serveStatic = (roots, p, r) => rawServe(roots, p, r, sec);
     const ctx = { req, res, ip: clientIp(req), query: Object.fromEntries(url.searchParams), cookies: parseCookies(req.headers.cookie), headers: [], setCookie(c) { this.headers.push(c); } };
     req.ip = ctx.ip;
     try {
       if (pathname.startsWith('/api/')) {
+        if (pathname !== '/api/payments/webhook' && !apiAllowed(ctx.ip)) throw new HttpError(429, 'too_many_requests');
         const m = r.match(req.method, pathname);
         if (!m) throw new HttpError(404, 'not_found');
         ctx.params = m.params;
