@@ -1,0 +1,9 @@
+{
+  "name": "ai-yt-studio-desktop",
+  "productName": "AI YT Studio",
+  "version": "1.0.0",
+  "description": "AI YT Studio — программа для компьютера: кабинет сервиса в отдельном окне.",
+  "main": "main.js",
+  "author": "AI YT Studio",
+  "aiytServer": "https://buykurs.ru"
+}

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:">
+<title>AI YT Studio</title>
+<style>
+body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#F4F3EF;color:#16161A;font:16px/1.5 'Segoe UI',system-ui,sans-serif;padding:24px;box-sizing:border-box}
+.box{max-width:440px;width:100%;background:#fff;border:1px solid #E2DFD7;border-radius:16px;padding:32px 28px;display:flex;flex-direction:column;gap:16px}
+.logo{width:48px;height:48px;border-radius:12px;background:#C93C14;display:grid;place-items:center}
+h1{margin:0;font-size:24px;line-height:1.25}
+p{margin:0;color:#5E5B54}
+button{min-height:48px;border-radius:10px;border:0;background:#C93C14;color:#fff;font:600 15px inherit;font-family:inherit;cursor:pointer}
+button:hover{background:#B0340F}
+button.sec{background:#fff;color:#16161A;border:1px solid #D9D6CE;font-weight:500}
+button.sec:hover{background:#fff;border-color:#16161A}
+button:focus-visible{outline:3px solid #2F5BEA;outline-offset:2px}
+.hint{font-size:13px}
+</style>
+</head>
+<body>
+<main class="box">
+  <div class="logo" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 16 16"><path d="M5 3.5v9l7.5-4.5z" fill="#fff"/></svg></div>
+  <h1 id="h"></h1>
+  <p id="p"></p>
+  <button type="button" id="retry"></button>
+  <button type="button" id="demo" class="sec"></button>
+  <p class="hint" id="s"></p>
+</main>
+<script>
+  var q = new URLSearchParams(location.search), en = q.get('lang') === 'en';
+  document.documentElement.lang = en ? 'en' : 'ru';
+  document.getElementById('h').textContent = en ? 'No connection to the service' : 'Нет связи с сервисом';
+  document.getElementById('p').textContent = en ? 'Check your internet connection. If it works, the service may be under maintenance — try again in a few minutes.' : 'Проверьте интернет. Если он работает, сервис может обновляться — попробуйте через несколько минут.';
+  document.getElementById('retry').textContent = en ? 'Try again' : 'Попробовать снова';
+  document.getElementById('s').textContent = (en ? 'Server: ' : 'Сервер: ') + (q.get('server') || '');
+  document.getElementById('demo').textContent = en ? 'Open the demo meanwhile' : 'Пока посмотреть демо-версию';
+  document.getElementById('demo').onclick = function () { location.href = (q.get('server') || '') + '/'; };
+  document.getElementById('retry').onclick = function () { location.href = (q.get('server') || '') + '/app/'; };
+  document.getElementById('retry').focus();
+</script>
+</body>
+</html>
