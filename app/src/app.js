@@ -224,10 +224,10 @@ function createApp(opts = {}) {
         if (serveStatic([appPublic], page || sub, res)) return;
         if (serveStatic([appPublic], '/index.html', res)) return;
       }
-      if (pathname === '/') {
-        // Главная — лендинг прототипа; его кнопки входа и регистрации ведут в настоящие экраны /app/.
+      if (pathname === '/' || pathname === '/MLanding.dc.html') {
+        // Главная — лендинг прототипа (на телефоне — мобильный); его кнопки входа и регистрации ведут в настоящие экраны /app/.
         const fs = require('node:fs');
-        let html; try { html = fs.readFileSync(path.join(siteRoot, 'Landing.dc.html'), 'utf8'); } catch (e) { html = null; }
+        let html; try { html = fs.readFileSync(path.join(siteRoot, pathname === '/' ? 'Landing.dc.html' : 'MLanding.dc.html'), 'utf8'); } catch (e) { html = null; }
         if (html) return send(res, 200, html.replace('</body>', LANDING_BRIDGE + '</body>'), { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-cache' });
       }
       if (pathname === '/prototype') return send(res, 301, '', { Location: '/prototype/' });

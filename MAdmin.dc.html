@@ -2,6 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>AI YT Studio — Mobile admin</title>
 <script src="./support.js"></script>
 </head>
@@ -29,7 +30,7 @@ input,select{font-family:inherit}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 </style>
 </helmet>
-<div lang="{{uiLang}}" style="width: 390px; height: 844px; position: relative; overflow: hidden; display: flex; flex-direction: column; background: #EEEDE8; color: #16161A; font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 16px">
+<div lang="{{uiLang}}" style="width: 100%; max-width: 480px; margin: 0 auto; height: 100vh; height: 100dvh; position: relative; overflow: hidden; display: flex; flex-direction: column; background: #EEEDE8; color: #16161A; font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 16px">
 
 <header style="flex: none; background: #0E0E11; color: #F4F3EF; padding: 10px 12px; display: flex; align-items: center; gap: 10px">
 <button type="button" onClick="{{toggleMenu}}" aria-label="{{t.menu}}" aria-expanded="{{menuOpen}}" style="width: 44px; height: 44px; border-radius: 10px; border: 1px solid #2E2E35; background: transparent; display: flex; align-items: center; justify-content: center; flex: none">
