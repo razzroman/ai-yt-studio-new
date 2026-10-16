@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>AI YT Studio — Mobile home</title>
 <script src="./support.js"></script>
+<script src="legal/cookie.js" defer></script>
 </head>
 <body>
 <x-dc>
@@ -82,8 +83,8 @@ footer a,header a{display:inline-flex;align-items:center;min-height:44px}
 <input id="mpass" type="password" class="fld">
 </div>
 <sc-if value="{{isSignup}}" hint-placeholder-val="{{ true }}">
-<div style="display: flex; gap: 10px; align-items: flex-start"><input id="mterms" type="checkbox" style="width: 22px; height: 22px; margin: 0; accent-color: #16161A; flex: none"><label for="mterms" style="font-size: 13px; color: #3A3833; line-height: 1.45">{{t.termsA}} <a href="MLegal.dc.html">{{t.termsL1}}</a> {{t.termsAnd}} <a href="MLegal.dc.html">{{t.termsL2}}</a></label></div>
-<div style="display: flex; gap: 10px; align-items: flex-start"><input id="mpdc" type="checkbox" style="width: 22px; height: 22px; margin: 0; accent-color: #16161A; flex: none"><label for="mpdc" style="font-size: 13px; color: #3A3833; line-height: 1.45">{{t.pdA}} <a href="MLegal.dc.html">{{t.pdL}}</a></label></div>
+<div style="display: flex; gap: 10px; align-items: flex-start"><input id="mterms" type="checkbox" style="width: 22px; height: 22px; margin: 0; accent-color: #16161A; flex: none"><label for="mterms" style="font-size: 13px; color: #3A3833; line-height: 1.45">{{t.termsA}} <a href="legal/terms.html" target="_blank" rel="noopener">{{t.termsL1}}</a> {{t.termsAnd}} <a href="legal/privacy.html" target="_blank" rel="noopener">{{t.termsL2}}</a></label></div>
+<div style="display: flex; gap: 10px; align-items: flex-start"><input id="mpdc" type="checkbox" style="width: 22px; height: 22px; margin: 0; accent-color: #16161A; flex: none"><label for="mpdc" style="font-size: 13px; color: #3A3833; line-height: 1.45">{{t.pdA}} <a href="legal/consent.html" target="_blank" rel="noopener">{{t.pdL}}</a></label></div>
 </sc-if>
 <a href="{{submitHref}}" style="min-height: 52px; display: flex; align-items: center; justify-content: center; border-radius: 10px; background: {{accent}}; color: #fff; text-decoration: none; font-weight: 600">{{submitLabel}}</a>
 </form>
@@ -163,7 +164,7 @@ footer a,header a{display:inline-flex;align-items:center;min-height:44px}
 
 <footer style="background: #16161A; color: #CFCBC2; padding: 28px 16px 36px; display: flex; flex-direction: column; gap: 14px; font-size: 14px">
 <span style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 18px; color: #F4F3EF">AI YT Studio</span>
-<div style="display: flex; flex-wrap: wrap; gap: 8px 18px"><a href="MLegal.dc.html" style="color: #CFCBC2">{{t.terms1}}</a><a href="MLegal.dc.html" style="color: #CFCBC2">{{t.privacy}}</a><a href="MLegal.dc.html" style="color: #CFCBC2">{{t.offerL}}</a><a href="#mtop" style="color: #CFCBC2">{{t.contacts}}</a></div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px 18px"><a href="legal/terms.html" style="color: #CFCBC2">{{t.terms1}}</a><a href="legal/privacy.html" style="color: #CFCBC2">{{t.privacy}}</a><a href="legal/offer.html" style="color: #CFCBC2">{{t.offerL}}</a><a href="legal/refund.html" style="color: #CFCBC2">{{t.refundL}}</a><a href="legal/contacts.html" style="color: #CFCBC2">{{t.contacts}}</a></div>
 <span style="font-size: 12px; color: #9C998F; line-height: 1.5">{{t.footNote}}</span>
 </footer>
 </div>
@@ -203,7 +204,7 @@ var L = {
     plans: [["Старт", "0 ₽", ["1 канал", "60 кредитов", "Сценарии и анализ", "Водяной знак", "Субтитры с выделением слова"], "Начать бесплатно"], ["Автор", "2 490 ₽", ["До 3 каналов", "1 000 кредитов", "Клипы и озвучка", "Без водяного знака", "Акценты и 10 стилей субтитров"], "Выбрать «Автор»"], ["Студия", "6 490 ₽", ["Без лимита каналов", "3 500 кредитов", "Командный доступ", "Приоритет"], "Выбрать «Студия»"]],
     faqTitle: "Вопросы",
     faq: [["Нужно ли подключать канал?", "Нет. Подключение YouTube, VK Видео, RUTUBE или Дзена нужно для публикации и анализа вашей статистики."], ["Можно ли публиковать в VK Видео, RUTUBE и Дзен?", "Да. Готовый ролик публикуется сразу на YouTube, VK Видео, RUTUBE и Дзен, а Shorts — ещё в VK Клипы и RUTUBE Shorts. Просмотры по всем площадкам видны в одном месте."], ["Как оплатить и будет ли чек?", "Картой, через СБП, SberPay или T-Pay. На каждую оплату приходит чек «Мой налог» — его можно скачать в истории платежей."], ["Помогаете с маркировкой рекламы?", "Да. Сервис получает токен erid через оператора рекламных данных и готовит пометку «Реклама» для описания и кадра. Ответственность за маркировку остаётся на авторе."], ["Что такое кредиты?", "Кредиты расходуются на генерации: сценарий, озвучку, изображение, клип или анализ."], ["Можно ли отменить подписку?", "Да, в любой момент. Доступ сохранится до конца оплаченного периода."]],
-    terms1: "Условия", offerL: "Оферта", privacy: "Конфиденциальность", contacts: "Контакты",
+    terms1: "Условия", offerL: "Оферта", refundL: "Возврат", privacy: "Конфиденциальность", contacts: "Контакты",
     footNote: "© 2026 AI YT Studio. YouTube — товарный знак Google LLC; VK Видео, RUTUBE и Дзен — товарные знаки их правообладателей. Сервис не связан с этими компаниями."
   },
   en: {
@@ -237,7 +238,7 @@ var L = {
     plans: [["Starter", "$0", ["1 channel", "60 credits", "Scripts and analytics", "Watermark", "Spoken-word subtitles"], "Start free"], ["Creator", "$29", ["Up to 3 channels", "1,000 credits", "Clips and voiceover", "No watermark", "Accents, 10 subtitle styles"], "Choose Creator"], ["Studio", "$79", ["Unlimited channels", "3,500 credits", "Team access", "Priority"], "Choose Studio"]],
     faqTitle: "FAQ",
     faq: [["Do I need to connect my YouTube channel?", "No. Connecting is only needed to analyze your own stats."], ["What are credits?", "Credits are spent on generations: a script, voiceover, image, clip or analysis."], ["Can I cancel my subscription?", "Yes, any time. Access stays until the end of the paid period."]],
-    terms1: "Terms", offerL: "Offer", privacy: "Privacy", contacts: "Contact",
+    terms1: "Terms", offerL: "Offer", refundL: "Refunds", privacy: "Privacy", contacts: "Contact",
     footNote: "© 2026 AI YT Studio. YouTube is a trademark of Google LLC. Not affiliated with Google."
   }
 };

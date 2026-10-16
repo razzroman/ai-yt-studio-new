@@ -6,6 +6,7 @@
 <title>AI YT Studio — Home</title>
 <script data-mobile-redirect>/* На телефоне открываем мобильную версию экрана (в холсте не срабатывает: там артборд шире). */if(window.matchMedia&&matchMedia('(max-width: 700px)').matches&&!/[?&]desktop=1/.test(location.search))location.replace('MLanding.dc.html'+location.hash);</script>
 <script src="./support.js"></script>
+<script src="legal/cookie.js" defer></script>
 </head>
 <body>
 <x-dc>
@@ -97,11 +98,11 @@ header nav a,footer a{display:inline-flex;align-items:center;min-height:32px}
 <sc-if value="{{isSignup}}" hint-placeholder-val="{{ true }}">
 <div style="display: flex; gap: 10px; align-items: flex-start">
 <input id="terms" type="checkbox" style="width: 20px; height: 20px; margin: 2px 0 0; accent-color: #16161A; flex: none">
-<label for="terms" style="font-size: 13px; color: #3A3833; line-height: 1.45">{{t.termsA}} <a href="Legal.dc.html">{{t.termsL1}}</a> {{t.termsAnd}} <a href="Legal.dc.html">{{t.termsL2}}</a></label>
+<label for="terms" style="font-size: 13px; color: #3A3833; line-height: 1.45">{{t.termsA}} <a href="legal/terms.html" target="_blank" rel="noopener">{{t.termsL1}}</a> {{t.termsAnd}} <a href="legal/privacy.html" target="_blank" rel="noopener">{{t.termsL2}}</a></label>
 </div>
 <div style="display: flex; gap: 10px; align-items: flex-start">
 <input id="pdc" type="checkbox" style="width: 20px; height: 20px; margin: 2px 0 0; accent-color: #16161A; flex: none">
-<label for="pdc" style="font-size: 13px; color: #3A3833; line-height: 1.45">{{t.pdA}} <a href="Legal.dc.html">{{t.pdL}}</a></label>
+<label for="pdc" style="font-size: 13px; color: #3A3833; line-height: 1.45">{{t.pdA}} <a href="legal/consent.html" target="_blank" rel="noopener">{{t.pdL}}</a></label>
 </div>
 </sc-if>
 <a href="{{submitHref}}" style="min-height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 8px; background: {{accent}}; color: #fff; text-decoration: none; font-weight: 600; font-size: 16px">{{submitLabel}}</a>
@@ -244,7 +245,7 @@ header nav a,footer a{display:inline-flex;align-items:center;min-height:32px}
 </div>
 <div style="display: flex; flex-wrap: wrap; gap: 48px; font-size: 14px">
 <div style="display: flex; flex-direction: column; gap: 10px"><span style="color: #F4F3EF; font-weight: 600">{{t.footProduct}}</span><a href="#features" style="color: #CFCBC2">{{t.navFeatures}}</a><a href="#pricing" style="color: #CFCBC2">{{t.navPricing}}</a><a href="#faq" style="color: #CFCBC2">{{t.navFaq}}</a></div>
-<div style="display: flex; flex-direction: column; gap: 10px"><span style="color: #F4F3EF; font-weight: 600">{{t.footLegal}}</span><a href="Legal.dc.html" style="color: #CFCBC2">{{t.terms1}}</a><a href="Legal.dc.html" style="color: #CFCBC2">{{t.privacy}}</a><a href="Legal.dc.html" style="color: #CFCBC2">{{t.offerL}}</a><a href="#top" style="color: #CFCBC2">{{t.contacts}}</a></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><span style="color: #F4F3EF; font-weight: 600">{{t.footLegal}}</span><a href="legal/terms.html" style="color: #CFCBC2">{{t.terms1}}</a><a href="legal/privacy.html" style="color: #CFCBC2">{{t.privacy}}</a><a href="legal/offer.html" style="color: #CFCBC2">{{t.offerL}}</a><a href="legal/refund.html" style="color: #CFCBC2">{{t.refundL}}</a><a href="legal/contacts.html" style="color: #CFCBC2">{{t.contacts}}</a></div>
 </div>
 </div>
 <div style="max-width: 1240px; margin: 32px auto 0; padding: 0 clamp(16px, 4vw, 40px); font-size: 13px; color: #9C998F">{{t.footNote}}</div>
@@ -305,7 +306,7 @@ var L = {
     ],
     ctaTitle: "Запустите первый канал уже сегодня", ctaSub: "Регистрация бесплатна, карта не нужна.",
     footTag: "AI-студия для создания и развития видеоканалов на YouTube, VK Видео, RUTUBE и Дзене.", footProduct: "Продукт", footLegal: "Компания",
-    terms1: "Условия использования", offerL: "Оферта", privacy: "Конфиденциальность", contacts: "Контакты",
+    terms1: "Условия использования", offerL: "Оферта", refundL: "Возврат", privacy: "Конфиденциальность", contacts: "Контакты",
     footNote: "© 2026 AI YT Studio. YouTube — товарный знак Google LLC; VK Видео, RUTUBE и Дзен — товарные знаки их правообладателей. Сервис не связан с этими компаниями."
   },
   en: {
@@ -358,7 +359,7 @@ var L = {
     ],
     ctaTitle: "Launch your first channel today", ctaSub: "Sign-up is free, no card required.",
     footTag: "AI studio for creating and growing YouTube channels.", footProduct: "Product", footLegal: "Company",
-    terms1: "Terms of Use", offerL: "Public offer", privacy: "Privacy", contacts: "Contact",
+    terms1: "Terms of Use", offerL: "Public offer", refundL: "Refunds", privacy: "Privacy", contacts: "Contact",
     footNote: "© 2026 AI YT Studio. YouTube is a trademark of Google LLC. Not affiliated with Google."
   }
 };

@@ -21,7 +21,7 @@
     if (isStaff()) h += '<div class="grp">' + t().adminGrp + '</div>' + ADM.map(function (n) { return '<a href="#/' + n[0] + '"' + (r === n[0] ? ' aria-current="page"' : '') + '>' + t()[n[1]] + '</a>'; }).join('');
     $('nav').innerHTML = h;
     $('aside').setAttribute('aria-label', t().menu);
-    $('sideFoot').innerHTML = '<span>' + E(me.email) + '</span><a href="/">' + t().site + '</a><a href="/Main.dc.html">' + t().proto + '</a><button type="button" class="link" id="logoutBtn" style="color:#CFCBC2;text-align:left">' + t().logout + '</button>';
+    $('sideFoot').innerHTML = '<span>' + E(me.email) + '</span><a href="/">' + t().site + '</a><a href="/Main.dc.html">' + t().proto + '</a><a href="/legal/">' + t().docs + '</a><button type="button" class="link" id="logoutBtn" style="color:#CFCBC2;text-align:left">' + t().logout + '</button>';
     $('logoutBtn').onclick = function () { A.api('POST', '/api/auth/logout', {}).then(function () { location.href = '/app/login'; }, function () { location.href = '/app/login'; }); };
     $('langBtn').textContent = t().lang; $('langBtn').setAttribute('aria-label', t().langL);
     $('menuL').textContent = t().menu; $('ntL').textContent = t().notif;
@@ -107,7 +107,7 @@
       '<div class="card"><div class="row" style="justify-content:space-between"><div><span class="muted">' + t().curPlan + '</span><h2 style="margin-top:4px">' + planName(me.plan) + '</h2><span class="hint">' + E(until) + '</span></div><div style="text-align:right"><span class="muted">' + t().balance + '</span><h2 style="margin-top:4px">' + A.num(me.balance) + '</h2><span class="hint">' + t().credits + '</span></div></div>' +
       (me.plan !== 'start' ? '<div class="setrow" style="margin-top:12px"><div><b style="font-weight:500">' + t().autorenew + '</b><div class="hint">' + t().autorenewH + (me.hasSavedCard ? ' ' + t().savedCard + '.' : '') + '</div></div><button type="button" class="switch" role="switch" aria-checked="' + me.autorenew + '" aria-label="' + t().autorenew + '" id="arSw"><span></span></button></div>' + (me.hasSavedCard ? '<button type="button" class="link" id="forgetBtn">' + t().forgetCard + '</button>' : '') : '') + '</div>' +
       '<div><h3 style="margin-bottom:8px">' + t().method + '</h3><div class="seg" role="radiogroup" aria-label="' + t().method + '">' + methods.map(function (m, i) { return '<button type="button" role="radio" aria-checked="' + (i === 0) + '" aria-pressed="' + (i === 0) + '" data-m="' + m + '">' + t().methods[m] + '</button>'; }).join('') + '</div></div>' +
-      '<div class="prods">' + cards + '</div><p class="hint">' + t().payNote + (cfg.paymentsMode === 'mock' ? ' <b>' + t().mockNote + '</b>' : '') + '</p>' +
+      '<div class="prods">' + cards + '</div><p class="hint">' + t().offerAcc + ' <a href="/legal/offer.html" target="_blank" rel="noopener">' + t().offerLink + '</a> ' + t().andW + ' <a href="/legal/refund.html" target="_blank" rel="noopener">' + t().refundLink + '</a>. ' + t().payNote + (cfg.paymentsMode === 'mock' ? ' <b>' + t().mockNote + '</b>' : '') + '</p>' +
       '<div><h3 style="margin-bottom:8px">' + t().payments + '</h3><div class="tbl"><table><tbody id="payRows"><tr><td class="empty"><span class="spinner"></span></td></tr></tbody></table></div></div>';
     bindBanner();
     view.querySelectorAll('[data-m]').forEach(function (b) { b.onclick = function () { method = b.dataset.m; view.querySelectorAll('[data-m]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); x.setAttribute('aria-checked', String(x === b)); }); }; });

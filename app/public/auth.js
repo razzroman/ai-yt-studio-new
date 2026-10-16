@@ -25,8 +25,8 @@
         '<div class="fld"><label for="name">' + t().name + '</label><input class="in" id="name" autocomplete="name" required></div>' +
         '<div class="fld"><label for="email">' + t().email + '</label><input class="in" id="email" type="email" autocomplete="email" placeholder="you@example.com" required></div>' +
         '<div class="fld"><label for="pass">' + t().pass + '</label><input class="in" id="pass" type="password" autocomplete="new-password" aria-describedby="ph" required><span class="hint" id="ph">' + t().passHint + '</span></div>' +
-        '<label class="chk"><input type="checkbox" id="c1"><span>' + t().terms1 + '<a href="/Legal.dc.html" target="_blank" rel="noopener">' + t().terms2 + '</a>' + t().terms3 + '<a href="/Legal.dc.html" target="_blank" rel="noopener">' + t().terms4 + '</a></span></label>' +
-        '<label class="chk"><input type="checkbox" id="c2"><span>' + t().pd1 + '<a href="/Legal.dc.html" target="_blank" rel="noopener">' + t().pd2 + '</a></span></label>' +
+        '<label class="chk"><input type="checkbox" id="c1"><span>' + t().terms1 + '<a href="/legal/terms.html" target="_blank" rel="noopener">' + t().terms2 + '</a>' + t().terms3 + '<a href="/legal/privacy.html" target="_blank" rel="noopener">' + t().terms4 + '</a></span></label>' +
+        '<label class="chk"><input type="checkbox" id="c2"><span>' + t().pd1 + '<a href="/legal/consent.html" target="_blank" rel="noopener">' + t().pd2 + '</a></span></label>' +
         errBox('e') + '<button class="btn p w" id="sb">' + t().create + '</button></form><p class="muted" style="text-align:center;font-size:14px">' + t().haveAcc + ' <a href="/app/login">' + t().login + '</a></p>';
       var g = document.getElementById('gBtn');
       if (g) g.onclick = function () {

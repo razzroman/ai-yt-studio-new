@@ -1,0 +1,31 @@
+:root{--ink:#16161A;--bg:#F4F3EF;--card:#fff;--line:#E2DFD7;--muted:#5E5B54;--accent:#C93C14;--focus:#2F5BEA}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 'IBM Plex Sans',system-ui,sans-serif}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.wrap{max-width:860px;margin:0 auto;padding:0 16px}
+.top{background:var(--ink);color:var(--bg)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:64px}
+.brand{display:flex;align-items:center;gap:10px;font:700 19px 'Space Grotesk',sans-serif;text-decoration:none}
+.logo{width:30px;height:30px;border-radius:8px;background:var(--accent);display:grid;place-items:center}
+.back{color:#CFCBC2;font-size:14px;min-height:44px;display:inline-flex;align-items:center}
+.docs{display:flex;flex-wrap:wrap;gap:6px;margin:24px 0 8px}
+.docs a{display:inline-flex;align-items:center;min-height:36px;padding:0 12px;border:1px solid var(--line);border-radius:999px;background:var(--card);font-size:14px;text-decoration:none;color:var(--muted)}
+.docs a[aria-current="page"]{background:var(--ink);border-color:var(--ink);color:#fff}
+article{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:clamp(20px,4vw,40px);margin:16px 0 24px}
+h1{font:700 clamp(28px,4vw,38px)/1.15 'Space Grotesk',sans-serif;margin:0 0 6px;letter-spacing:-.01em}
+h2{font:600 21px/1.3 'Space Grotesk',sans-serif;margin:28px 0 8px}
+.ed{color:var(--muted);font-size:14px;margin:0 0 16px}
+.lead{font-size:17px;color:#3A3833;margin:0 0 8px}
+section p{margin:0 0 10px}
+section ul{margin:0 0 10px;padding-left:22px}
+section li{margin:0 0 6px}
+.op{font-weight:500}
+.op.miss{background:#FBEBC9;color:#5A3800;border-radius:4px;padding:0 4px;font-weight:500}
+.list{list-style:none;padding:0;margin:16px 0 0;display:flex;flex-direction:column;gap:10px}
+.list li{border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.list a{text-decoration:none}.list a:hover b{text-decoration:underline}
+.list span{color:var(--muted);font-size:14px}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16px;color:var(--muted);font-size:13px;padding-bottom:40px}
+@media print{.top,.docs,.foot,#aiyt-cookie{display:none}article{border:0;padding:0}}

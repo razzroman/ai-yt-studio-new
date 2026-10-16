@@ -188,7 +188,8 @@ function createApp(opts = {}) {
   function sitePath(p) {
     let d; try { d = decodeURIComponent(p || '/'); } catch (e) { return null; }
     if (d === '/') return '/index.html';
-    return /^\/[A-Za-z0-9][\w-]*(\.dc)?\.(html|js|mp4|ico)$/.test(d) || /^\/img\/[\w-]+\.webp$/.test(d) ? d : null;
+    if (d === '/legal/') return '/legal/index.html';
+    return /^\/[A-Za-z0-9][\w-]*(\.dc)?\.(html|js|mp4|ico)$/.test(d) || /^\/img\/[\w-]+\.webp$/.test(d) || /^\/legal\/[a-z-]+\.(html|css|js)$/.test(d) ? d : null;
   }
   const NO_CSRF = new Set(['/api/auth/register', '/api/auth/login', '/api/auth/verify', '/api/auth/forgot', '/api/auth/reset', '/api/payments/webhook']);
 
@@ -206,7 +207,7 @@ function createApp(opts = {}) {
     const url = new URL(req.url, 'http://x');
     const pathname = url.pathname;
     // Строгая политика скриптов для кабинета и API; прототипу (холст) нужна мягкая. HSTS — когда сайт на HTTPS.
-    const strict = pathname.startsWith('/api/') || pathname.startsWith('/app');
+    const strict = pathname.startsWith('/api/') || pathname.startsWith('/app') || pathname.startsWith('/legal/');
     const sec = Object.assign(strict ? { 'Content-Security-Policy': STRICT_CSP } : {}, config.secureCookies ? { 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains' } : {});
     const send = (r, st, body, h = {}) => rawSend(r, st, body, Object.assign({}, sec, h));
     const serveStatic = (roots, p, r) => rawServe(roots, p, r, sec);
@@ -252,6 +253,7 @@ function createApp(opts = {}) {
         if (html) return send(res, 200, html.replace('</body>', LANDING_BRIDGE + '</body>'), { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-cache' });
       }
       if (pathname === '/prototype') return send(res, 301, '', { Location: '/prototype/' });
+      if (pathname === '/legal') return send(res, 301, '', { Location: '/legal/' });
       // Прототип целиком доступен по /prototype/ (страница со всеми экранами и демо-видео).
       // Из корня репозитория отдаются только файлы прототипа верхнего уровня (страницы, support.js, видео) —
       // исходники app/, desktop/, .git и служебные файлы наружу не попадают.
