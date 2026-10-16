@@ -185,6 +185,11 @@ function createApp(opts = {}) {
   // ---------- обработка запроса
   const appPublic = path.join(__dirname, '..', 'public');
   const siteRoot = opts.siteRoot || path.join(__dirname, '..', '..');
+  function sitePath(p) {
+    let d; try { d = decodeURIComponent(p || '/'); } catch (e) { return null; }
+    if (d === '/') return '/index.html';
+    return /^\/[A-Za-z0-9][\w-]*(\.dc)?\.(html|js|mp4|ico)$/.test(d) ? d : null;
+  }
   const NO_CSRF = new Set(['/api/auth/register', '/api/auth/login', '/api/auth/verify', '/api/auth/forgot', '/api/auth/reset', '/api/payments/webhook']);
 
   // Ограничение частоты запросов к API с одного адреса (вторая линия после nginx).
@@ -248,8 +253,10 @@ function createApp(opts = {}) {
       }
       if (pathname === '/prototype') return send(res, 301, '', { Location: '/prototype/' });
       // Прототип целиком доступен по /prototype/ (страница со всеми экранами и демо-видео).
-      if (pathname.startsWith('/prototype/')) { if (serveStatic([siteRoot], pathname.slice(10) || '/', res)) return; }
-      if (!pathname.startsWith('/app/') && !/^\/(\.git|README\.md|CNAME)/.test(pathname) && serveStatic([siteRoot], pathname, res)) return;
+      // Из корня репозитория отдаются только файлы прототипа верхнего уровня (страницы, support.js, видео) —
+      // исходники app/, desktop/, .git и служебные файлы наружу не попадают.
+      if (pathname.startsWith('/prototype/')) { const sp = sitePath(pathname.slice(10)); if (sp && serveStatic([siteRoot], sp, res)) return; }
+      { const sp = sitePath(pathname); if (sp && serveStatic([siteRoot], sp, res)) return; }
       send(res, 404, 'Not found', { 'Content-Type': 'text/plain; charset=utf-8' });
     } catch (e) {
       if (e instanceof HttpError) return send(res, e.status, Object.assign({ error: e.code }, e.extra || {}), ctx.headers.length ? { 'Set-Cookie': ctx.headers } : {});
