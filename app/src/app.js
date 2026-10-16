@@ -32,8 +32,6 @@ function createApp(opts = {}) {
   const auth = require('./services/auth')({ db, config, mail, credits, audit, fetchImpl, now });
   const payments = require('./services/payments')({ db, config, credits, audit, mail, settings, provider, now });
   const admin = require('./services/admin')({ db, credits, audit, settings, payments, now });
-  const providerKeys = { timeweb: !!(config.ai && config.ai.timewebKey), gateway: !!(config.ai && config.ai.gatewayUrl) };
-  const catalog = require('./services/catalog')({ settings, config: { providerKeys } });
 
   const r = new Router();
   const baseOrigin = new URL(config.baseUrl).origin;
@@ -64,7 +62,6 @@ function createApp(opts = {}) {
   // ---------- публичное
   r.get('/api/health', () => ({ ok: true }));
   r.get('/api/public/config', () => publicConfig());
-  r.get('/api/public/models', (ctx) => ({ sections: catalog.publicList(ctx.query.lang) }));
 
   // ---------- вход
   r.post('/api/auth/register', async (ctx) => {
@@ -185,38 +182,6 @@ function createApp(opts = {}) {
   r.post('/api/admin/settings', (ctx) => { const a = needRole(ctx, ADMIN); return { [ctx.body.key]: admin.setSetting(a, String(ctx.body.key), ctx.body.value, ctx.ip) }; });
   r.post('/api/admin/renew', async (ctx) => { needRole(ctx, ADMIN); return { results: await payments.renewDue() }; });
 
-  // ---------- каталог моделей: включение, цены, кредиты
-  r.get('/api/admin/catalog', (ctx) => {
-    needRole(ctx, STAFF);
-    return { creditCost: catalog.creditCost(), sections: catalog.SECTIONS, providers: Object.keys(catalog.PROVIDERS).map((k) => Object.assign({ id: k, ready: providerKeys[k] }, catalog.PROVIDERS[k])), items: catalog.all() };
-  });
-  r.post('/api/admin/catalog/credit-cost', (ctx) => {
-    const a = needRole(ctx, ADMIN); const before = catalog.creditCost();
-    catalog.setCreditCost(Number(ctx.body.value));
-    audit.log(a.id, 'admin.credit_cost', null, { before, after: catalog.creditCost() }, ctx.ip);
-    return { creditCost: catalog.creditCost() };
-  });
-  r.post('/api/admin/catalog/:id', (ctx) => {
-    const a = needRole(ctx, ADMIN);
-    const patch = {}; ['enabled', 'in', 'out', 'price', 'model', 'credits'].forEach((k) => { if (ctx.body[k] !== undefined) patch[k] = ctx.body[k]; });
-    const m = catalog.update(ctx.params.id, patch);
-    audit.log(a.id, 'admin.catalog', null, Object.assign({ model: m.id }, patch), ctx.ip);
-    return m;
-  });
-  // Проверка ключа Timeweb AI Gateway: список доступных моделей у провайдера.
-  r.post('/api/admin/catalog-check', async (ctx) => {
-    needRole(ctx, ADMIN);
-    if (!config.ai || !config.ai.timewebKey) throw new HttpError(400, 'provider_key_missing');
-    let res;
-    try { res = await fetchImpl('https://api.timeweb.ai/v1/models', { headers: { Authorization: 'Bearer ' + config.ai.timewebKey } }); }
-    catch (e) { throw new HttpError(502, 'provider_unreachable'); }
-    if (!res.ok) throw new HttpError(502, res.status === 401 ? 'provider_key_invalid' : 'provider_error');
-    const data = await res.json().catch(() => ({}));
-    const ids = (data.data || []).map((x) => x.id).filter(Boolean);
-    const known = new Set(catalog.all().filter((m) => m.provider === 'timeweb').map((m) => m.model));
-    return { total: ids.length, missingInProvider: [...known].filter((x) => !ids.includes(x)), newAtProvider: ids.filter((x) => !known.has(x)).slice(0, 300) };
-  });
-
   // ---------- обработка запроса
   const appPublic = path.join(__dirname, '..', 'public');
   const siteRoot = opts.siteRoot || path.join(__dirname, '..', '..');
@@ -293,7 +258,7 @@ function createApp(opts = {}) {
     }
   }
 
-  return { handle, db, config, services: { audit, settings, credits, mail, auth, payments, admin, provider, catalog } };
+  return { handle, db, config, services: { audit, settings, credits, mail, auth, payments, admin, provider } };
 }
 
 module.exports = { createApp };

@@ -78,7 +78,7 @@ module.exports = function makeAdmin({ db, credits, audit, settings, payments, no
       return row(userById.get(id));
     },
     setSetting(actor, key, value, ip) {
-      if (!settings.KEYS.includes(key)) throw new HttpError(400, 'unknown_key'); // каталог и себестоимость — только своими методами
+      if (!settings.KEYS.includes(key)) throw new HttpError(400, 'unknown_key');
       const before = settings.get(key);
       const err = settings.set(key, value);
       if (err) throw new HttpError(400, err);
