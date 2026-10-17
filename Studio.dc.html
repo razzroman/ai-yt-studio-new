@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script data-desktop-viewport>/* «Версия для ПК» в мобильном браузере: показываем раскладку для компьютера. */if(!/Mobi|Android|iPhone|iPod/.test(navigator.userAgent)&&navigator.maxTouchPoints>0&&screen.width<=600){var v=document.querySelector('meta[name=viewport]');if(v)v.setAttribute('content','width=1280');}</script>
 <title>AI YT Studio — Growth tools</title>
-<script data-mobile-redirect>/* На телефоне открываем мобильную версию экрана (в холсте не срабатывает: там артборд шире). */if(window.matchMedia&&matchMedia('(max-width: 700px)').matches&&!/[?&]desktop=1/.test(location.search))location.replace('MStudio.dc.html'+location.hash);</script>
+<script data-mobile-redirect>/* Телефон — мобильная версия. Если в мобильном браузере включена «Версия для ПК» (браузер называет себя компьютером), остаёмся здесь. В холсте и рамке телефона не срабатывает. */if(window.top===window.self&&window.matchMedia&&matchMedia('(max-width: 700px)').matches&&(/Mobi|Android|iPhone|iPod/.test(navigator.userAgent)||!navigator.maxTouchPoints)&&!/[?&]desktop=1/.test(location.search))location.replace('MStudio.dc.html'+location.hash);</script>
 <script src="./support.js"></script>
 </head>
 <body>

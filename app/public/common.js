@@ -1,5 +1,7 @@
 // Общие помощники для экранов сервиса: API, язык, уведомления, форматирование.
 (function () {
+  // «Версия для ПК» в мобильном браузере: браузер называет себя компьютером — показываем раскладку для компьютера.
+  try { if(!/Mobi|Android|iPhone|iPod/.test(navigator.userAgent)&&navigator.maxTouchPoints>0&&screen.width<=600){var v = document.querySelector('meta[name=viewport]');if(v)v.setAttribute('content','width=1280');} } catch (e) {}
   var csrf = '';
   var lang = 'ru';
   try { lang = localStorage.getItem('aiyt.lang') || ((navigator.language || '').slice(0, 2) === 'en' ? 'en' : 'ru'); } catch (e) {}
