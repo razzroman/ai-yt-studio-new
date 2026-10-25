@@ -32,6 +32,7 @@ function createApp(opts = {}) {
   const auth = require('./services/auth')({ db, config, mail, credits, audit, fetchImpl, now });
   const payments = require('./services/payments')({ db, config, credits, audit, mail, settings, provider, now });
   const admin = require('./services/admin')({ db, credits, audit, settings, payments, now });
+  const images = require('./services/images')({ db, config, credits, settings, audit, fetchImpl, logger });
 
   const r = new Router();
   const baseOrigin = new URL(config.baseUrl).origin;
@@ -56,7 +57,7 @@ function createApp(opts = {}) {
   }
   function publicConfig() {
     const products = settings.get('products');
-    return { products, payMethods: settings.get('payMethods'), platforms: settings.get('platforms'), eridOn: settings.get('eridOn'), registrationOpen: settings.get('registrationOpen'), google: !!config.google.clientId, paymentsMode: provider.mode, startCredits: config.startCredits };
+    return { products, payMethods: settings.get('payMethods'), platforms: settings.get('platforms'), eridOn: settings.get('eridOn'), registrationOpen: settings.get('registrationOpen'), google: !!config.google.clientId, paymentsMode: provider.mode, startCredits: config.startCredits, imageGen: images.publicInfo() };
   }
 
   // ---------- публичное
@@ -178,7 +179,13 @@ function createApp(opts = {}) {
   r.post('/api/admin/users/:id/block', (ctx) => admin.setBlocked(needRole(ctx, ADMIN), Number(ctx.params.id), !!ctx.body.blocked, ctx.ip));
   r.post('/api/admin/payments/:id/refund', async (ctx) => { const p = await payments.refund(needRole(ctx, ADMIN), Number(ctx.params.id), ctx.ip); return { id: p.id, status: p.status }; });
   r.get('/api/admin/audit', (ctx) => { needRole(ctx, STAFF); return { items: audit.list({ q: String(ctx.query.q || ''), action: String(ctx.query.action || ''), before: ctx.query.before ? Number(ctx.query.before) : null, limit: 100 }) }; });
-  r.get('/api/admin/settings', (ctx) => { needRole(ctx, STAFF); return settings.all(); });
+  r.get('/api/admin/settings', (ctx) => { needRole(ctx, STAFF); return Object.assign(settings.all(), { imageGenStatus: images.status() }); });
+  r.post('/api/admin/image-gen/check', async (ctx) => images.check(needRole(ctx, ADMIN), ctx.ip));
+
+  // Генерация фото (модуль OpenAI): создать, список своих, файл (только владельцу).
+  r.post('/api/images', async (ctx) => images.generate(needUser(ctx), ctx.body));
+  r.get('/api/images', (ctx) => ({ items: images.list(needUser(ctx).id) }));
+  r.get('/api/images/:id/file', (ctx) => ({ raw: images.file(needUser(ctx).id, Number(ctx.params.id)), type: 'image/webp', filename: 'image-' + Number(ctx.params.id) + '.webp', inline: true }));
   r.post('/api/admin/settings', (ctx) => { const a = needRole(ctx, ADMIN); return { [ctx.body.key]: admin.setSetting(a, String(ctx.body.key), ctx.body.value, ctx.ip) }; });
   r.post('/api/admin/renew', async (ctx) => { needRole(ctx, ADMIN); return { results: await payments.renewDue() }; });
 
@@ -234,7 +241,7 @@ function createApp(opts = {}) {
         const out = await m.handler(ctx);
         const extra = ctx.headers.length ? { 'Set-Cookie': ctx.headers } : {};
         if (out && out.redirect) return send(res, 302, '', Object.assign({ Location: out.redirect }, extra));
-        if (out && out.raw !== undefined) return send(res, 200, out.raw, Object.assign({ 'Content-Type': out.type, 'Content-Disposition': `attachment; filename="${out.filename}"`, 'Cache-Control': 'no-store' }, extra));
+        if (out && out.raw !== undefined) return send(res, 200, out.raw, Object.assign({ 'Content-Type': out.type, 'Content-Disposition': `${out.inline ? 'inline' : 'attachment'}; filename="${out.filename}"`, 'Cache-Control': out.inline ? 'private, max-age=86400' : 'no-store', 'X-Content-Type-Options': 'nosniff' }, extra));
         return send(res, 200, out || {}, extra);
       }
       if (req.method !== 'GET' && req.method !== 'HEAD') throw new HttpError(405, 'method_not_allowed');
@@ -267,7 +274,7 @@ function createApp(opts = {}) {
     }
   }
 
-  return { handle, db, config, services: { audit, settings, credits, mail, auth, payments, admin, provider } };
+  return { handle, db, config, services: { audit, settings, credits, mail, auth, payments, admin, provider, images } };
 }
 
 module.exports = { createApp };

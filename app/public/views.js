@@ -249,7 +249,7 @@
       view.innerHTML = (ro ? '<div class="alert warn">' + t().readOnly + '</div>' : '') +
         '<section class="card"><h3>' + t().sMethods + '</h3><p class="hint" style="margin:4px 0 6px">' + t().sMethodsH + '</p>' + Object.keys(s.payMethods).map(function (k) { return sw('payMethods.' + k, s.payMethods[k], t().methods[k]); }).join('') + '</section>' +
         '<section class="card grid"><h3>' + t().sPrices + '</h3>' + ['author', 'studio', 'pack'].map(function (id) { var p = s.products[id]; return '<div class="row" style="align-items:flex-end"><b style="flex:1 1 140px;font-weight:500">' + t().products[id] + '</b><div class="fld" style="width:140px"><label for="pr_' + id + '">' + t().sPriceRub + '</label><input class="in" id="pr_' + id + '" type="number" min="1" step="1" value="' + p.priceKop / 100 + '"' + (ro ? ' disabled' : '') + '></div><div class="fld" style="width:120px"><label for="cr_' + id + '">' + t().sCredits + '</label><input class="in" id="cr_' + id + '" type="number" min="1" step="1" value="' + p.credits + '"' + (ro ? ' disabled' : '') + '></div></div>'; }).join('') + (ro ? '' : '<div><button type="button" class="btn d sm" id="savePr">' + t().save + '</button></div>') + '</section>' +
-        '<section class="card"><h3>' + t().sPlatforms + '</h3>' + Object.keys(s.platforms).map(function (k) { return sw('platforms.' + k, s.platforms[k], t().platformNames[k]); }).join('') + sw('eridOn', s.eridOn, t().sErid) + sw('registrationOpen', s.registrationOpen, t().sReg) + '</section>';
+        '<section class="card"><h3>' + t().sPlatforms + '</h3>' + Object.keys(s.platforms).map(function (k) { return sw('platforms.' + k, s.platforms[k], t().platformNames[k]); }).join('') + sw('eridOn', s.eridOn, t().sErid) + sw('registrationOpen', s.registrationOpen, t().sReg) + '</section>' + igSection(s, ro, sw);
       view.querySelectorAll('[data-sw]').forEach(function (b) {
         b.onclick = function () {
           var parts = b.dataset.sw.split('.'), key = parts[0], val;
@@ -257,12 +257,51 @@
           A.api('POST', '/api/admin/settings', { key: key, value: val }).then(function (r) { s[key] = r[key]; A.toast(t().saved); vAdminSettings(); refreshCfg(); }, fail);
         };
       });
+      igBind(s);
       if ($('savePr')) $('savePr').onclick = function () {
         var v = JSON.parse(JSON.stringify(s.products));
         ['author', 'studio', 'pack'].forEach(function (id) { v[id].priceKop = Math.round(Number($('pr_' + id).value) * 100); v[id].credits = Math.round(Number($('cr_' + id).value)); });
         A.api('POST', '/api/admin/settings', { key: 'products', value: v }).then(function () { A.toast(t().saved); refreshCfg(); }, fail);
       };
     }, fail);
+  }
+
+  // Модуль «Генерация фото — OpenAI»
+  function igSection(s, ro, sw) {
+    var g = s.imageGen, st = s.imageGenStatus || {}, cost = (st.costUsd || {})[g.model] || {};
+    var opt = function (id, cur, map) { return '<option value="' + E(id) + '"' + (id === cur ? ' selected' : '') + '>' + E(map[id] || id) + '</option>'; };
+    var dis = ro ? ' disabled' : '';
+    return '<section class="card grid" id="igCard"><div><h3>' + t().igH + '</h3><p class="hint" style="margin:4px 0 0">' + t().igHint + '</p></div>' +
+      sw('imageGen.enabled', g.enabled, t().igOn, t().igOnH) +
+      (st.keySet ? '<div class="alert ok" role="status">' + t().igKeyOk + ' · ' + t().igVia + ' <span class="mono">' + E(st.host) + '</span></div>' : '<div class="alert warn" role="status">' + t().igKeyNo + '</div>') +
+      '<div class="row" style="align-items:flex-end">' +
+        '<div class="fld" style="flex:1 1 260px"><label for="igModel">' + t().igModel + '</label><select class="in" id="igModel"' + dis + '>' + (st.models || [g.model]).map(function (m) { return opt(m, g.model, t().igModels); }).join('') + '</select></div>' +
+        '<div class="fld" style="flex:1 1 160px"><label for="igQ">' + t().igQuality + '</label><select class="in" id="igQ"' + dis + '>' + (st.qualities || ['low', 'medium', 'high']).map(function (q) { return opt(q, g.quality, t().igQ); }).join('') + '</select></div>' +
+        '<div class="fld" style="flex:1 1 180px"><label for="igSize">' + t().igSize + '</label><select class="in" id="igSize"' + dis + '>' + (st.sizes || [g.size]).map(function (z) { return opt(z, g.size, t().igSizes); }).join('') + '</select></div>' +
+      '</div>' +
+      '<div><b style="font-weight:500">' + t().igCredits + '</b><div class="row" style="margin-top:8px;align-items:flex-start">' + ['low', 'medium', 'high'].map(function (q) {
+        var c = cost[q]; return '<div class="fld" style="width:180px"><label for="igc_' + q + '">' + t().igQ[q] + '</label><input class="in" id="igc_' + q + '" type="number" min="1" max="1000" step="1" value="' + g.credits[q] + '"' + dis + '><span class="hint">' + (c ? t().igCost + ' $' + c + ' · 1024×1024' : t().igCostNa) + '</span></div>';
+      }).join('') + '</div></div>' +
+      (ro ? '' : '<div class="row"><button type="button" class="btn d sm" id="igSave">' + t().save + '</button><button type="button" class="btn s sm" id="igCheck"' + (st.keySet ? '' : ' disabled') + '>' + t().igCheck + '</button></div>') +
+      '</section>';
+  }
+  function igBind(s) {
+    var sv = $('igSave'); if (!sv) return;
+    // Себестоимость под выбранной моделью обновляется сразу, до сохранения.
+    $('igModel').onchange = function () {
+      var cost = ((s.imageGenStatus || {}).costUsd || {})[this.value] || {};
+      ['low', 'medium', 'high'].forEach(function (q) { var h = $('igc_' + q).nextElementSibling; if (h) h.textContent = cost[q] ? t().igCost + ' $' + cost[q] + ' · 1024×1024' : t().igCostNa; });
+    };
+    sv.onclick = function () {
+      var v = { enabled: s.imageGen.enabled, model: $('igModel').value, quality: $('igQ').value, size: $('igSize').value, credits: {} };
+      ['low', 'medium', 'high'].forEach(function (q) { v.credits[q] = Math.round(Number($('igc_' + q).value)); });
+      busy(sv, true);
+      A.api('POST', '/api/admin/settings', { key: 'imageGen', value: v }).then(function () { A.toast(t().saved); vAdminSettings(); refreshCfg(); }, function (e) { busy(sv, false); fail(e); });
+    };
+    var ck = $('igCheck'); if (ck) ck.onclick = function () {
+      busy(ck, true);
+      A.api('POST', '/api/admin/image-gen/check', {}).then(function (r) { busy(ck, false); A.toast(t().igCheckOk.replace('{m}', r.model)); }, function (e) { busy(ck, false); fail(e); });
+    };
   }
 
   // ---------- запуск

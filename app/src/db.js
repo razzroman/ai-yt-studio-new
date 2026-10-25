@@ -102,7 +102,24 @@ const MIGRATIONS = [
      text_en TEXT NOT NULL,
      read_at TEXT,
      created_at TEXT NOT NULL DEFAULT (datetime('now'))
-   )`
+   )`,
+  // Генерация фото (модуль OpenAI): одна строка — одна картинка; файл лежит в папке images рядом с базой.
+  `CREATE TABLE images (
+     id INTEGER PRIMARY KEY,
+     user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+     prompt TEXT NOT NULL,
+     model TEXT NOT NULL,
+     quality TEXT NOT NULL,
+     size TEXT NOT NULL,
+     credits INTEGER NOT NULL,
+     status TEXT NOT NULL DEFAULT 'pending',
+     error TEXT,
+     file TEXT,
+     bytes INTEGER,
+     spend_ref TEXT,
+     created_at TEXT NOT NULL DEFAULT (datetime('now'))
+   );
+   CREATE INDEX images_user ON images(user_id, id)`
 ];
 
 function open(file) {

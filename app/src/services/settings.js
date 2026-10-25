@@ -10,8 +10,13 @@ const DEFAULTS = {
   payMethods: { card: true, sbp: true, sberpay: true, tpay: true },
   platforms: { youtube: true, vk: true, rutube: true, dzen: true },
   eridOn: true,
-  registrationOpen: true
+  registrationOpen: true,
+  // Модуль «Генерация фото — OpenAI». Ключ API — только в /etc/aiyt/app.env (OPENAI_API_KEY), не в базе.
+  imageGen: { enabled: false, model: 'gpt-image-2', quality: 'medium', size: '1024x1024', credits: { low: 1, medium: 4, high: 12 } }
 };
+const IMAGE_MODELS = ['gpt-image-2', 'gpt-image-2.5-flare', 'gpt-image-2.5-sunburst'];
+const IMAGE_QUALITIES = ['low', 'medium', 'high'];
+const IMAGE_SIZES = ['1024x1024', '1024x1536', '1536x1024'];
 const KEYS = Object.keys(DEFAULTS);
 
 module.exports = function makeSettings(db) {
@@ -29,6 +34,14 @@ module.exports = function makeSettings(db) {
       }
       return null;
     }
+    if (key === 'imageGen') {
+      if (!v || typeof v !== 'object' || typeof v.enabled !== 'boolean') return 'bad_value';
+      if (!IMAGE_MODELS.includes(v.model)) return 'bad_model';
+      if (!IMAGE_QUALITIES.includes(v.quality)) return 'bad_quality';
+      if (!IMAGE_SIZES.includes(v.size)) return 'bad_size';
+      if (!v.credits || IMAGE_QUALITIES.some(q => !Number.isInteger(v.credits[q]) || v.credits[q] < 1 || v.credits[q] > 1000)) return 'bad_credits';
+      return null;
+    }
     if (typeof DEFAULTS[key] === 'boolean') return typeof v === 'boolean' ? null : 'bad_value';
     if (typeof v !== 'object' || !v) return 'bad_value';
     for (const k of Object.keys(DEFAULTS[key])) if (typeof v[k] !== 'boolean') return 'bad_value';
@@ -44,6 +57,7 @@ module.exports = function makeSettings(db) {
       // Сохраняем только известные поля, чтобы в настройки не попал мусор.
       let clean = value;
       if (key === 'products') { clean = {}; Object.keys(DEFAULTS.products).forEach(id => { clean[id] = Object.assign({}, DEFAULTS.products[id], { priceKop: value[id].priceKop, credits: value[id].credits }); }); }
+      else if (key === 'imageGen') { clean = { enabled: value.enabled, model: value.model, quality: value.quality, size: value.size, credits: {} }; IMAGE_QUALITIES.forEach(q => { clean.credits[q] = value.credits[q]; }); }
       else if (typeof DEFAULTS[key] === 'object') { clean = {}; Object.keys(DEFAULTS[key]).forEach(k => { clean[k] = value[k]; }); }
       put1.run(key, JSON.stringify(clean));
       return null;
@@ -51,3 +65,4 @@ module.exports = function makeSettings(db) {
   };
 };
 module.exports.DEFAULTS = DEFAULTS;
+module.exports.IMAGE = { MODELS: IMAGE_MODELS, QUALITIES: IMAGE_QUALITIES, SIZES: IMAGE_SIZES };

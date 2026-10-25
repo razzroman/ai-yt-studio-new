@@ -29,6 +29,12 @@ const config = {
     mode: env('YOOKASSA_MODE', 'mock')
   },
   // Кредиты при подтверждении почты (тариф «Старт»).
+  // Генерация фото через OpenAI. OPENAI_BASE_URL — если запросы идут через свой шлюз (OpenAI не принимает запросы с российских адресов).
+  ai: {
+    openaiKey: env('OPENAI_API_KEY', ''),
+    openaiBase: env('OPENAI_BASE_URL', 'https://api.openai.com/v1').replace(/\/$/, ''),
+    imagesDir: env('IMAGES_DIR', '')
+  },
   startCredits: Number(env('START_CREDITS', 60)),
   // Первый администратор: при подтверждении этой почты пользователь получает роль admin.
   bootstrapAdmin: env('BOOTSTRAP_ADMIN_EMAIL', '').toLowerCase()

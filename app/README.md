@@ -103,6 +103,17 @@ cd /opt/aiyt/site/app && sudo -u aiyt bash -c 'set -a; . /etc/aiyt/app.env; node
 - Проверка: отправьте письмо на mail-tester.com или посмотрите заголовки письма в Gmail («Показать оригинал»): SPF, DKIM и DMARC должны быть `PASS`.
 - Записи A/CNAME для сайта эти изменения не затрагивают.
 
+## Генерация фото — OpenAI
+
+Модуль в админке: «Настройки» → «Генерация фото — OpenAI». Там включение, модель (GPT Image 2, GPT Image 2.5 Flare, GPT Image 2.5 Sunburst), качество и формат по умолчанию, цена в кредитах за картинку для каждого качества и кнопка «Проверить подключение».
+
+1. Ключ: platform.openai.com → API keys. В `/etc/aiyt/app.env`: `OPENAI_API_KEY=…`, затем `systemctl restart aiyt`. Ключ хранится только на сервере, в базу и в браузер не попадает.
+2. OpenAI не принимает запросы с российских адресов. Для сервера в России укажите в `OPENAI_BASE_URL` свой шлюз за рубежом, совместимый с OpenAI API (например, небольшой сервер в Казахстане с обратным прокси на api.openai.com).
+3. Кредиты списываются до запроса и возвращаются автоматически, если OpenAI отказал (проверка безопасности, перегрузка, сбой связи).
+4. Картинки лежат в `/var/lib/aiyt/images` (или `IMAGES_DIR`) и открываются только их владельцу. В резервную копию базы они не входят.
+
+API для экрана в кабинете: `POST /api/images` `{prompt, quality?, size?}`, `GET /api/images`, `GET /api/images/:id/file`.
+
 ## Вход через Google
 
 Google Cloud Console → «APIs & Services» → «Credentials» → «OAuth client ID» (Web). Redirect URI: `https://buykurs.ru/api/auth/google/callback`. В `app.env`: `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`. Пока они пусты, кнопки Google не показываются.
